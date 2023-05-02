@@ -293,7 +293,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!114 &4418298382927004815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,19 +309,25 @@ MonoBehaviour:
   PlayerCamera: {fileID: 4418298381620389061}
   WallCollider: {fileID: 4418298381598351463}
   GroundCollider: {fileID: 4418298383214414295}
-  Gravity: -80
+  Gravity: -60
   LookSensitivity: 1000
-  AccelerationSpeed: 100
-  MaxMoveSpeed: 100
+  AccelerationSpeed: 50
+  ApproachingCooeficient: 60000
+  MaxMoveSpeed: 10000
   TerminalVelocity: -30
   GroundMercyTime: 0.3
   JumpDelay: 0.1
-  JumpForce: 25
+  JumpForce: 17
   MaxJumpVelocity: 35
   WallStickTime: 0.1
-  WallJumpDelay: 0.5
-  FrictionDelay: 0.3
-  FrictionForce: 50
+  WallJumpDelay: 0.15
+  WallRunDistanceFromWall: 0.51
+  FrictionDelay: 0.1
+  FrictionForce: 25
+  FrictionCompensation: 25
+  WallRunDelay: 0.1
+  WallJumpForgetDelay: 0.1
+  FOV: 60
 --- !u!1 &4418298383214414295
 GameObject:
   m_ObjectHideFlags: 0

@@ -54,7 +54,7 @@ public class PlayerScript : MonoBehaviour
     Vector3 RotationEuler;
     Vector3 CameraRotationEuler;
 
-    Collider OtherWall;
+    List<Collider> OtherWalls;
     Collider OtherFloor;
 
     float LastGroundedTime;
@@ -62,6 +62,7 @@ public class PlayerScript : MonoBehaviour
     bool IsGrounded; // Wink   <- Why did I write this?
     GameObject CurrentWall;
     GameObject LastWall;
+    List<GameObject> TouchingWalls;
     float LastWallTouch;
     float LastWallJump;
     Vector3 LastVelocityAtTouch;
@@ -90,6 +91,8 @@ public class PlayerScript : MonoBehaviour
         WallCollider.GetComponent<ColliderScript>().collided += WallCollided;
         GroundCollider.GetComponent<ColliderScript>().collided += GroundCollided;
 
+        OtherWalls = new List<Collider>();
+
         LastGroundedTime = 0f;
         LastJumpTime = 0f;
         LastWallTouch = 0f;
@@ -117,6 +120,10 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         IsSliding = Input.GetKey(SlideKey);
+        if (IsSliding)
+        {
+            LastWallTouch = WallStickTime;
+        }
 
         #region Advance Timers
         LastGroundedTime += Time.deltaTime;
@@ -151,8 +158,10 @@ public class PlayerScript : MonoBehaviour
         // The WallCollider stops working properly at heights less than 1.4 (double the Radius of 0.7), so you can't consider it's collided as correct
         // Unity should add Cylinder Colliders, even if they're inefficient, then this wouldn't be necessary
         // One way to fix this would be to make a cylinder mesh and use a mesh collider, I just don't want to do that right now
-        if (OtherWall && OtherWall != OtherFloor && WallCollider.GetComponent<CapsuleCollider>().height > 1.4f)
+        OtherWalls.ForEach(OtherWall =>
         {
+            if (OtherWall == OtherFloor || WallCollider.GetComponent<CapsuleCollider>().height < 1.4f)
+                return;
             if (LastWallJump > WallJumpDelay && LastWallRun > WallRunDelay)
                 WallRunning = true;
             Vector3 WallAwayVector;
@@ -161,17 +170,19 @@ public class PlayerScript : MonoBehaviour
             if (LastWall == OtherWall.gameObject)
             {
                 LastWallTouch = 0f;
+                return;
             }
-            else if (CurrentWall == null)
+            else if (CurrentWall == OtherWall.gameObject)
+            {
+                LastWallTouch = 0f;
+                return;
+            }
+            if (CurrentWall == null)
             {
                 LastVelocityAtTouch = velocity;
                 LastWallTouch = 0f;
                 CurrentWall = OtherWall.gameObject;
                 WallJumpForgetTime = 0f;
-            }
-            else if (CurrentWall == OtherWall.gameObject)
-            {
-                LastWallTouch = 0f;
             }
             else
             {
@@ -194,10 +205,10 @@ public class PlayerScript : MonoBehaviour
                 velocity.z = planeAligned.z;
             }
             #endregion
-        }
+        });
 
         OtherFloor = null;
-        OtherWall = null;
+        OtherWalls = new List<Collider>();
         #endregion
 
         IsGrounded = LastGroundedTime < GroundMercyTime;
@@ -212,7 +223,6 @@ public class PlayerScript : MonoBehaviour
         // Axis - Sensi: 0,1
         float MouseX = Input.GetAxis("Mouse X") * LookSensitivity * Time.deltaTime; // <- Time.deltaTime might be wrong, depending on how Mouse Axis work
         float MouseY = -Input.GetAxis("Mouse Y") * LookSensitivity * Time.deltaTime;// Why can't I find any good Info for this
-
         // Mouse Movement doesn't line up with Desktop Movement, don't know why (Removing timeDelta fix it)
 
         #region General Rotation
@@ -345,9 +355,9 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            velocity = Vector3.zero;
-            transform.position = new Vector3(-5, 2, 5);
-        } // Reset Character / Debug Purpose
+            Debug.Log(camera.transform.rotation * Vector3.forward);
+            velocity += camera.transform.rotation * Vector3.forward * 1000;
+        } // Boost in Look Direction / Simulate Rocket-Jump without Rockets being implemented
 
         Vector3 ActualVelocity = new Vector3(velocity.x, 0, velocity.z);
         ActualVelocity = ActualVelocity.normalized * DecreasedReturn(ActualVelocity.magnitude);
@@ -360,7 +370,7 @@ public class PlayerScript : MonoBehaviour
     #region Save Collided
     void WallCollided(Collider other)
     {
-        OtherWall = other;
+        OtherWalls.Add(other);
     }
     void GroundCollided(Collider other)
     {

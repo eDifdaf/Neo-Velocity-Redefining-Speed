@@ -314,11 +314,10 @@ MonoBehaviour:
   LookSensitivity: 1000
   AccelerationSpeed: 50
   ApproachingCooeficient: 60000
-  MaxMoveSpeed: 10000
   TerminalVelocity: -30
   GroundMercyTime: 0.3
   JumpDelay: 0.1
-  JumpForce: 17
+  JumpForce: 30
   MaxJumpVelocity: 35
   WallStickTime: 0.1
   WallJumpDelay: 0.15
@@ -331,6 +330,7 @@ MonoBehaviour:
   FOV: 60
   SlideKey: 304
   SlideCameraTransitionTime: 0.1
+  SlidingAccelerationSpeed: 10
 --- !u!1 &4418298383214414295
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ public class PlayerScript : MonoBehaviour
 {
     #region Field Declaration
 
+    [SerializeField] GameObject Body;
     [SerializeField] GameObject PlayerCamera;
     [SerializeField] GameObject WallCollider;
     [SerializeField] GameObject GroundCollider;
@@ -27,7 +28,6 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float LookSensitivity;
     [SerializeField] float AccelerationSpeed;
     [SerializeField] float ApproachingCooeficient = 60000; // ChatGPT too dumb for this
-    [SerializeField] float MaxMoveSpeed = 10000;
     [SerializeField] float TerminalVelocity;
     [SerializeField] float GroundMercyTime;
     [SerializeField] float JumpDelay;
@@ -39,11 +39,12 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float FrictionDelay; // Doesn't actually do anything
     [SerializeField] float FrictionForce; // Decelerate movement
     [SerializeField] float FrictionCompensation; // Accelerate normal movement by apllied Friction
-    [SerializeField] float WallRunDelay; // If you fall of a Wall, how long until you can run again
+    [SerializeField] float WallRunDelay; // If you fall off a Wall, how long until you can run again
     [SerializeField] float WallJumpForgetDelay; // How long you have to stick to a wall, for it to forget your initial touchspeed (important for smooth Walljumps)
     [SerializeField] float FOV;
     [SerializeField] KeyCode SlideKey;
     [SerializeField] float SlideCameraTransitionTime;
+    [SerializeField] float SlidingAccelerationSpeed; // Used instead of AccelerationSpeed when sliding
 
     new Rigidbody rigidbody;
     new GameObject camera;
@@ -147,7 +148,10 @@ public class PlayerScript : MonoBehaviour
         }
 
         // Checks if collided with a Wall (that isn't the Floor)
-        if (OtherWall && OtherWall != OtherFloor)
+        // The WallCollider stops working properly at heights less than 1.4 (double the Radius of 0.7), so you can't consider it's collided as correct
+        // Unity should add Cylinder Colliders, even if they're inefficient, then this wouldn't be necessary
+        // One way to fix this would be to make a cylinder mesh and use a mesh collider, I just don't want to do that right now
+        if (OtherWall && OtherWall != OtherFloor && WallCollider.GetComponent<CapsuleCollider>().height > 1.4f)
         {
             if (LastWallJump > WallJumpDelay && LastWallRun > WallRunDelay)
                 WallRunning = true;
@@ -207,9 +211,9 @@ public class PlayerScript : MonoBehaviour
 
         // Axis - Sensi: 0,1
         float MouseX = Input.GetAxis("Mouse X") * LookSensitivity * Time.deltaTime; // <- Time.deltaTime might be wrong, depending on how Mouse Axis work
-        float MouseY = -Input.GetAxis("Mouse Y") * LookSensitivity * Time.deltaTime;
+        float MouseY = -Input.GetAxis("Mouse Y") * LookSensitivity * Time.deltaTime;// Why can't I find any good Info for this
 
-        // Mouse Movement doesn't line up with Desktop Movement, don't know why
+        // Mouse Movement doesn't line up with Desktop Movement, don't know why (Removing timeDelta fix it)
 
         #region General Rotation
         RotationEuler.y += MouseX;
@@ -226,7 +230,12 @@ public class PlayerScript : MonoBehaviour
         camera.transform.localRotation = CameraRotation;
         #endregion
 
+        // Change Collider Size/Camera Position depending on Sliding, allthough the Wall Collider is useless while Sliding
         camera.transform.localPosition = new Vector3(0, 2.5f - SlidingAnimationTimer / SlideCameraTransitionTime, 0); // 2.5 => Default Camera Height
+        Body.GetComponent<CapsuleCollider>().height = 2 - SlidingAnimationTimer / SlideCameraTransitionTime; // 2 => Default Height
+        Body.GetComponent<CapsuleCollider>().center = new Vector3(0, -SlidingAnimationTimer / SlideCameraTransitionTime / 2, 0);
+        WallCollider.GetComponent<CapsuleCollider>().height = 1.8f - SlidingAnimationTimer / SlideCameraTransitionTime; // 1.8 => Default Height
+        WallCollider.GetComponent<CapsuleCollider>().center = new Vector3(0, -SlidingAnimationTimer / SlideCameraTransitionTime / 2, 0);
 
         // For better Interaction with Slopes, Gravity is increased when on the Ground
         if (IsGrounded)
@@ -242,7 +251,10 @@ public class PlayerScript : MonoBehaviour
         float Vertical = Input.GetAxis("Vertical");
         float Horizontal = Input.GetAxis("Horizontal");
         Vector3 PlaneMovement = new Vector3(Horizontal, 0, Vertical).normalized;
-        PlaneMovement *= AccelerationSpeed * Time.deltaTime;
+        if (IsSliding)
+            PlaneMovement *= SlidingAccelerationSpeed * Time.deltaTime;
+        else
+            PlaneMovement *= AccelerationSpeed * Time.deltaTime;
         PlaneMovement = Quaternion.AngleAxis(RotationEuler.y, Vector3.up) * PlaneMovement;
         #endregion
 
@@ -266,10 +278,7 @@ public class PlayerScript : MonoBehaviour
         #endregion
 
         #region Apply Movement
-        if (MagnitudeInMovement + PlaneMovement.magnitude < MaxMoveSpeed)
-            velocity += PlaneMovement;
-        else if (MagnitudeInMovement < MaxMoveSpeed)
-            velocity += PlaneMovement.normalized * (MaxMoveSpeed - MagnitudeInMovement);
+        velocity += PlaneMovement;
         #endregion
 
         if (WallRunning && CurrentWall != null)
@@ -343,6 +352,8 @@ public class PlayerScript : MonoBehaviour
         Vector3 ActualVelocity = new Vector3(velocity.x, 0, velocity.z);
         ActualVelocity = ActualVelocity.normalized * DecreasedReturn(ActualVelocity.magnitude);
         rigidbody.velocity = new Vector3(ActualVelocity.x, velocity.y, ActualVelocity.z);
+
+        // FOV setting / more than 60 clips the camera through Walls :(
         //camera.GetComponent<Camera>().fieldOfView = Mathf.Floor(FOV + FOV * Mathf.Pow(velocity.magnitude / 100, 0.1f));
     }
 

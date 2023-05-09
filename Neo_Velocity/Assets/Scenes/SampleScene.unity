@@ -593,6 +593,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4418298381620389080, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: m_Depth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418298381620389080, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418298381620389080, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: m_FOVAxisMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418298381620389080, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: far clip plane
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418298381620389080, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: near clip plane
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418298381620389080, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418298381620389080, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4418298382927004808, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
       propertyPath: m_Name
       value: Player
@@ -640,6 +668,14 @@ PrefabInstance:
     - target: {fileID: 4418298382927004809, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418298382927004815, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: SlideKey
+      value: 304
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418298382927004815, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: SlideCameraTransitionTime
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd8d767e58249794d987153ebbf0e388, type: 3}

@@ -40,8 +40,10 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float FrictionForce; // Decelerate movement
     [SerializeField] float FrictionCompensation; // Accelerate normal movement by apllied Friction
     [SerializeField] float WallRunDelay; // If you fall of a Wall, how long until you can run again
-    [SerializeField] float WallJumpForgetDelay; // How long you have to stick to a wall, for it to forget your initial touchspeed
+    [SerializeField] float WallJumpForgetDelay; // How long you have to stick to a wall, for it to forget your initial touchspeed (important for smooth Walljumps)
     [SerializeField] float FOV;
+    [SerializeField] KeyCode SlideKey;
+    [SerializeField] float SlideCameraTransitionTime;
 
     new Rigidbody rigidbody;
     new GameObject camera;
@@ -65,6 +67,8 @@ public class PlayerScript : MonoBehaviour
     bool WallRunning;
     float LastWallRun;
     float WallJumpForgetTime;
+    bool IsSliding;
+    float SlidingAnimationTimer;
 
     #endregion
 
@@ -74,6 +78,8 @@ public class PlayerScript : MonoBehaviour
         camera = GetComponentInChildren<Camera>().gameObject;
 
         velocity = rigidbody.velocity;
+
+        camera.GetComponent<Camera>().fieldOfView = FOV;
 
         Rotation = transform.rotation;
         CameraRotation = camera.transform.localRotation;
@@ -88,6 +94,7 @@ public class PlayerScript : MonoBehaviour
         LastWallTouch = 0f;
         LastWallJump = 0f;
         LastWallRun = 0f;
+        SlidingAnimationTimer = 0f;
     }
 
     #region MagnitudeInDirection
@@ -108,6 +115,8 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        IsSliding = Input.GetKey(SlideKey);
+
         #region Advance Timers
         LastGroundedTime += Time.deltaTime;
         LastJumpTime += Time.deltaTime;
@@ -115,7 +124,14 @@ public class PlayerScript : MonoBehaviour
         LastWallJump += Time.deltaTime;
         LastWallRun += Time.deltaTime;
         WallJumpForgetTime += Time.deltaTime;
+        if (IsSliding)
+            SlidingAnimationTimer = Math.Min(SlidingAnimationTimer + Time.deltaTime, SlideCameraTransitionTime);
+        else
+            SlidingAnimationTimer = Math.Max(SlidingAnimationTimer - Time.deltaTime, 0);
         #endregion
+
+        // Update POV
+        camera.GetComponent<Camera>().fieldOfView = FOV;
 
         // Floor and Wall
         #region Collision Handling
@@ -210,7 +226,13 @@ public class PlayerScript : MonoBehaviour
         camera.transform.localRotation = CameraRotation;
         #endregion
 
-        velocity.y += Gravity * Time.deltaTime;
+        camera.transform.localPosition = new Vector3(0, 2.5f - SlidingAnimationTimer / SlideCameraTransitionTime, 0); // 2.5 => Default Camera Height
+
+        // For better Interaction with Slopes, Gravity is increased when on the Ground
+        if (IsGrounded)
+            velocity.y += Gravity * 2 * Time.deltaTime;
+        else
+            velocity.y += Gravity * Time.deltaTime;
 
         #region PlaneMovement Vector
         // for Vertical and Horizontal set:
@@ -227,7 +249,7 @@ public class PlayerScript : MonoBehaviour
         float MagnitudeInMovement = MagnitudeInDirection(PlaneMovement, velocity);
 
         #region Friction
-        if (IsGrounded)
+        if (IsGrounded && !IsSliding)
         {
             Vector3 flatVelocity = new Vector3(velocity.x, 0, velocity.z);
             if (PlaneMovement.magnitude < 0.01)

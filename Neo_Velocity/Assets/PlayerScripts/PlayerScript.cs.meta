@@ -1,7 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Neo_Velocity/Assets/PlayerScripts/PlayerScript.cs.meta
 guid: 514034dd9d265d64aaab2d48d23415e6
+========
+guid: 8ef7be1c625941f7ba8ed7cc71718c0d
+>>>>>>>> development:Neo_Velocity/Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs.meta
 MonoImporter:
-  externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0

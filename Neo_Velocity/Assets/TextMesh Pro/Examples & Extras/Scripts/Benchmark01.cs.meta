@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Neo_Velocity/Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs.meta
 guid: f970ea55f9f84bf79b05dab180b8c125
+========
+guid: 2d687537154440a3913a9a3c7977978c
+>>>>>>>> development:Neo_Velocity/Assets/TextMesh Pro/Examples & Extras/Scripts/CameraController.cs.meta
 MonoImporter:
   serializedVersion: 2
   defaultReferences: []

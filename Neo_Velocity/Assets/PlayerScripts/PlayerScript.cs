@@ -6,14 +6,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-// Wall Detect+
-// PastWalls List
-// set delay till again touchable
-// reset delay if touch in delay
-
-// Wallrunning
-// WallCollider.GetComponent<Collider>().ClosestPoint()
-// Teleport next to wall
 
 public class PlayerScript : MonoBehaviour
 {
@@ -158,26 +150,27 @@ public class PlayerScript : MonoBehaviour
         // The WallCollider stops working properly at heights less than 1.4 (double the Radius of 0.7), so you can't consider it's collided as correct
         // Unity should add Cylinder Colliders, even if they're inefficient, then this wouldn't be necessary
         // One way to fix this would be to make a cylinder mesh and use a mesh collider, I just don't want to do that right now
-        OtherWalls.ForEach(OtherWall =>
+        OtherWalls.OrderBy((c) => (transform.position - c.gameObject.GetComponent<Collider>().ClosestPoint(transform.position)).magnitude)
+        .ToList().ForEach(OtherWall =>
         {
-            if (OtherWall == OtherFloor || WallCollider.GetComponent<CapsuleCollider>().height < 1.4f)
+            if (OtherWall == OtherFloor)
                 return;
             if (LastWallJump > WallJumpDelay && LastWallRun > WallRunDelay)
                 WallRunning = true;
+            
             Vector3 WallAwayVector;
             Vector3 ParallelToWall;
+            
 
             if (LastWall == OtherWall.gameObject)
             {
                 LastWallTouch = 0f;
-                return;
             }
             else if (CurrentWall == OtherWall.gameObject)
             {
                 LastWallTouch = 0f;
-                return;
             }
-            if (CurrentWall == null)
+            else if (CurrentWall == null)
             {
                 LastVelocityAtTouch = velocity;
                 LastWallTouch = 0f;
@@ -192,7 +185,7 @@ public class PlayerScript : MonoBehaviour
                 CurrentWall = OtherWall.gameObject;
                 WallJumpForgetTime = 0f;
             }
-
+            
             // Aligns Momentum in direction of the wall, if facing towards the wall
             #region AlignMomentumToWall
             WallAwayVector = transform.position - OtherWall.gameObject.GetComponent<Collider>().ClosestPoint(transform.position);
@@ -205,6 +198,7 @@ public class PlayerScript : MonoBehaviour
                 velocity.z = planeAligned.z;
             }
             #endregion
+            
         });
 
         OtherFloor = null;
@@ -244,8 +238,10 @@ public class PlayerScript : MonoBehaviour
         camera.transform.localPosition = new Vector3(0, 2.5f - SlidingAnimationTimer / SlideCameraTransitionTime, 0); // 2.5 => Default Camera Height
         Body.GetComponent<CapsuleCollider>().height = 2 - SlidingAnimationTimer / SlideCameraTransitionTime; // 2 => Default Height
         Body.GetComponent<CapsuleCollider>().center = new Vector3(0, -SlidingAnimationTimer / SlideCameraTransitionTime / 2, 0);
-        WallCollider.GetComponent<CapsuleCollider>().height = 1.8f - SlidingAnimationTimer / SlideCameraTransitionTime; // 1.8 => Default Height
-        WallCollider.GetComponent<CapsuleCollider>().center = new Vector3(0, -SlidingAnimationTimer / SlideCameraTransitionTime / 2, 0);
+
+        // For Cylinder Mesh Wall Collider
+        WallCollider.transform.localScale = new Vector3(WallCollider.transform.localScale.x, 0.6f - SlidingAnimationTimer / SlideCameraTransitionTime / 5, WallCollider.transform.localScale.z);
+        WallCollider.transform.localPosition = new Vector3(0, 2-SlidingAnimationTimer / SlideCameraTransitionTime / 2, 0);
 
         // For better Interaction with Slopes, Gravity is increased when on the Ground
         if (IsGrounded)
@@ -291,6 +287,8 @@ public class PlayerScript : MonoBehaviour
         velocity += PlaneMovement;
         #endregion
 
+        if (IsGrounded) // No Wallrunning while on the Ground
+            WallRunning = false;
         if (WallRunning && CurrentWall != null)
         {
             LastWallRun = 0f;
@@ -299,10 +297,14 @@ public class PlayerScript : MonoBehaviour
             float AngleFromWallAndVelocity = Vector3.Angle(new Vector3(velocity.x, 0, velocity.z), WallAwayVector);
             if (AngleFromWallAndMovement < 45 && PlaneMovement.magnitude > 0.01)
             {
+                CurrentWall = null;
+                LastWall = null;
                 WallRunning = false;
             }
             else if (AngleFromWallAndVelocity < 20)
             {
+                CurrentWall = null;
+                LastWall = null;
                 WallRunning = false;
             }
             else if (WallAwayVector.magnitude > WallRunDistanceFromWall)
@@ -320,16 +322,18 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
+            // Walljump
             if (CurrentWall != null && LastWallJump > WallJumpDelay && LastJumpTime > JumpDelay && !IsGrounded)
             {
                 Vector3 newVelocity = new Vector3(LastVelocityAtTouch.x, 0, LastVelocityAtTouch.z);
                 Vector3 WallAwayVector = transform.position - CurrentWall.GetComponent<Collider>().ClosestPoint(transform.position);
                 WallAwayVector.y = 0;
                 WallAwayVector = WallAwayVector.normalized;
-                newVelocity = newVelocity - 2 * Vector3.Dot(newVelocity, WallAwayVector) * WallAwayVector;
+                newVelocity = newVelocity - 2 * Vector3.Dot(newVelocity, WallAwayVector) * WallAwayVector; // Geschwindigkeit an Wand spiegeln
                 newVelocity.y = velocity.y;
                 velocity = newVelocity;
                 velocity += WallAwayVector * JumpForce;
+                velocity += PlaneMovement.normalized * JumpForce * 0.5f;
                 if (velocity.y < MaxJumpVelocity)
                 {
                     if (velocity.y + JumpForce < MaxJumpVelocity)
@@ -340,6 +344,7 @@ public class PlayerScript : MonoBehaviour
                 WallRunning = false;
                 LastWallJump = 0f;
             }
+            // Grounded Jump
             else if (LastJumpTime > JumpDelay && IsGrounded)
             {
                 velocity.y += JumpForce;
@@ -365,6 +370,8 @@ public class PlayerScript : MonoBehaviour
 
         // FOV setting / more than 60 clips the camera through Walls :(
         //camera.GetComponent<Camera>().fieldOfView = Mathf.Floor(FOV + FOV * Mathf.Pow(velocity.magnitude / 100, 0.1f));
+
+        Debug.Log(WallRunning);
     }
 
     #region Save Collided

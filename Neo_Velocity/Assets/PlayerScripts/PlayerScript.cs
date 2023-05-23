@@ -37,6 +37,8 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] KeyCode SlideKey;
     [SerializeField] float SlideCameraTransitionTime;
     [SerializeField] float SlidingAccelerationSpeed; // Used instead of AccelerationSpeed when sliding
+    [SerializeField] float CameraTiltWhileWallrunning = 15f; // Max Angle of Camertilt, when parallel to Wall
+    [SerializeField] float CameraTiltBufferChangeSpeed = 10f; // How fast the actual Tilt approaches the Buffer
 
     new Rigidbody rigidbody;
     new GameObject camera;
@@ -63,9 +65,10 @@ public class PlayerScript : MonoBehaviour
     float WallJumpForgetTime;
     bool IsSliding;
     float SlidingAnimationTimer;
+    float CameraTiltBuffer;
 
     #endregion
-
+    GameObject LastPainted; // temp
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -224,24 +227,26 @@ public class PlayerScript : MonoBehaviour
         Rotation.eulerAngles = RotationEuler;
         transform.rotation = Rotation;
         #endregion
-        #region Camera Rotation
-        CameraRotationEuler.x += MouseY;
-        if (CameraRotationEuler.x > 90)
-            CameraRotationEuler.x = 90;
-        else if (CameraRotationEuler.x < -90)
-            CameraRotationEuler.x = -90;
-        CameraRotation.eulerAngles = CameraRotationEuler;
-        camera.transform.localRotation = CameraRotation;
-        #endregion
+        // Camera Rotation moved down to Wallrunning Section for Camera tilting
 
-        // Change Collider Size/Camera Position depending on Sliding, allthough the Wall Collider is useless while Sliding
-        camera.transform.localPosition = new Vector3(0, 2.5f - SlidingAnimationTimer / SlideCameraTransitionTime, 0); // 2.5 => Default Camera Height
-        Body.GetComponent<CapsuleCollider>().height = 2 - SlidingAnimationTimer / SlideCameraTransitionTime; // 2 => Default Height
-        Body.GetComponent<CapsuleCollider>().center = new Vector3(0, -SlidingAnimationTimer / SlideCameraTransitionTime / 2, 0);
+        // Change Collider Size/Camera Position depending on Sliding
+        camera.transform.localPosition = new Vector3(0, 2.5f - SlidingAnimationTimer / SlideCameraTransitionTime, 0); // 2.5 => Default, 1.5 => Sliding
+        if (IsSliding)
+        {
+            Body.GetComponent<CapsuleCollider>().height = 1; // 2 => Default
+            Body.GetComponent<CapsuleCollider>().center = new Vector3(0, -0.5f, 0); // 0 => Default
 
-        // For Cylinder Mesh Wall Collider
-        WallCollider.transform.localScale = new Vector3(WallCollider.transform.localScale.x, 0.6f - SlidingAnimationTimer / SlideCameraTransitionTime / 5, WallCollider.transform.localScale.z);
-        WallCollider.transform.localPosition = new Vector3(0, 2-SlidingAnimationTimer / SlideCameraTransitionTime / 2, 0);
+            WallCollider.transform.localScale = new Vector3(1.2f, 0.4f, 1.2f); // 0.6 => Default
+            WallCollider.transform.localPosition = new Vector3(0, 1.5f, 0); // 2 => Default
+        } // Colliders change instantly, to make Sliding feel better
+        else
+        {
+            Body.GetComponent<CapsuleCollider>().height = 2; // 1 => Sliding
+            Body.GetComponent<CapsuleCollider>().center = new Vector3(0, 0, 0); // -0.5f => Sliding
+
+            WallCollider.transform.localScale = new Vector3(1.2f, 0.6f, 1.2f); // 0.4 => Sliding
+            WallCollider.transform.localPosition = new Vector3(0, 2f, 0); // 1.5 => Sliding
+        }
 
         // For better Interaction with Slopes, Gravity is increased when on the Ground
         if (IsGrounded)
@@ -289,6 +294,9 @@ public class PlayerScript : MonoBehaviour
 
         if (IsGrounded) // No Wallrunning while on the Ground
             WallRunning = false;
+
+        CameraTiltBuffer = 0; // Reset Camera-tilt before Wallrun-eval
+
         if (WallRunning && CurrentWall != null)
         {
             LastWallRun = 0f;
@@ -313,12 +321,50 @@ public class PlayerScript : MonoBehaviour
                 transform.position -= WallAwayVector;
             }
             velocity.y = 0;
-        } // everything wall
+
+            // Camera-tilting
+            float AngleLookToNormalWall = Vector3.Angle(WallAwayVector, transform.rotation * Vector3.forward);
+            float AngleLookToParallelWall = Vector3.Angle(Quaternion.AngleAxis(90, Vector3.up) * WallAwayVector, transform.rotation * Vector3.forward);
+            float TiltFactor; // How strong to tilt
+            if (AngleLookToNormalWall > 180)
+                TiltFactor = Math.Min((360 - AngleLookToNormalWall) / 90, 1);
+            else
+                TiltFactor = Math.Min(AngleLookToNormalWall / 90, 1);
+            float TiltDirection = 1;
+            if (AngleLookToParallelWall > 90)
+                TiltDirection = -1;
+            CameraTiltBuffer = TiltDirection * TiltFactor * CameraTiltWhileWallrunning;
+        } // everything with Wallrunning (letting go, snapping position to Wall, stopping down velocity, also Camera-tilting)
+
+        #region Camera Rotation
+        #region Approach Cameratiltbuffer
+        if (CameraRotationEuler.z - CameraTiltBuffer < 0)
+        {
+            CameraRotationEuler.z += CameraTiltBufferChangeSpeed * Time.deltaTime;
+            if (CameraRotationEuler.z > CameraTiltBuffer)
+                CameraRotationEuler.z = CameraTiltBuffer;
+        }
+        else if (CameraRotationEuler.z - CameraTiltBuffer > 0)
+        {
+            CameraRotationEuler.z -= CameraTiltBufferChangeSpeed * Time.deltaTime;
+            if (CameraRotationEuler.z < CameraTiltBuffer)
+                CameraRotationEuler.z = CameraTiltBuffer;
+        }
+        #endregion
+
+        CameraRotationEuler.x += MouseY;
+        if (CameraRotationEuler.x > 90)
+            CameraRotationEuler.x = 90;
+        else if (CameraRotationEuler.x < -90)
+            CameraRotationEuler.x = -90;
+        CameraRotation.eulerAngles = CameraRotationEuler;
+        camera.transform.localRotation = CameraRotation;
+        #endregion
 
         if (WallJumpForgetTime > WallJumpForgetDelay)
         {
             LastVelocityAtTouch = velocity;
-        }// Reset Walljump reflexion-direction to velocity
+        } // Reset Walljump reflexion-direction to velocity
 
         if (Input.GetKey(KeyCode.Space))
         {
@@ -329,7 +375,7 @@ public class PlayerScript : MonoBehaviour
                 Vector3 WallAwayVector = transform.position - CurrentWall.GetComponent<Collider>().ClosestPoint(transform.position);
                 WallAwayVector.y = 0;
                 WallAwayVector = WallAwayVector.normalized;
-                newVelocity = newVelocity - 2 * Vector3.Dot(newVelocity, WallAwayVector) * WallAwayVector; // Geschwindigkeit an Wand spiegeln
+                newVelocity = newVelocity - 2 * Vector3.Dot(newVelocity, WallAwayVector) * WallAwayVector; // mirror Speed at the Wall
                 newVelocity.y = velocity.y;
                 velocity = newVelocity;
                 velocity += WallAwayVector * JumpForce;
@@ -368,10 +414,24 @@ public class PlayerScript : MonoBehaviour
         ActualVelocity = ActualVelocity.normalized * DecreasedReturn(ActualVelocity.magnitude);
         rigidbody.velocity = new Vector3(ActualVelocity.x, velocity.y, ActualVelocity.z);
 
+        /*
+         * temp
+        Debug.Log(CurrentWall);
+        if (LastPainted)
+            LastPainted.GetComponent<MeshRenderer>().material.SetColor("BLUE", new Color(0, 0, 255));
+        if (CurrentWall)
+        {
+            CurrentWall.GetComponent<MeshRenderer>().material.SetColor("RED", new Color(255, 0, 0));
+            LastPainted = CurrentWall;
+        }
+        */
+
         // FOV setting / more than 60 clips the camera through Walls :(
         //camera.GetComponent<Camera>().fieldOfView = Mathf.Floor(FOV + FOV * Mathf.Pow(velocity.magnitude / 100, 0.1f));
 
-        Debug.Log(WallRunning);
+        // Issue with the way wallrunning is handled,
+        // if you touch 2 Walls and move slightly away from the main one,
+        // it doesn't snap you to the second one
     }
 
     #region Save Collided

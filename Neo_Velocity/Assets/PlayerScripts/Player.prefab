@@ -1,64 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4418298381598351463
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4418298381598351460}
-  - component: {fileID: 4418298381598351461}
-  - component: {fileID: 4418298381598351482}
-  m_Layer: 3
-  m_Name: WallCollider
-  m_TagString: WallCollider
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4418298381598351460
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4418298381598351463}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4418298382927004809}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &4418298381598351461
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4418298381598351463}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.7
-  m_Height: 1.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4418298381598351482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4418298381598351463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 763ddaf792607294598e752ac5469964, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4418298381620389061
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,9 +193,10 @@ GameObject:
   - component: {fileID: 4418298382927004809}
   - component: {fileID: 4418298382927004814}
   - component: {fileID: 4418298382927004815}
-  m_Layer: 3
+  - component: {fileID: 1501487197093846086}
+  m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -267,13 +209,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4418298382927004808}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 2, z: 5}
+  m_LocalPosition: {x: -3.5808997, y: 7.7172003, z: -42.154293}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4418298382267178574}
+  - {fileID: 8041747936038323190}
   - {fileID: 4418298383214414292}
-  - {fileID: 4418298381598351460}
   - {fileID: 4418298381620389082}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -308,17 +250,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Body: {fileID: 4418298382267178569}
   PlayerCamera: {fileID: 4418298381620389061}
-  WallCollider: {fileID: 4418298381598351463}
+  WallCollider: {fileID: 8041747936038323195}
   GroundCollider: {fileID: 4418298383214414295}
   Gravity: -60
-  LookSensitivity: 1000
+  LookSensitivityY: 4
+  LookSensitivityX: 7
   AccelerationSpeed: 50
   ApproachingCooeficient: 60000
-  MaxMoveSpeed: 10000
   TerminalVelocity: -30
   GroundMercyTime: 0.3
   JumpDelay: 0.1
-  JumpForce: 17
+  JumpForce: 25
   MaxJumpVelocity: 35
   WallStickTime: 0.1
   WallJumpDelay: 0.15
@@ -329,8 +271,25 @@ MonoBehaviour:
   WallRunDelay: 0.1
   WallJumpForgetDelay: 0.1
   FOV: 60
-  SlideKey: 304
   SlideCameraTransitionTime: 0.1
+  SlidingAccelerationSpeed: 10
+  CameraTiltWhileWallrunning: 15
+  CameraTiltBufferChangeSpeed: 300
+--- !u!114 &1501487197093846086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4418298382927004808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e3fe07d26e64640addb2cca8c37e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SlideKey: 304
+  JumpKey: 32
+  RespawnKey: 114
 --- !u!1 &4418298383214414295
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,7 +321,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4418298382927004809}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &4418298383214414293
 SphereCollider:
@@ -384,6 +343,65 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4418298383214414295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 763ddaf792607294598e752ac5469964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8041747936038323195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8041747936038323190}
+  - component: {fileID: 8041747936038323189}
+  - component: {fileID: 8041747936038323188}
+  m_Layer: 3
+  m_Name: WallCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8041747936038323190
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8041747936038323195}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1.2, y: 0.6, z: 1.2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4418298382927004809}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &8041747936038323189
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8041747936038323195}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &8041747936038323188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8041747936038323195}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 763ddaf792607294598e752ac5469964, type: 3}

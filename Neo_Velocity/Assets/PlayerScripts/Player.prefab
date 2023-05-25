@@ -193,9 +193,10 @@ GameObject:
   - component: {fileID: 4418298382927004809}
   - component: {fileID: 4418298382927004814}
   - component: {fileID: 4418298382927004815}
-  m_Layer: 3
+  - component: {fileID: 1501487197093846086}
+  m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -252,13 +253,14 @@ MonoBehaviour:
   WallCollider: {fileID: 8041747936038323195}
   GroundCollider: {fileID: 4418298383214414295}
   Gravity: -60
-  LookSensitivity: 1000
+  LookSensitivityY: 4
+  LookSensitivityX: 7
   AccelerationSpeed: 50
   ApproachingCooeficient: 60000
   TerminalVelocity: -30
   GroundMercyTime: 0.3
   JumpDelay: 0.1
-  JumpForce: 30
+  JumpForce: 25
   MaxJumpVelocity: 35
   WallStickTime: 0.1
   WallJumpDelay: 0.15
@@ -269,9 +271,25 @@ MonoBehaviour:
   WallRunDelay: 0.1
   WallJumpForgetDelay: 0.1
   FOV: 60
-  SlideKey: 304
   SlideCameraTransitionTime: 0.1
   SlidingAccelerationSpeed: 10
+  CameraTiltWhileWallrunning: 15
+  CameraTiltBufferChangeSpeed: 300
+--- !u!114 &1501487197093846086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4418298382927004808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e3fe07d26e64640addb2cca8c37e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SlideKey: 304
+  JumpKey: 32
+  RespawnKey: 114
 --- !u!1 &4418298383214414295
 GameObject:
   m_ObjectHideFlags: 0

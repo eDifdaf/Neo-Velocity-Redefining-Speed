@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -17,7 +18,8 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] GameObject GroundCollider;
 
     [SerializeField] float Gravity;
-    [SerializeField] float LookSensitivity;
+    [SerializeField] float LookSensitivityY = 4;
+    [SerializeField] float LookSensitivityX = 7;
     [SerializeField] float AccelerationSpeed;
     [SerializeField] float ApproachingCooeficient = 60000; // ChatGPT too dumb for this
     [SerializeField] float TerminalVelocity;
@@ -34,11 +36,15 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float WallRunDelay; // If you fall off a Wall, how long until you can run again
     [SerializeField] float WallJumpForgetDelay; // How long you have to stick to a wall, for it to forget your initial touchspeed (important for smooth Walljumps)
     [SerializeField] float FOV;
-    [SerializeField] KeyCode SlideKey;
+    //[SerializeField] KeyCode SlideKey;     Moved to InputScript
     [SerializeField] float SlideCameraTransitionTime;
     [SerializeField] float SlidingAccelerationSpeed; // Used instead of AccelerationSpeed when sliding
     [SerializeField] float CameraTiltWhileWallrunning = 15f; // Max Angle of Camertilt, when parallel to Wall
     [SerializeField] float CameraTiltBufferChangeSpeed = 10f; // How fast the actual Tilt approaches the Buffer
+
+    Func<Dictionary<string, float>> GetInput;
+    Func<Vector2> GetCameraMovement;
+    Action ResetInputs;
 
     new Rigidbody rigidbody;
     new GameObject camera;
@@ -67,8 +73,14 @@ public class PlayerScript : MonoBehaviour
     float SlidingAnimationTimer;
     float CameraTiltBuffer;
 
+    float RevertToCameraY;
+    float RevertToCameraZ;
+
+    Vector3 RespawnPoint;
+    Vector3 RespawnLookDirection;
+
     #endregion
-    GameObject LastPainted; // temp
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -85,6 +97,13 @@ public class PlayerScript : MonoBehaviour
 
         WallCollider.GetComponent<ColliderScript>().collided += WallCollided;
         GroundCollider.GetComponent<ColliderScript>().collided += GroundCollided;
+
+        GetInput = GetComponent<PlayerInputScript>().GetInput;
+        GetCameraMovement = GetComponent<PlayerInputScript>().GetMouseInput;
+        ResetInputs = GetComponent<PlayerInputScript>().ResetInputs;
+
+        RevertToCameraY = 0;
+        RevertToCameraZ = 0;
 
         OtherWalls = new List<Collider>();
 
@@ -112,9 +131,50 @@ public class PlayerScript : MonoBehaviour
     }
     #endregion
 
-    void Update()
+    // Camera Movement, unrelated from the recorded inputs
+    private void Update()
     {
-        IsSliding = Input.GetKey(SlideKey);
+        Vector2 MouseMovement = GetCameraMovement();
+
+        float AmpMouseX = MouseMovement.x * LookSensitivityX;
+        float AmpMouseY = -MouseMovement.y * LookSensitivityY;
+
+        #region Camera Rotation
+
+        #region Approach Cameratiltbuffer
+        if (CameraRotationEuler.z - CameraTiltBuffer < 0)
+        {
+            CameraRotationEuler.z += CameraTiltBufferChangeSpeed * Time.deltaTime;
+            if (CameraRotationEuler.z > CameraTiltBuffer)
+                CameraRotationEuler.z = CameraTiltBuffer;
+        }
+        else if (CameraRotationEuler.z - CameraTiltBuffer > 0)
+        {
+            CameraRotationEuler.z -= CameraTiltBufferChangeSpeed * Time.deltaTime;
+            if (CameraRotationEuler.z < CameraTiltBuffer)
+                CameraRotationEuler.z = CameraTiltBuffer;
+        }
+        #endregion
+
+        CameraRotationEuler.x += AmpMouseY;
+        if (CameraRotationEuler.x > 90)
+            CameraRotationEuler.x = 90;
+        else if (CameraRotationEuler.x < -90)
+            CameraRotationEuler.x = -90;
+
+        CameraRotationEuler.y += AmpMouseX;
+
+        CameraRotation.eulerAngles = CameraRotationEuler;
+        camera.transform.localRotation = CameraRotation;
+        #endregion
+    }
+
+    // Everthing else
+    void FixedUpdate()
+    {
+        Dictionary<string, float> input = GetInput();
+
+        IsSliding = input["Sliding"] == 1f;
         if (IsSliding)
         {
             LastWallTouch = WallStickTime;
@@ -132,9 +192,6 @@ public class PlayerScript : MonoBehaviour
         else
             SlidingAnimationTimer = Math.Max(SlidingAnimationTimer - Time.deltaTime, 0);
         #endregion
-
-        // Update POV
-        camera.GetComponent<Camera>().fieldOfView = FOV;
 
         // Floor and Wall
         #region Collision Handling
@@ -218,10 +275,11 @@ public class PlayerScript : MonoBehaviour
         } // Reset the touched walls
 
         // Axis - Sensi: 0,1
-        float MouseX = Input.GetAxis("Mouse X") * LookSensitivity * Time.deltaTime; // <- Time.deltaTime might be wrong, depending on how Mouse Axis work
-        float MouseY = -Input.GetAxis("Mouse Y") * LookSensitivity * Time.deltaTime;// Why can't I find any good Info for this
+        float MouseX = input["Mouse X"] * LookSensitivityX; // <- Time.deltaTime might be wrong, depending on how Mouse Axis work
+        float MouseY = -input["Mouse Y"] * LookSensitivityY;// Why can't I find any good Info for this
         // Mouse Movement doesn't line up with Desktop Movement, don't know why (Removing timeDelta fix it)
 
+        CameraRotationEuler.y = 0;
         #region General Rotation
         RotationEuler.y += MouseX;
         Rotation.eulerAngles = RotationEuler;
@@ -248,7 +306,7 @@ public class PlayerScript : MonoBehaviour
             WallCollider.transform.localPosition = new Vector3(0, 2f, 0); // 1.5 => Sliding
         }
 
-        // For better Interaction with Slopes, Gravity is increased when on the Ground
+        // For better Interaction with Slopes, Gravity is increased when on the Ground, don't know if this actually works
         if (IsGrounded)
             velocity.y += Gravity * 2 * Time.deltaTime;
         else
@@ -259,8 +317,8 @@ public class PlayerScript : MonoBehaviour
         // Gravity: 100
         // Dead: 0.001
         // Sensitivity: 15
-        float Vertical = Input.GetAxis("Vertical");
-        float Horizontal = Input.GetAxis("Horizontal");
+        float Vertical = input["Vertical"];
+        float Horizontal = input["Horizontal"];
         Vector3 PlaneMovement = new Vector3(Horizontal, 0, Vertical).normalized;
         if (IsSliding)
             PlaneMovement *= SlidingAccelerationSpeed * Time.deltaTime;
@@ -338,6 +396,7 @@ public class PlayerScript : MonoBehaviour
 
         #region Camera Rotation
         #region Approach Cameratiltbuffer
+        CameraRotationEuler.z = RevertToCameraZ;
         if (CameraRotationEuler.z - CameraTiltBuffer < 0)
         {
             CameraRotationEuler.z += CameraTiltBufferChangeSpeed * Time.deltaTime;
@@ -350,8 +409,10 @@ public class PlayerScript : MonoBehaviour
             if (CameraRotationEuler.z < CameraTiltBuffer)
                 CameraRotationEuler.z = CameraTiltBuffer;
         }
+        RevertToCameraZ = CameraRotationEuler.z;
         #endregion
 
+        CameraRotationEuler.x = RevertToCameraY;
         CameraRotationEuler.x += MouseY;
         if (CameraRotationEuler.x > 90)
             CameraRotationEuler.x = 90;
@@ -359,6 +420,7 @@ public class PlayerScript : MonoBehaviour
             CameraRotationEuler.x = -90;
         CameraRotation.eulerAngles = CameraRotationEuler;
         camera.transform.localRotation = CameraRotation;
+        RevertToCameraY = CameraRotationEuler.x;
         #endregion
 
         if (WallJumpForgetTime > WallJumpForgetDelay)
@@ -366,7 +428,7 @@ public class PlayerScript : MonoBehaviour
             LastVelocityAtTouch = velocity;
         } // Reset Walljump reflexion-direction to velocity
 
-        if (Input.GetKey(KeyCode.Space))
+        if (input["Jump"] == 1f)
         {
             // Walljump
             if (CurrentWall != null && LastWallJump > WallJumpDelay && LastJumpTime > JumpDelay && !IsGrounded)
@@ -404,15 +466,22 @@ public class PlayerScript : MonoBehaviour
             velocity.y = TerminalVelocity;
         } // Caps falling-speed at TerminalVelocity
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Debug.Log(camera.transform.rotation * Vector3.forward);
-            velocity += camera.transform.rotation * Vector3.forward * 1000;
-        } // Boost in Look Direction / Simulate Rocket-Jump without Rockets being implemented
-
         Vector3 ActualVelocity = new Vector3(velocity.x, 0, velocity.z);
         ActualVelocity = ActualVelocity.normalized * DecreasedReturn(ActualVelocity.magnitude);
         rigidbody.velocity = new Vector3(ActualVelocity.x, velocity.y, ActualVelocity.z);
+
+        if (input["Respawn"] == 1f)
+        {
+            velocity = Vector3.zero;
+            rigidbody.velocity = velocity;
+            transform.position = RespawnPoint;
+            RotationEuler = new Vector3(0, RespawnLookDirection.y);
+            Rotation.eulerAngles = RotationEuler;
+            CameraRotationEuler = new Vector3(RespawnLookDirection.x, 0);
+            CameraRotation.eulerAngles = CameraRotationEuler;
+
+            ResetInputs();
+        }
 
         /*
          * temp

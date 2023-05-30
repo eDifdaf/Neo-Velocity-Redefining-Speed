@@ -194,6 +194,7 @@ GameObject:
   - component: {fileID: 4418298382927004814}
   - component: {fileID: 4418298382927004815}
   - component: {fileID: 1501487197093846086}
+  - component: {fileID: 4577073902111530777}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -290,6 +291,21 @@ MonoBehaviour:
   SlideKey: 304
   JumpKey: 32
   RespawnKey: 114
+  ReplayFolderLocation: Replays\
+--- !u!114 &4577073902111530777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4418298382927004808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db16102cb71fb914da2766c2b489d497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ReplayFolderLocation: Replays\
+  ReplayName: 
 --- !u!1 &4418298383214414295
 GameObject:
   m_ObjectHideFlags: 0

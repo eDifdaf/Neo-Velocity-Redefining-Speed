@@ -837,6 +837,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &715193976 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1501487197093846086, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+  m_PrefabInstance: {fileID: 1855910877}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e3fe07d26e64640addb2cca8c37e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &743016199
 GameObject:
   m_ObjectHideFlags: 0
@@ -2207,6 +2218,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1501487197093846086, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4418298381620389061, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -2264,12 +2279,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4418298382927004815, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: Replay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418298382927004815, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: InputScript
+      value: 
+      objectReference: {fileID: 715193976}
+    - target: {fileID: 4418298382927004815, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
       propertyPath: LookSensitivity
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4418298383214414295, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4577073902111530777, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4577073902111530777, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: ReplayName
+      value: Replay_2023-05-25-17-21-55-336.replay
       objectReference: {fileID: 0}
     - target: {fileID: 8041747936038323195, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
       propertyPath: m_Layer

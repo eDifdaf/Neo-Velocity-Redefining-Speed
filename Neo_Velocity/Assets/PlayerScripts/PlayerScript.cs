@@ -12,6 +12,9 @@ public class PlayerScript : MonoBehaviour
 {
     #region Field Declaration
 
+
+    [SerializeField] bool Replay;
+
     [SerializeField] GameObject Body;
     [SerializeField] GameObject PlayerCamera;
     [SerializeField] GameObject WallCollider;
@@ -98,9 +101,19 @@ public class PlayerScript : MonoBehaviour
         WallCollider.GetComponent<ColliderScript>().collided += WallCollided;
         GroundCollider.GetComponent<ColliderScript>().collided += GroundCollided;
 
-        GetInput = GetComponent<PlayerInputScript>().GetInput;
-        GetCameraMovement = GetComponent<PlayerInputScript>().GetMouseInput;
-        ResetInputs = GetComponent<PlayerInputScript>().ResetInputs;
+        if (Replay)
+        {
+            GetInput = GetComponent<ReplayInputScript>().GetInput;
+            GetCameraMovement = GetComponent<ReplayInputScript>().GetMouseInput;
+            ResetInputs = GetComponent<ReplayInputScript>().ResetInputs;
+        }
+        else
+        {
+            GetInput = GetComponent<PlayerInputScript>().GetInput;
+            GetCameraMovement = GetComponent<PlayerInputScript>().GetMouseInput;
+            ResetInputs = GetComponent<PlayerInputScript>().ResetInputs;
+        }
+        ResetInputs();
 
         RevertToCameraY = 0;
         RevertToCameraZ = 0;

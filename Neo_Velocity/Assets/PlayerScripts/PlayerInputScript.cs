@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class PlayerInputScript : MonoBehaviour
+public class PlayerInputScript : AInputScript
 {
     [SerializeField] KeyCode SlideKey = KeyCode.LeftShift;
     [SerializeField] KeyCode JumpKey = KeyCode.Space;
@@ -36,7 +37,7 @@ public class PlayerInputScript : MonoBehaviour
     /// 
     /// </summary>
     /// <returns></returns>
-    public Dictionary<string, float> GetInput()
+    public override Dictionary<string, float> GetInput()
     {
         Dictionary<string, float> inputs = new Dictionary<string, float>();
         string StringInputs = "";
@@ -74,19 +75,19 @@ public class PlayerInputScript : MonoBehaviour
         inputs.Add("Mouse Y", MouseYBuffer);
         MouseXBuffer = 0;
         MouseYBuffer = 0;
-        StringInputs += inputs["Mouse X"] + ",";
-        StringInputs += inputs["Mouse Y"] + ",";
+        StringInputs += inputs["Mouse X"].ToString(CultureInfo.InvariantCulture) + ",";
+        StringInputs += inputs["Mouse Y"].ToString(CultureInfo.InvariantCulture) + ",";
 
         inputs.Add("Vertical", Input.GetAxisRaw("Vertical"));
         inputs.Add("Horizontal", Input.GetAxisRaw("Horizontal"));
-        StringInputs += inputs["Vertical"] + ",";
-        StringInputs += inputs["Horizontal"];
+        StringInputs += inputs["Vertical"].ToString(CultureInfo.InvariantCulture) + ",";
+        StringInputs += inputs["Horizontal"].ToString(CultureInfo.InvariantCulture);
 
         replayWriter.WriteLine(StringInputs);
 
         return inputs;
     }
-    public Vector2 GetMouseInput()
+    public override Vector2 GetMouseInput()
     {
         if (MouseUpdateFlag)
         {
@@ -100,17 +101,18 @@ public class PlayerInputScript : MonoBehaviour
         }
         return new Vector2(MouseX, MouseY);
     }
-    public void ResetInputs()
+    public override void ResetInputs()
     {
         if (replayWriter != null)
             replayWriter.Close();
+        if (!Directory.Exists(ReplayFolderLocation))
+            Directory.CreateDirectory(ReplayFolderLocation);
         replayWriter = new StreamWriter(ReplayFolderLocation + "Replay_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".replay");
         replayWriter.WriteLine("Format: 23_5_2023");
     }
 
     private void Start()
     {
-        ResetInputs();
         MouseX = 0;
         MouseY = 0;
         MouseUpdateFlag = true;
@@ -121,7 +123,8 @@ public class PlayerInputScript : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        replayWriter.Close();
+        if (replayWriter != null)
+            replayWriter.Close();
     }
 
     private void Update()

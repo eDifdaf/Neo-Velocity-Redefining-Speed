@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-
 
 public class PlayerScript : MonoBehaviour
 {
@@ -20,11 +18,13 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] GameObject WallCollider;
     [SerializeField] GameObject GroundCollider;
 
+    [SerializeField] GameObject Rocket;
+
     [SerializeField] float Gravity;
     [SerializeField] float LookSensitivityY = 4;
     [SerializeField] float LookSensitivityX = 7;
     [SerializeField] float AccelerationSpeed;
-    [SerializeField] float ApproachingCooeficient = 60000; // ChatGPT too dumb for this
+    [SerializeField] float SpeedCapModifier;
     [SerializeField] float TerminalVelocity;
     [SerializeField] float GroundMercyTime;
     [SerializeField] float JumpDelay;
@@ -44,6 +44,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float SlidingAccelerationSpeed; // Used instead of AccelerationSpeed when sliding
     [SerializeField] float CameraTiltWhileWallrunning = 15f; // Max Angle of Camertilt, when parallel to Wall
     [SerializeField] float CameraTiltBufferChangeSpeed = 10f; // How fast the actual Tilt approaches the Buffer
+    [SerializeField] float ShootDelay;
 
     Func<Dictionary<string, float>> GetInput;
     Func<Vector2> GetCameraMovement;
@@ -51,7 +52,7 @@ public class PlayerScript : MonoBehaviour
 
     new Rigidbody rigidbody;
     new GameObject camera;
-    Vector3 velocity;
+    public Vector3 velocity;
     Quaternion Rotation;
     Quaternion CameraRotation;
     Vector3 RotationEuler;
@@ -75,6 +76,7 @@ public class PlayerScript : MonoBehaviour
     bool IsSliding;
     float SlidingAnimationTimer;
     float CameraTiltBuffer;
+    float LastShoot;
 
     float RevertToCameraY;
     float RevertToCameraZ;
@@ -126,6 +128,9 @@ public class PlayerScript : MonoBehaviour
         LastWallJump = 0f;
         LastWallRun = 0f;
         SlidingAnimationTimer = 0f;
+        LastShoot = 0f;
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     #region MagnitudeInDirection
@@ -200,6 +205,7 @@ public class PlayerScript : MonoBehaviour
         LastWallJump += Time.deltaTime;
         LastWallRun += Time.deltaTime;
         WallJumpForgetTime += Time.deltaTime;
+        LastShoot += Time.deltaTime;
         if (IsSliding)
             SlidingAnimationTimer = Math.Min(SlidingAnimationTimer + Time.deltaTime, SlideCameraTransitionTime);
         else
@@ -360,7 +366,7 @@ public class PlayerScript : MonoBehaviour
         #endregion
 
         #region Apply Movement
-        velocity += PlaneMovement;
+        velocity += PlaneMovement / (1 + (new Vector3(velocity.x, 0, velocity.z).magnitude * SpeedCapModifier) * (1 - Vector3.Angle(new Vector3(velocity.x, 0, velocity.z), PlaneMovement.normalized) / 180));
         #endregion
 
         if (IsGrounded) // No Wallrunning while on the Ground
@@ -451,10 +457,10 @@ public class PlayerScript : MonoBehaviour
                 WallAwayVector.y = 0;
                 WallAwayVector = WallAwayVector.normalized;
                 newVelocity = newVelocity - 2 * Vector3.Dot(newVelocity, WallAwayVector) * WallAwayVector; // mirror Speed at the Wall
+                newVelocity += WallAwayVector * (JumpForce / (1 + (new Vector3(newVelocity.x, 0, newVelocity.z).magnitude * SpeedCapModifier)));
+                newVelocity += PlaneMovement.normalized * (JumpForce / (1 + (new Vector3(newVelocity.x, 0, newVelocity.z).magnitude * SpeedCapModifier) * (1 - Vector3.Angle(newVelocity, PlaneMovement.normalized) / 180) )) * 0.5f;
                 newVelocity.y = velocity.y;
                 velocity = newVelocity;
-                velocity += WallAwayVector * JumpForce;
-                velocity += PlaneMovement.normalized * JumpForce * 0.5f;
                 if (velocity.y < MaxJumpVelocity)
                 {
                     if (velocity.y + JumpForce < MaxJumpVelocity)
@@ -479,9 +485,16 @@ public class PlayerScript : MonoBehaviour
             velocity.y = TerminalVelocity;
         } // Caps falling-speed at TerminalVelocity
 
-        Vector3 ActualVelocity = new Vector3(velocity.x, 0, velocity.z);
-        ActualVelocity = ActualVelocity.normalized * DecreasedReturn(ActualVelocity.magnitude);
-        rigidbody.velocity = new Vector3(ActualVelocity.x, velocity.y, ActualVelocity.z);
+        //Vector3 ActualVelocity = new Vector3(velocity.x, 0, velocity.z);
+        //ActualVelocity = ActualVelocity.normalized * DecreasedReturn(ActualVelocity.magnitude);
+        //rigidbody.velocity = new Vector3(ActualVelocity.x, velocity.y, ActualVelocity.z);
+        rigidbody.velocity = velocity;
+
+        if (input["Shoot"] == 1f && LastShoot >= ShootDelay) // SHOOT
+        {
+            LastShoot = 0f;
+            Instantiate(Rocket, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+        }
 
         if (input["Respawn"] == 1f)
         {
@@ -527,8 +540,4 @@ public class PlayerScript : MonoBehaviour
     }
     #endregion
 
-    float DecreasedReturn(float value)
-    {
-        return 200 - ApproachingCooeficient / (value + 300);
-    }
 }

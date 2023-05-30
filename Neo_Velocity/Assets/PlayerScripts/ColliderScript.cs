@@ -11,7 +11,8 @@ public class ColliderScript : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        //Debug.Log(other.gameObject.name);
+        if (other.isTrigger)
+            return;
         collided.Invoke(other);
     }
 }

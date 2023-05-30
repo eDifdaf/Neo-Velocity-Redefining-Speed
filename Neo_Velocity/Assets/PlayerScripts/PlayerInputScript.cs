@@ -23,6 +23,7 @@ public class PlayerInputScript : AInputScript
     bool MouseUpdateFlag; // true: unevaled, false: evaled
 
     bool RespawnPressed;
+    bool ShootPressed;
 
     /// <summary>
     /// 
@@ -81,7 +82,24 @@ public class PlayerInputScript : AInputScript
         inputs.Add("Vertical", Input.GetAxisRaw("Vertical"));
         inputs.Add("Horizontal", Input.GetAxisRaw("Horizontal"));
         StringInputs += inputs["Vertical"].ToString(CultureInfo.InvariantCulture) + ",";
-        StringInputs += inputs["Horizontal"].ToString(CultureInfo.InvariantCulture);
+        StringInputs += inputs["Horizontal"].ToString(CultureInfo.InvariantCulture) + ",";
+
+        if (Input.GetMouseButton(0))
+        {
+            if (ShootPressed)
+                inputs.Add("Shoot", 0);
+            else
+            {
+                ShootPressed = true;
+                inputs.Add("Shoot", 1);
+            }
+        }
+        else
+        {
+            inputs.Add("Shoot", 0);
+            ShootPressed = false;
+        }
+        StringInputs += inputs["Shoot"];
 
         replayWriter.WriteLine(StringInputs);
 
@@ -108,7 +126,7 @@ public class PlayerInputScript : AInputScript
         if (!Directory.Exists(ReplayFolderLocation))
             Directory.CreateDirectory(ReplayFolderLocation);
         replayWriter = new StreamWriter(ReplayFolderLocation + "Replay_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".replay");
-        replayWriter.WriteLine("Format: 23_5_2023");
+        replayWriter.WriteLine("Format: 30_5_2023");
     }
 
     private void Start()
@@ -119,9 +137,10 @@ public class PlayerInputScript : AInputScript
         MouseXBuffer = 0;
         MouseYBuffer = 0;
         RespawnPressed = false;
+        ShootPressed = false;
     }
 
-    private void OnApplicationQuit()
+    private void OnDestroy()
     {
         if (replayWriter != null)
             replayWriter.Close();

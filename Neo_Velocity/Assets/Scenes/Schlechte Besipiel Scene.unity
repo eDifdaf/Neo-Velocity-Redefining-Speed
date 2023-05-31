@@ -562,7 +562,7 @@ Terrain:
   m_DrawTreesAndFoliage: 1
   m_StaticShadowCaster: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 667fe5ed4da5c4d4292c5863af71352c, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: 22262639920f43d6be32430e4e58350d, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -593,6 +593,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4418298381598351461, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: m_Height
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418298381598351461, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4418298381620389080, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
       propertyPath: m_Depth
       value: 0

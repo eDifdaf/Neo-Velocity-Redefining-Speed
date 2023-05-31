@@ -8,6 +8,8 @@ TagManager:
   - Wall
   - WallCollider
   - GroundCollider
+  - Spawn
+  - Time
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - PlayerObject
   - 
   - 
   - 

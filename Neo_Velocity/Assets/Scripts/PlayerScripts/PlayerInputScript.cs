@@ -130,7 +130,7 @@ public class PlayerInputScript : AInputScript
     {
         AlreadyFinished = false;
         if (replayWriter != null)
-            replayWriter.Close();
+            ResetWriter();
         if (!Directory.Exists(ReplayFolderLocation))
             Directory.CreateDirectory(ReplayFolderLocation);
         WriterLocation = ReplayFolderLocation + "Replay_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".replay";
@@ -141,7 +141,10 @@ public class PlayerInputScript : AInputScript
     public void Finished(float time)
     {
         if (AlreadyFinished)
+        {
+            TimeToFinish = Math.Min(TimeToFinish, time);
             return;
+        }
         TimeToFinish = time;
         AlreadyFinished = true;
     }
@@ -170,7 +173,7 @@ public class PlayerInputScript : AInputScript
     private void OnDestroy()
     {
         if (replayWriter != null)
-            replayWriter.Close();
+            ResetWriter();
     }
 
     private void Update()

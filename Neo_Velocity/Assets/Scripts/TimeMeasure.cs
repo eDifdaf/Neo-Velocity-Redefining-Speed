@@ -10,6 +10,8 @@ public class TimeMeasure : MonoBehaviour {
     private float startTime;
     private TMP_Text timeText;
 
+    public float? TimeToFinish;
+
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag(spawnTag)) {
             //why do i need this?
@@ -28,6 +30,7 @@ public class TimeMeasure : MonoBehaviour {
         else if (other.CompareTag(finishTag) && timing) {
             timing = false;
             float elapsedTime = Time.time - startTime;
+            TimeToFinish = elapsedTime;
             DisplayTime(elapsedTime);
             //Debug.Log("Player touched the finish object");
         }
@@ -81,5 +84,10 @@ public class TimeMeasure : MonoBehaviour {
         if (timeText == null) {
             Debug.LogError("Time Text component not found with the specified tag: " + timeTag);
         }
+    }
+
+    private void Start()
+    {
+        TimeToFinish = null;
     }
 }

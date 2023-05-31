@@ -506,6 +506,11 @@ public class PlayerScript : MonoBehaviour
             Instantiate(Rocket, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
         }
 
+        if (GetComponent<TimeMeasure>().TimeToFinish != null)
+        {
+            Finished((float)GetComponent<TimeMeasure>().TimeToFinish);
+        }
+
         if (input["Respawn"] == 1f)
         {
             velocity = Vector3.zero;

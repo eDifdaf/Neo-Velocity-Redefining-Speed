@@ -10,6 +10,7 @@ TagManager:
   - GroundCollider
   - Spawn
   - Time
+  - Canvas
   layers:
   - Default
   - TransparentFX

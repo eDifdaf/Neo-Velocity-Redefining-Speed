@@ -15,6 +15,8 @@ public class PlayerInputScript : AInputScript
     [SerializeField] string ReplayFolderLocation = "Replays\\";
     StreamWriter replayWriter;
 
+    public bool SaveReplay;
+
     float MouseXBuffer;
     float MouseYBuffer;
     float MouseX;
@@ -101,7 +103,8 @@ public class PlayerInputScript : AInputScript
         }
         StringInputs += inputs["Shoot"];
 
-        replayWriter.WriteLine(StringInputs);
+        if (SaveReplay)
+            replayWriter.WriteLine(StringInputs);
 
         return inputs;
     }

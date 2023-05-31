@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -50,6 +51,7 @@ public class PlayerScript : MonoBehaviour
     Func<Dictionary<string, float>> GetInput;
     Func<Vector2> GetCameraMovement;
     Action ResetInputs;
+    Action<float> Finished;
 
     new Rigidbody rigidbody;
     new GameObject camera;
@@ -82,9 +84,6 @@ public class PlayerScript : MonoBehaviour
     float RevertToCameraY;
     float RevertToCameraZ;
 
-    Vector3 RespawnPoint;
-    Vector3 RespawnLookDirection;
-
     #endregion
 
     void Start()
@@ -110,6 +109,7 @@ public class PlayerScript : MonoBehaviour
             GetInput = GetComponent<ReplayInputScript>().GetInput;
             GetCameraMovement = GetComponent<ReplayInputScript>().GetMouseInput;
             ResetInputs = GetComponent<ReplayInputScript>().ResetInputs;
+            Finished = t => { };
             ResetInputs();
         }
         else
@@ -118,10 +118,11 @@ public class PlayerScript : MonoBehaviour
             GetCameraMovement = GetComponent<PlayerInputScript>().GetMouseInput;
             ResetInputs = GetComponent<PlayerInputScript>().ResetInputs;
             GetComponent<PlayerInputScript>().SaveReplay = SaveReplay;
+            Finished = GetComponent<PlayerInputScript>().Finished;
             if (SaveReplay)
                 ResetInputs();
         }
-
+        
         RevertToCameraY = 0;
         RevertToCameraZ = 0;
 

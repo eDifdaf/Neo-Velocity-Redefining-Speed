@@ -500,11 +500,13 @@ public class PlayerScript : MonoBehaviour
         {
             velocity = Vector3.zero;
             rigidbody.velocity = velocity;
-            transform.position = RespawnPoint;
-            RotationEuler = new Vector3(0, RespawnLookDirection.y);
+            transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
+            RotationEuler = new Vector3(0, GameObject.FindGameObjectWithTag("Spawn").transform.rotation.eulerAngles.y);
             Rotation.eulerAngles = RotationEuler;
-            CameraRotationEuler = new Vector3(RespawnLookDirection.x, 0);
+            transform.rotation = Rotation;
+            CameraRotationEuler = new Vector3(GameObject.FindGameObjectWithTag("Spawn").transform.rotation.eulerAngles.x, 0);
             CameraRotation.eulerAngles = CameraRotationEuler;
+            //Camera.transform.rotation = CameraRotation;
 
             ResetInputs();
         }

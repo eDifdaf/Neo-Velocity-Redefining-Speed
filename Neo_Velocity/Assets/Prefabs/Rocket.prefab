@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6795358358832933094}
   - component: {fileID: 123067426056121360}
   - component: {fileID: 573331634982426578}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 9177683456336843585}
   - component: {fileID: 5803636936235980266}
   - component: {fileID: 8616170431587182899}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}

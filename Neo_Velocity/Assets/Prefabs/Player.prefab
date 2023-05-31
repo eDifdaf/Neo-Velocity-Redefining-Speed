@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7302092034298696891}
   - component: {fileID: 2266340603053421881}
   - component: {fileID: 1006983339040455562}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4060898974125660681}
   - component: {fileID: 1024620295348105685}
   - component: {fileID: 4353643345409222744}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Foot_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 7669813792295508416}
   - component: {fileID: 7432754178092297492}
   - component: {fileID: 601800394386680535}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 210068037665646485}
   - component: {fileID: 3628263560203225238}
   - component: {fileID: 4696323195346215791}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arm_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 791267924219018461}
   - component: {fileID: 8541931336007782491}
   - component: {fileID: 5873398916491285771}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Foot_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 4418298381620389082}
   - component: {fileID: 4418298381620389080}
   - component: {fileID: 4418298381620389083}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: PlayerCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -479,7 +479,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 191
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -511,7 +511,8 @@ GameObject:
   - component: {fileID: 4418298382927004814}
   - component: {fileID: 4418298382927004815}
   - component: {fileID: 1501487197093846086}
-  m_Layer: 0
+  - component: {fileID: 1960077663518410568}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -565,19 +566,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514034dd9d265d64aaab2d48d23415e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Replay: 0
   Body: {fileID: 9213567486236578209}
   PlayerCamera: {fileID: 4418298381620389061}
   WallCollider: {fileID: 8041747936038323195}
   GroundCollider: {fileID: 4418298383214414295}
-  Gravity: -60
+  Rocket: {fileID: 790567055100085698, guid: 5b6bfd11c93d8074280b118cf63d1e99, type: 3}
+  Gravity: -50
   LookSensitivityY: 4
   LookSensitivityX: 7
   AccelerationSpeed: 50
-  ApproachingCooeficient: 60000
+  SpeedCapModifier: 0.05
   TerminalVelocity: -30
   GroundMercyTime: 0.3
   JumpDelay: 0.1
-  JumpForce: 25
+  JumpForce: 15
   MaxJumpVelocity: 35
   WallStickTime: 0.1
   WallJumpDelay: 0.15
@@ -592,6 +595,8 @@ MonoBehaviour:
   SlidingAccelerationSpeed: 10
   CameraTiltWhileWallrunning: 15
   CameraTiltBufferChangeSpeed: 300
+  ShootDelay: 0.5
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &1501487197093846086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -608,6 +613,20 @@ MonoBehaviour:
   JumpKey: 32
   RespawnKey: 114
   ReplayFolderLocation: Replays\
+--- !u!114 &1960077663518410568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4418298382927004808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db16102cb71fb914da2766c2b489d497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ReplayFolderLocation: Replays\
+  ReplayName: 
 --- !u!1 &4418298383214414295
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,7 +638,7 @@ GameObject:
   - component: {fileID: 4418298383214414292}
   - component: {fileID: 4418298383214414293}
   - component: {fileID: 4418298383214414314}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: GroundCollider
   m_TagString: GroundCollider
   m_Icon: {fileID: 0}
@@ -677,7 +696,7 @@ GameObject:
   - component: {fileID: 1025135441134219046}
   - component: {fileID: 7929618784584805859}
   - component: {fileID: 6129152591745635478}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arm_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -760,7 +779,7 @@ GameObject:
   - component: {fileID: 8041747936038323190}
   - component: {fileID: 8041747936038323189}
   - component: {fileID: 8041747936038323188}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: WallCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -818,7 +837,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3363577034211210509}
   - component: {fileID: 761643640058666333}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -568,7 +568,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514034dd9d265d64aaab2d48d23415e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Replay: 0
+  PlayReplay: 0
+  SaveReplay: 1
   Body: {fileID: 9213567486236578209}
   PlayerCamera: {fileID: 4418298381620389061}
   WallCollider: {fileID: 8041747936038323195}
@@ -615,6 +616,7 @@ MonoBehaviour:
   JumpKey: 32
   RespawnKey: 114
   ReplayFolderLocation: Replays\
+  SaveReplay: 0
 --- !u!114 &1960077663518410568
 MonoBehaviour:
   m_ObjectHideFlags: 0

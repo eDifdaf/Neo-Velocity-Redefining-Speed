@@ -14,16 +14,22 @@ public class PlayerInputScript : AInputScript
 
     [SerializeField] string ReplayFolderLocation = "Replays\\";
     StreamWriter replayWriter;
+    string WriterLocation;
+
+    public bool SaveReplay;
 
     float MouseXBuffer;
     float MouseYBuffer;
     float MouseX;
     float MouseY;
-
+    
     bool MouseUpdateFlag; // true: unevaled, false: evaled
 
     bool RespawnPressed;
     bool ShootPressed;
+
+    bool AlreadyFinished;
+    float TimeToFinish;
 
     /// <summary>
     /// 
@@ -101,7 +107,8 @@ public class PlayerInputScript : AInputScript
         }
         StringInputs += inputs["Shoot"];
 
-        replayWriter.WriteLine(StringInputs);
+        if (SaveReplay)
+            replayWriter.WriteLine(StringInputs);
 
         return inputs;
     }
@@ -121,12 +128,32 @@ public class PlayerInputScript : AInputScript
     }
     public override void ResetInputs()
     {
+        AlreadyFinished = false;
         if (replayWriter != null)
             replayWriter.Close();
         if (!Directory.Exists(ReplayFolderLocation))
             Directory.CreateDirectory(ReplayFolderLocation);
-        replayWriter = new StreamWriter(ReplayFolderLocation + "Replay_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".replay");
-        replayWriter.WriteLine("Format: 30_5_2023");
+        WriterLocation = ReplayFolderLocation + "Replay_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".replay";
+        replayWriter = new StreamWriter(WriterLocation);
+        replayWriter.WriteLine("Format: 31_5_2023");
+        replayWriter.WriteLine("Not Finished");
+    }
+    public void Finished(float time)
+    {
+        if (AlreadyFinished)
+            return;
+        TimeToFinish = time;
+        AlreadyFinished = true;
+    }
+    void ResetWriter()
+    {
+        replayWriter.Close();
+        if (AlreadyFinished)
+        {
+            string[] arrLine = File.ReadAllLines(WriterLocation);
+            arrLine[1] = TimeToFinish.ToString(CultureInfo.InvariantCulture);
+            File.WriteAllLines(WriterLocation, arrLine);
+        }
     }
 
     private void Start()

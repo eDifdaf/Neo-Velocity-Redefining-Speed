@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class RocketScript : MonoBehaviour
 {
-    [SerializeField] float Speed = 2.5f;
+    [SerializeField] float Speed = 25;
     [SerializeField] float ExplosionRadius = 50;
     [SerializeField] float ExplosionForce = 25;
     [SerializeField] float LifeTime = 20;
@@ -18,11 +18,11 @@ public class RocketScript : MonoBehaviour
     {
         Affected = new List<GameObject>();
         RemainingLifeTime = LifeTime;
+        GetComponent<Rigidbody>().velocity = transform.rotation * Vector3.forward * Speed;
     }
 
     void FixedUpdate()
     {
-        transform.position += transform.rotation * Vector3.forward * Speed;
         RemainingLifeTime -= 0.02f;
         if (RemainingLifeTime < 0)
             Destroy(gameObject);

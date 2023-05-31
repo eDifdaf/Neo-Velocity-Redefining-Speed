@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,7 +12,8 @@ public class PlayerScript : MonoBehaviour
     #region Field Declaration
 
 
-    [SerializeField] bool Replay;
+    [SerializeField] bool PlayReplay = false;
+    [SerializeField] bool SaveReplay = true;
 
     [SerializeField] GameObject Body;
     [SerializeField] GameObject PlayerCamera;
@@ -49,6 +51,7 @@ public class PlayerScript : MonoBehaviour
     Func<Dictionary<string, float>> GetInput;
     Func<Vector2> GetCameraMovement;
     Action ResetInputs;
+    Action<float> Finished;
 
     new Rigidbody rigidbody;
     new GameObject camera;
@@ -81,9 +84,6 @@ public class PlayerScript : MonoBehaviour
     float RevertToCameraY;
     float RevertToCameraZ;
 
-    Vector3 RespawnPoint;
-    Vector3 RespawnLookDirection;
-
     #endregion
 
     void Start()
@@ -103,20 +103,26 @@ public class PlayerScript : MonoBehaviour
         WallCollider.GetComponent<ColliderScript>().collided += WallCollided;
         GroundCollider.GetComponent<ColliderScript>().collided += GroundCollided;
 
-        if (Replay)
+
+        if (PlayReplay)
         {
             GetInput = GetComponent<ReplayInputScript>().GetInput;
             GetCameraMovement = GetComponent<ReplayInputScript>().GetMouseInput;
             ResetInputs = GetComponent<ReplayInputScript>().ResetInputs;
+            Finished = t => { };
+            ResetInputs();
         }
         else
         {
             GetInput = GetComponent<PlayerInputScript>().GetInput;
             GetCameraMovement = GetComponent<PlayerInputScript>().GetMouseInput;
             ResetInputs = GetComponent<PlayerInputScript>().ResetInputs;
+            GetComponent<PlayerInputScript>().SaveReplay = SaveReplay;
+            Finished = GetComponent<PlayerInputScript>().Finished;
+            if (SaveReplay)
+                ResetInputs();
         }
-        ResetInputs();
-
+        
         RevertToCameraY = 0;
         RevertToCameraZ = 0;
 
@@ -374,6 +380,10 @@ public class PlayerScript : MonoBehaviour
 
         CameraTiltBuffer = 0; // Reset Camera-tilt before Wallrun-eval
 
+        if (CurrentWall != null)
+            if (CurrentWall.tag == "No_Wallrun") // No Wallruns on this Wall
+                WallRunning = false;
+
         if (WallRunning && CurrentWall != null)
         {
             LastWallRun = 0f;
@@ -503,12 +513,11 @@ public class PlayerScript : MonoBehaviour
             transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
             RotationEuler = new Vector3(0, GameObject.FindGameObjectWithTag("Spawn").transform.rotation.eulerAngles.y);
             Rotation.eulerAngles = RotationEuler;
-            transform.rotation = Rotation;
             CameraRotationEuler = new Vector3(GameObject.FindGameObjectWithTag("Spawn").transform.rotation.eulerAngles.x, 0);
             CameraRotation.eulerAngles = CameraRotationEuler;
-            //Camera.transform.rotation = CameraRotation;
 
-            ResetInputs();
+            if (SaveReplay && !PlayReplay)
+                ResetInputs();
         }
 
         /*

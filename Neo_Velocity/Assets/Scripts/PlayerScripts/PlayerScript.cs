@@ -91,7 +91,7 @@ public class PlayerScript : MonoBehaviour
     float CameraTiltBuffer;
     float LastShoot;
     float LastChange;
-    bool Respawn;
+    public bool Respawn;
 
     public Tools SelectedTool = Tools.Rocket;
 
@@ -213,6 +213,12 @@ public class PlayerScript : MonoBehaviour
     void FixedUpdate()
     {
         Dictionary<string, float> input = GetInput();
+        if (input == null)
+        {
+            rigidbody.velocity = Vector3.zero;
+            return;
+        }
+            
 
         // This causes as many problems as it fixes, so no
         // velocity = rigidbody.velocity;
@@ -220,6 +226,7 @@ public class PlayerScript : MonoBehaviour
         IsSliding = input["Sliding"] == 1f;
         if (IsSliding)
         {
+            // SOUND-Sliding
             LastWallTouch = WallStickTime;
         }
 
@@ -405,6 +412,7 @@ public class PlayerScript : MonoBehaviour
 
         if (WallRunning && CurrentWall != null)
         {
+            // SOUND-Wallrun
             LastWallRun = 0f;
             Vector3 WallAwayVector = transform.position - CurrentWall.GetComponent<Collider>().ClosestPoint(transform.position);
             float AngleFromWallAndMovement = Vector3.Angle(PlaneMovement, WallAwayVector);
@@ -481,6 +489,7 @@ public class PlayerScript : MonoBehaviour
             // Walljump
             if (CurrentWall != null && LastWallJump > WallJumpDelay && LastJumpTime > JumpDelay && !IsGrounded)
             {
+                // SOUND-Walljump
                 Vector3 newVelocity = new Vector3(LastVelocityAtTouch.x, 0, LastVelocityAtTouch.z);
                 Vector3 WallAwayVector = transform.position - CurrentWall.GetComponent<Collider>().ClosestPoint(transform.position);
                 WallAwayVector.y = 0;
@@ -503,6 +512,7 @@ public class PlayerScript : MonoBehaviour
             // Grounded Jump
             else if (LastJumpTime > JumpDelay && IsGrounded)
             {
+                // SOUND-Grounded_Jump
                 velocity.y += JumpForce;
                 LastJumpTime = 0f;
                 LastGroundedTime = GroundMercyTime;
@@ -522,6 +532,7 @@ public class PlayerScript : MonoBehaviour
             GameObject Projectile = null;
             if (SelectedTool == Tools.Rocket)
             {
+                // SOUND-Rocketlaunch
                 Projectile = Instantiate(Rocket, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
                 if (IsGhost)
                     Projectile.GetComponent<RocketScript>().MakeGhost();
@@ -529,6 +540,7 @@ public class PlayerScript : MonoBehaviour
             }
             else if (SelectedTool == Tools.C4)
             {
+                // SOUND-C4_Throw
                 string tag = IsGhost ? "Ghost_C4" : "C4";
                 if (GameObject.FindGameObjectsWithTag(tag).Length < MaxNumberOfC4)
                 {
@@ -542,6 +554,7 @@ public class PlayerScript : MonoBehaviour
 
         if (input["Activate"] == 1f)
         {
+            // SOUND-C4_Activate
             GameObject.FindGameObjectsWithTag("C4").ToList().ForEach(o => o.GetComponent<C4Script>().Explode());
         }
 
@@ -559,6 +572,8 @@ public class PlayerScript : MonoBehaviour
 
         if (Respawn || input["Respawn"] == 1f)
         {
+            GameObject.FindGameObjectsWithTag("Player").ToList().Where(o => o.GetComponent<PlayerScript>().IsGhost)
+                .ToList().ForEach(o => o.GetComponent<PlayerScript>().Respawn = true);
             GameObject.FindGameObjectsWithTag("C4").ToList().ForEach(o => Destroy(o));
             GameObject.FindGameObjectsWithTag("Rocket").ToList().ForEach(o => Destroy(o));
             velocity = Vector3.zero;
@@ -571,7 +586,7 @@ public class PlayerScript : MonoBehaviour
 
             GetComponent<TimeMeasure>().TimeToFinish = null;
 
-            if (SaveReplay && !PlayReplay)
+            if (SaveReplay || PlayReplay)
                 ResetInputs();
         }
         Respawn = false;

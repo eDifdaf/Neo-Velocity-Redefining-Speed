@@ -16,6 +16,8 @@ public class ReplayInputScript : AInputScript
     private Func<Dictionary<string, float>> getInputs;
     public override Dictionary<string, float> GetInput()
     {
+        if (replayReader.Peek() == -1) // No more to read from
+            return null;
         return getInputs();
     }
     public override Vector2 GetMouseInput()

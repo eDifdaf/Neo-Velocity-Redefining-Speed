@@ -5,10 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
-    
-    // Start is called before the first frame update
-    public void LoadScene(string sceneName){
+    public void LoadScene(string sceneName) {
         Debug.Log(sceneName);
-        SceneManager.LoadScene(sceneName);
+        var operation = SceneManager.LoadSceneAsync(sceneName);
+        operation.completed += o => { GameObject.FindGameObjectWithTag("Spawn").GetComponent<Spawn>().Init(); };
     }
 }

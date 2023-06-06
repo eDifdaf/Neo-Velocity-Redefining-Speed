@@ -3,16 +3,26 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - Wall
+  - WallCollider
+  - GroundCollider
+  - Spawn
+  - Time
+  - No_Wallrun
+  - Canvas
+  - C4
+  - Laser
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Wall
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - PlayerObject
   - 
   - 
   - 

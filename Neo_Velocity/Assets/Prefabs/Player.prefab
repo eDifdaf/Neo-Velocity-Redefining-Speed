@@ -607,6 +607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayReplay: 0
   SaveReplay: 1
+  SettingsInputs: 0
   Body: {fileID: 9213567486236578209}
   PlayerCamera: {fileID: 4418298381620389061}
   WallCollider: {fileID: 8041747936038323195}
@@ -639,6 +640,7 @@ MonoBehaviour:
   ChangeDelay: 0.45
   MaxNumberOfC4: 5
   velocity: {x: 0, y: 0, z: 0}
+  Respawn: 0
   SelectedTool: 0
   IsGhost: 0
 --- !u!114 &1501487197093846086
@@ -688,7 +690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReplayFolderLocation: Replays\
-  ReplayName: Replay_2023-06-06-15-26-52-941.replay
+  ReplayName: Replay_2023-06-06-15-43-05-935.replay
 --- !u!114 &5774500035664423022
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -35,7 +35,6 @@ public class RocketScript : MonoBehaviour
 
         Affected.Where(o => o.GetComponent<PlayerScript>().IsGhost == IsGhost).ToList().ForEach(o =>
         {
-            Debug.Log("Launching");
             // There is a Method for simulating an Explosion, but because of how velocity is handled it doesn't work
             Vector3 closestPoint = o.GetComponentInChildren<Collider>().ClosestPoint(transform.position);
             Vector3 toObject = closestPoint - transform.position;

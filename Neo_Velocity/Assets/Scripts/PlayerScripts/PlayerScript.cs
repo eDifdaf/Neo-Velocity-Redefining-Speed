@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public enum Tools
 {
@@ -96,6 +97,8 @@ public class PlayerScript : MonoBehaviour
 
     float RevertToCameraY;
     float RevertToCameraZ;
+
+    public bool IsGhost = false;
 
     #endregion
 
@@ -516,21 +519,25 @@ public class PlayerScript : MonoBehaviour
 
         if (input["Shoot"] == 1f && LastShoot >= ShootDelay) // SHOOT
         {
+            GameObject Projectile = null;
             if (SelectedTool == Tools.Rocket)
             {
-                Instantiate(Rocket, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+                Projectile = Instantiate(Rocket, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+                if (IsGhost)
+                    Projectile.GetComponent<RocketScript>().MakeGhost();
                 LastShoot = 0f;
             }
             else if (SelectedTool == Tools.C4)
             {
-                if (GameObject.FindGameObjectsWithTag("C4").Length < MaxNumberOfC4)
+                string tag = IsGhost ? "Ghost_C4" : "C4";
+                if (GameObject.FindGameObjectsWithTag(tag).Length < MaxNumberOfC4)
                 {
-                    Instantiate(C4, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+                    Projectile = Instantiate(C4, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+                    if (IsGhost)
+                        Projectile.GetComponent<C4Script>().MakeGhost();
                     LastShoot = 0f;
                 }
             }
-            else
-                Debug.Log("Didn't recognize Weapon");
         }
 
         if (input["Activate"] == 1f)
@@ -562,6 +569,8 @@ public class PlayerScript : MonoBehaviour
             CameraRotationEuler = new Vector3(GameObject.FindGameObjectWithTag("Spawn").transform.rotation.eulerAngles.x, 0);
             CameraRotation.eulerAngles = CameraRotationEuler;
 
+            GetComponent<TimeMeasure>().TimeToFinish = null;
+
             if (SaveReplay && !PlayReplay)
                 ResetInputs();
         }
@@ -585,6 +594,22 @@ public class PlayerScript : MonoBehaviour
         // Issue with the way wallrunning is handled,
         // if you touch 2 Walls and move slightly away from the main one,
         // it doesn't snap you to the second one
+    }
+
+    public void MakeGhost()
+    {
+        // Transparency
+        IsGhost = true;
+        var children = GetComponentsInChildren<Transform>(true);
+        foreach (var child in children)
+        {
+            child.gameObject.layer = 8;
+        }
+        gameObject.layer = 8; // Ghost Layer (spooky)
+        GetComponentInChildren<AudioListener>().enabled = false;
+        SaveReplay = false;
+        GetComponent<TimeMeasure>().enabled = false;
+        PlayReplay = true;
     }
 
     private void OnCollisionStay(Collision collision)

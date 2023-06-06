@@ -215,9 +215,9 @@ public class PlayerInputScript : AInputScript
     }
     public override void ResetInputs()
     {
-        AlreadyFinished = false;
         if (replayWriter != null)
             ResetWriter();
+        AlreadyFinished = false;
         if (!Directory.Exists(ReplayFolderLocation))
             Directory.CreateDirectory(ReplayFolderLocation);
         WriterLocation = ReplayFolderLocation + "Replay_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".replay";
@@ -244,6 +244,7 @@ public class PlayerInputScript : AInputScript
             string[] arrLine = File.ReadAllLines(WriterLocation);
             arrLine[1] = TimeToFinish.ToString(CultureInfo.InvariantCulture);
             File.WriteAllLines(WriterLocation, arrLine);
+            TimeToFinish = 0;
         }
     }
 

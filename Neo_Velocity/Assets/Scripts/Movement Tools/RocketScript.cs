@@ -13,6 +13,7 @@ public class RocketScript : MonoBehaviour
 
     public List<GameObject> Affected;
     float RemainingLifeTime;
+    public bool IsGhost = false;
 
     void Start()
     {
@@ -32,7 +33,7 @@ public class RocketScript : MonoBehaviour
     {
         Affected = Affected.Union(GameObject.FindGameObjectsWithTag("Player")).ToList();
 
-        Affected.ForEach(o =>
+        Affected.Where(o => o.GetComponent<PlayerScript>().IsGhost == IsGhost).ToList().ForEach(o =>
         {
             // There is a Method for simulating an Explosion, but because of how velocity is handled it doesn't work
             Vector3 closestPoint = o.GetComponentInChildren<Collider>().ClosestPoint(transform.position);
@@ -44,5 +45,11 @@ public class RocketScript : MonoBehaviour
         });
 
         Destroy(gameObject);
+    }
+
+    public void MakeGhost()
+    {
+        IsGhost = true;
+        tag = "Ghost_Rocket";
     }
 }

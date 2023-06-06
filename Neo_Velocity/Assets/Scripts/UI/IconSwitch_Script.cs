@@ -16,9 +16,10 @@ public class IconSwitch_Script : MonoBehaviour
         IconRocketLauncher.enabled = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (GameObject.FindGameObjectWithTag("Player") == null)
+            return;
         if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().SelectedTool == Tools.C4)
         {
             // Enable C4 icon and disable Rocket Launcher icon

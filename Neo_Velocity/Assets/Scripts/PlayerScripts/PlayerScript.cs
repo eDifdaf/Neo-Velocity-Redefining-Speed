@@ -211,6 +211,9 @@ public class PlayerScript : MonoBehaviour
     {
         Dictionary<string, float> input = GetInput();
 
+        // This causes as many problems as it fixes, so no
+        // velocity = rigidbody.velocity;
+
         IsSliding = input["Sliding"] == 1f;
         if (IsSliding)
         {
@@ -218,14 +221,14 @@ public class PlayerScript : MonoBehaviour
         }
 
         #region Advance Timers
-        LastGroundedTime += Time.deltaTime;
-        LastJumpTime += Time.deltaTime;
-        LastWallTouch += Time.deltaTime;
-        LastWallJump += Time.deltaTime;
-        LastWallRun += Time.deltaTime;
-        WallJumpForgetTime += Time.deltaTime;
-        LastShoot += Time.deltaTime;
-        LastChange += Time.deltaTime;
+        LastGroundedTime += Time.fixedDeltaTime;
+        LastJumpTime += Time.fixedDeltaTime;
+        LastWallTouch += Time.fixedDeltaTime;
+        LastWallJump += Time.fixedDeltaTime;
+        LastWallRun += Time.fixedDeltaTime;
+        WallJumpForgetTime += Time.fixedDeltaTime;
+        LastShoot += Time.fixedDeltaTime;
+        LastChange += Time.fixedDeltaTime;
         if (IsSliding)
             SlidingAnimationTimer = Math.Min(SlidingAnimationTimer + Time.deltaTime, SlideCameraTransitionTime);
         else
@@ -503,16 +506,6 @@ public class PlayerScript : MonoBehaviour
             }
         } // Jump
 
-        if (velocity.y < TerminalVelocity)
-        {
-            velocity.y = TerminalVelocity;
-        } // Caps falling-speed at TerminalVelocity
-
-        //Vector3 ActualVelocity = new Vector3(velocity.x, 0, velocity.z);
-        //ActualVelocity = ActualVelocity.normalized * DecreasedReturn(ActualVelocity.magnitude);
-        //rigidbody.velocity = new Vector3(ActualVelocity.x, velocity.y, ActualVelocity.z);
-        rigidbody.velocity = velocity;
-
         if (input["Change"] == 1f && LastChange >= ChangeDelay) {
             LastChange = 0f;
             if (SelectedTool == Tools.Rocket)
@@ -544,6 +537,13 @@ public class PlayerScript : MonoBehaviour
         {
             GameObject.FindGameObjectsWithTag("C4").ToList().ForEach(o => o.GetComponent<C4Script>().Explode());
         }
+
+        if (velocity.y < TerminalVelocity)
+        {
+            velocity.y = TerminalVelocity;
+        } // Caps falling-speed at TerminalVelocity
+
+        rigidbody.velocity = velocity;
 
         if (GetComponent<TimeMeasure>().TimeToFinish != null)
         {
@@ -585,6 +585,21 @@ public class PlayerScript : MonoBehaviour
         // Issue with the way wallrunning is handled,
         // if you touch 2 Walls and move slightly away from the main one,
         // it doesn't snap you to the second one
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        List<ContactPoint> contacts = new List<ContactPoint>();
+        collision.GetContacts(contacts);
+
+        contacts.ForEach(c =>
+        {
+            if (Vector3.Angle(c.normal, Vector3.up) >= 150f)
+            {
+                velocity.y = 0;
+                rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+            }
+        });
     }
 
     #region Save Collided

@@ -160,14 +160,8 @@ public class PlayerScript : MonoBehaviour
         SlidingAnimationTimer = 0f;
         LastShoot = 0f;
 
-        if (!SettingsInputs) {
+        if (!SettingsInputs)
             Cursor.lockState = CursorLockMode.Locked;
-        }
-        else {
-            Cursor.lockState = CursorLockMode.None;
-        }
-
-
     }
 
     #region MagnitudeInDirection

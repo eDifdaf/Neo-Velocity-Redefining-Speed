@@ -57,6 +57,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float CameraTiltBufferChangeSpeed = 10f; // How fast the actual Tilt approaches the Buffer
     [SerializeField] float ShootDelay;
     [SerializeField] float ChangeDelay = 0.2f;
+    [SerializeField] int MaxNumberOfC4 = 5;
 
     Func<Dictionary<string, float>> GetInput;
     Func<Vector2> GetCameraMovement;
@@ -91,6 +92,7 @@ public class PlayerScript : MonoBehaviour
     float CameraTiltBuffer;
     float LastShoot;
     float LastChange;
+    bool Respawn;
 
     public Tools SelectedTool = Tools.Rocket;
 
@@ -524,11 +526,19 @@ public class PlayerScript : MonoBehaviour
 
         if (input["Shoot"] == 1f && LastShoot >= ShootDelay) // SHOOT
         {
-            LastShoot = 0f;
             if (SelectedTool == Tools.Rocket)
+            {
                 Instantiate(Rocket, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+                LastShoot = 0f;
+            }
             else if (SelectedTool == Tools.C4)
-                Instantiate(C4, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+            {
+                if (GameObject.FindGameObjectsWithTag("C4").Length < MaxNumberOfC4)
+                {
+                    Instantiate(C4, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+                    LastShoot = 0f;
+                }
+            }
             else
                 Debug.Log("Didn't recognize Weapon");
         }
@@ -543,7 +553,7 @@ public class PlayerScript : MonoBehaviour
             Finished((float)GetComponent<TimeMeasure>().TimeToFinish);
         }
 
-        if (input["Respawn"] == 1f)
+        if (Respawn || input["Respawn"] == 1f)
         {
             velocity = Vector3.zero;
             rigidbody.velocity = velocity;
@@ -556,6 +566,7 @@ public class PlayerScript : MonoBehaviour
             if (SaveReplay && !PlayReplay)
                 ResetInputs();
         }
+        Respawn = false;
 
         /*
          * temp
@@ -580,10 +591,14 @@ public class PlayerScript : MonoBehaviour
     #region Save Collided
     void WallCollided(Collider other)
     {
+        if (other.gameObject.tag == "Laser")
+            Respawn = true;
         OtherWalls.Add(other);
     }
     void GroundCollided(Collider other)
     {
+        if (other.gameObject.tag == "Laser")
+            Respawn = true;
         OtherFloor = other;
     }
     #endregion

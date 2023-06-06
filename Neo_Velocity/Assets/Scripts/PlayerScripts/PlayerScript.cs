@@ -31,8 +31,6 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] GameObject C4;
 
     [SerializeField] float Gravity;
-    [SerializeField] float LookSensitivityY = 4;
-    [SerializeField] float LookSensitivityX = 7;
     [SerializeField] float AccelerationSpeed;
     [SerializeField] float SpeedCapModifier;
     [SerializeField] float TerminalVelocity;
@@ -175,8 +173,8 @@ public class PlayerScript : MonoBehaviour
     {
         Vector2 MouseMovement = GetCameraMovement();
 
-        float AmpMouseX = MouseMovement.x * LookSensitivityX;
-        float AmpMouseY = -MouseMovement.y * LookSensitivityY;
+        float AmpMouseX = MouseMovement.x;
+        float AmpMouseY = -MouseMovement.y;
 
         #region Camera Rotation
 
@@ -316,9 +314,8 @@ public class PlayerScript : MonoBehaviour
         } // Reset the touched walls
 
         // Axis - Sensi: 0,1
-        float MouseX = input["Mouse X"] * LookSensitivityX; // <- Time.deltaTime might be wrong, depending on how Mouse Axis work
-        float MouseY = -input["Mouse Y"] * LookSensitivityY;// Why can't I find any good Info for this
-        // Mouse Movement doesn't line up with Desktop Movement, don't know why (Removing timeDelta fix it)
+        float MouseX = input["Mouse X"];
+        float MouseY = -input["Mouse Y"];
 
         CameraRotationEuler.y = 0;
         #region General Rotation

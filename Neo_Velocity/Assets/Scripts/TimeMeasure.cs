@@ -1,7 +1,8 @@
 using UnityEngine;
 using TMPro;
 
-public class TimeMeasure : MonoBehaviour {
+public class TimeMeasure : MonoBehaviour
+{
     public string spawnTag = "Spawn";
     public string finishTag = "Finish";
     public string timeTag = "Time";
@@ -10,75 +11,80 @@ public class TimeMeasure : MonoBehaviour {
     private float startTime;
     private TMP_Text timeText;
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag(spawnTag)) {
-            //why do i need this?
-            if (timing) {
-                timing = false;
-                float elapsedTime = Time.time - startTime;
-                DisplayTime(elapsedTime);
-                //Debug.Log("Player touched the finish object");
-            }
-            else {
-                ResetTimer();
-                //Debug.Log("Player entered the spawn area");
-            }
-            //end
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(spawnTag))
+        {
+            ResetTimer();
+            Debug.Log("Player entered the spawn area");
         }
-        else if (other.CompareTag(finishTag) && timing) {
+        else if (other.CompareTag(finishTag) && timing)
+        {
             timing = false;
             float elapsedTime = Time.time - startTime;
             DisplayTime(elapsedTime);
-            //Debug.Log("Player touched the finish object");
+            Debug.Log("Player touched the finish object");
         }
     }
 
-    private void OnTriggerExit(Collider other) {
-        if (other.CompareTag(spawnTag)) {
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(spawnTag))
+        {
             timing = true;
             startTime = Time.time;
-            //Debug.Log("Player left the spawn area");
+            Debug.Log("Player left the spawn area");
         }
     }
 
-    private void Update() {
-        if (timing) {
+    private void Update()
+    {
+        if (timing)
+        {
             float elapsedTime = Time.time - startTime;
             DisplayTime(elapsedTime);
         }
     }
 
-    private void DisplayTime(float elapsedTime) {
-        int minutes = (int) (elapsedTime / 60f);
-        int seconds = (int) (elapsedTime % 60f);
-        int milliseconds = (int) ((elapsedTime * 1000f) % 1000f);
+    private void DisplayTime(float elapsedTime)
+    {
+        int minutes = (int)(elapsedTime / 60f);
+        int seconds = (int)(elapsedTime % 60f);
+        int milliseconds = (int)((elapsedTime * 1000f) % 1000f);
 
         string timeString = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
 
-        if (timeText != null) {
+        if (timeText != null)
+        {
             timeText.text = timeString;
         }
-        else {
-            //Debug.LogError("Time Text component not found with the specified tag: " + timeTag);
-        }
-    }
-
-    private void ResetTimer() {
-        timing = false;
-        startTime = 0f;
-
-        if (timeText != null) {
-            DisplayTime(0f);
-        }
-        else {
+        else
+        {
             Debug.LogError("Time Text component not found with the specified tag: " + timeTag);
         }
     }
 
-    public void InitializeTimer() {
+    private void ResetTimer()
+    {
+        timing = false;
+        startTime = 0f;
+
+        if (timeText != null)
+        {
+            DisplayTime(0f);
+        }
+        else
+        {
+            Debug.LogError("Time Text component not found with the specified tag: " + timeTag);
+        }
+    }
+
+    public void InitializeTimer()
+    {
         timeText = GameObject.FindGameObjectWithTag(timeTag)?.GetComponent<TMP_Text>();
 
-        if (timeText == null) {
+        if (timeText == null)
+        {
             Debug.LogError("Time Text component not found with the specified tag: " + timeTag);
         }
     }

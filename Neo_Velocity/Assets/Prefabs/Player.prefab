@@ -611,8 +611,6 @@ MonoBehaviour:
   Rocket: {fileID: 790567055100085698, guid: 5b6bfd11c93d8074280b118cf63d1e99, type: 3}
   C4: {fileID: 6726947803506007272, guid: 0c3a08a25ce80624e93cc694bb2ad881, type: 3}
   Gravity: -50
-  LookSensitivityY: 4
-  LookSensitivityX: 7
   AccelerationSpeed: 50
   SpeedCapModifier: 0.05
   TerminalVelocity: -30
@@ -636,6 +634,7 @@ MonoBehaviour:
   CameraTiltBufferChangeSpeed: 300
   ShootDelay: 0.5
   ChangeDelay: 0.45
+  MaxNumberOfC4: 5
   velocity: {x: 0, y: 0, z: 0}
   SelectedTool: 0
 --- !u!114 &1501487197093846086
@@ -650,9 +649,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e3fe07d26e64640addb2cca8c37e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ForwardKey: 119
+  BackwardsKey: 115
+  LeftKey: 97
+  RightKey: 100
   SlideKey: 304
   JumpKey: 32
   RespawnKey: 114
+  ShootKey: 323
+  ActivateKey: 324
+  UseChangeKey: 1
+  ChangeKey: 325
+  VerticalMouseSensitivity: 4
+  HorizontalMouseSensitivity: 7
+  UseFixedDistanceLookKeys: 1
+  UpLookKey: 105
+  DownLookKey: 107
+  LeftLookKey: 106
+  RightLookKey: 108
+  VerticalLookKeySensitivity: 1
+  HorizontalLookKeySensitivity: 0.5
   ReplayFolderLocation: Replays\
   SaveReplay: 0
 --- !u!114 &1960077663518410568

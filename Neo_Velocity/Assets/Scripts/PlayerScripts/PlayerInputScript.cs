@@ -4,16 +4,46 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerInputScript : AInputScript
 {
+    [SerializeField] KeyCode ForwardKey = KeyCode.W;
+    [SerializeField] KeyCode BackwardsKey = KeyCode.S;
+    [SerializeField] KeyCode LeftKey = KeyCode.A;
+    [SerializeField] KeyCode RightKey = KeyCode.D;
     [SerializeField] KeyCode SlideKey = KeyCode.LeftShift;
     [SerializeField] KeyCode JumpKey = KeyCode.Space;
     [SerializeField] KeyCode RespawnKey = KeyCode.R;
+    [SerializeField] KeyCode ShootKey = KeyCode.Mouse0;
+    [SerializeField] KeyCode ActivateKey = KeyCode.Mouse1;
+    /// <summary>
+    /// <p>false -> Tool changes by scrolling</p>
+    /// <br></br>
+    /// <p>true  -> Tool changes with the ChangeKey</p>
+    /// </summary>
+    [SerializeField] bool UseChangeKey = true;
+    [SerializeField] KeyCode ChangeKey = KeyCode.Mouse2;
+    [SerializeField] float VerticalMouseSensitivity = 4f;
+    [SerializeField] float HorizontalMouseSensitivity = 7f;
+    /// <summary>
+    /// <p>false -> Only Mouse is used to move the Camera</p>
+    /// <br></br>
+    /// <p>true  -> Additional to Mouse Movement, the 4 Look Keys are used to move the camera</p>
+    /// </summary>
+    [SerializeField] bool UseFixedDistanceLookKeys = true;
+    [SerializeField] KeyCode UpLookKey = KeyCode.I;
+    [SerializeField] KeyCode DownLookKey = KeyCode.K;
+    [SerializeField] KeyCode LeftLookKey = KeyCode.J;
+    [SerializeField] KeyCode RightLookKey = KeyCode.L;
+    [SerializeField] float VerticalLookKeySensitivity = 1f;
+    [SerializeField] float HorizontalLookKeySensitivity = 0.5f;
+
 
     [SerializeField] string ReplayFolderLocation = "Replays\\";
+
     StreamWriter replayWriter;
     string WriterLocation;
 
@@ -36,7 +66,7 @@ public class PlayerInputScript : AInputScript
     float TimeToFinish;
 
     /// <summary>
-    /// 
+    /// !!!not accurate, to lazy to change!!!!
     /// bool = 1/0 -> true/false
     /// <br></br>
     /// <br></br>   Sliding     : bool
@@ -82,19 +112,35 @@ public class PlayerInputScript : AInputScript
         }
         StringInputs += inputs["Respawn"] + ",";
 
-        inputs.Add("Mouse X", MouseXBuffer);
-        inputs.Add("Mouse Y", MouseYBuffer);
+        if (UseFixedDistanceLookKeys)
+        {
+            int ul = Input.GetKey(UpLookKey) ? 1 : 0;
+            int dl = Input.GetKey(DownLookKey) ? 1 : 0;
+            int ll = Input.GetKey(LeftLookKey) ? 1 : 0;
+            int rl = Input.GetKey(RightLookKey) ? 1 : 0;
+            inputs.Add("Mouse X", MouseXBuffer + (rl - ll) * HorizontalLookKeySensitivity);
+            inputs.Add("Mouse Y", MouseYBuffer + (ul - dl) * VerticalLookKeySensitivity);
+        }
+        else
+        {
+            inputs.Add("Mouse X", MouseXBuffer);
+            inputs.Add("Mouse Y", MouseYBuffer);
+        }
         MouseXBuffer = 0;
         MouseYBuffer = 0;
         StringInputs += inputs["Mouse X"].ToString(CultureInfo.InvariantCulture) + ",";
         StringInputs += inputs["Mouse Y"].ToString(CultureInfo.InvariantCulture) + ",";
 
-        inputs.Add("Vertical", Input.GetAxisRaw("Vertical"));
-        inputs.Add("Horizontal", Input.GetAxisRaw("Horizontal"));
+        int fwd = Input.GetKey(ForwardKey) ? 1 : 0;
+        int bwd = Input.GetKey(BackwardsKey) ? 1 : 0;
+        int lst = Input.GetKey(RightKey) ? 1 : 0;
+        int rst = Input.GetKey(LeftKey) ? 1 : 0;
+        inputs.Add("Vertical", fwd - bwd);
+        inputs.Add("Horizontal", lst - rst);
         StringInputs += inputs["Vertical"].ToString(CultureInfo.InvariantCulture) + ",";
         StringInputs += inputs["Horizontal"].ToString(CultureInfo.InvariantCulture) + ",";
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetKey(ShootKey))
         {
             if (ShootPressed)
                 inputs.Add("Shoot", 0);
@@ -111,7 +157,7 @@ public class PlayerInputScript : AInputScript
         }
         StringInputs += inputs["Shoot"] + ",";
 
-        if (Input.GetMouseButton(1))
+        if (Input.GetKey(ActivateKey))
         {
             if (ActivatePressed)
                 inputs.Add("Activate", 0);
@@ -128,13 +174,21 @@ public class PlayerInputScript : AInputScript
         }
         StringInputs += inputs["Activate"] + ",";
 
-        if (ScrollBuffer != 0)
-            inputs.Add("Change", 1);
+        if (UseChangeKey)
+        {
+            if (Input.GetKey(ChangeKey))
+                inputs.Add("Change", 1);
+            else
+                inputs.Add("Change", 0);
+        }
         else
-            inputs.Add("Change", 0);
+        {
+            if (ScrollBuffer != 0)
+                inputs.Add("Change", 1);
+            else
+                inputs.Add("Change", 0);
+        }
         StringInputs += inputs["Change"];
-        if (ScrollBuffer != 0)
-            Debug.Log(ScrollBuffer);
         ScrollBuffer = 0;
 
         if (SaveReplay)
@@ -146,8 +200,8 @@ public class PlayerInputScript : AInputScript
     {
         if (MouseUpdateFlag)
         {
-            MouseX = Input.GetAxis("Mouse X");
-            MouseY = Input.GetAxis("Mouse Y");
+            MouseX = Input.GetAxis("Mouse X") * HorizontalMouseSensitivity;
+            MouseY = Input.GetAxis("Mouse Y") * VerticalMouseSensitivity;
 
             MouseXBuffer += MouseX;
             MouseYBuffer += MouseY;

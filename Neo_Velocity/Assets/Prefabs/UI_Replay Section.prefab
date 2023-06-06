@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 3053927170269143599}
   - component: {fileID: 8641223679203489852}
   - component: {fileID: 579999263150921333}
+  - component: {fileID: 5711438077054456520}
   m_Layer: 5
   m_Name: Watch_Button
   m_TagString: Untagged
@@ -257,6 +258,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5711438077054456520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3275121290854551830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c00b616dc135341bb69c8712810286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 
 --- !u!1 &4376680495502194248
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,6 +650,7 @@ GameObject:
   - component: {fileID: 8717014474823659547}
   - component: {fileID: 6834963638544936172}
   - component: {fileID: 6959453740518284268}
+  - component: {fileID: 6548461170886561130}
   m_Layer: 5
   m_Name: Ghost_Button
   m_TagString: Untagged
@@ -746,3 +761,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6548461170886561130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7794047367350883386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41c00b616dc135341bb69c8712810286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 

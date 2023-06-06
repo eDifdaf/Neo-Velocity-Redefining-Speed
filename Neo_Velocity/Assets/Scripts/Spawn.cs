@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Spawn : MonoBehaviour {
     public bool SpawnGhost = false;
+    public bool WatchGhost = false;
 
     public GameObject playerPrefab; // Reference to the player prefab
 
@@ -21,6 +22,11 @@ public class Spawn : MonoBehaviour {
         if (SpawnGhost)
         {
             playerGhost = Instantiate(playerPrefab, transform.position, transform.rotation);
+            if (WatchGhost)
+            {
+                playerGhost.GetComponent<PlayerScript>().WatchGhost();
+                return;
+            }
             playerGhost.GetComponent<PlayerScript>().MakeGhost();
         }
         player = Instantiate(playerPrefab, transform.position, transform.rotation);

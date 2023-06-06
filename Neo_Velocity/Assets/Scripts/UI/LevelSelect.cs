@@ -30,7 +30,6 @@ public class LevelSelect : MonoBehaviour
         List<string> allReplays = GetReplayNames(name);
         ReplayInfoHolder.GetComponent<RectTransform>().sizeDelta =
             new Vector2(ReplayInfoHolder.GetComponent<RectTransform>().sizeDelta.x, 80 * allReplays.Count);
-        Debug.Log(allReplays.Count);
         int i = 0;
         allReplays.ForEach(r =>
         {
@@ -38,11 +37,15 @@ public class LevelSelect : MonoBehaviour
             temp.GetComponent<UIReplayInfoHolderScript>().Text.GetComponent<TextMeshProUGUI>().text = r;
             temp.transform.SetParent(ReplayInfoHolder.transform);
             temp.GetComponent<RectTransform>().localPosition = new Vector2(90, -80 * i); // This doesn't correctly arrange the Buttons, good Luck!
-            temp.GetComponent<UIReplayInfoHolderScript>().GhostButton.GetComponent<Button>().onClick
-            .AddListener(temp.GetComponent<UIReplayInfoHolderScript>().GhostButton.GetComponent<UIReplayButtonScript>().Execute);
+            i++;
             temp.GetComponent<UIReplayInfoHolderScript>().GhostButton.GetComponent<UIReplayButtonScript>().value = r;
             temp.GetComponent<UIReplayInfoHolderScript>().GhostButton.GetComponent<UIReplayButtonScript>().action = GhostButtonPressed;
-            i++;
+            temp.GetComponent<UIReplayInfoHolderScript>().GhostButton.GetComponent<Button>().onClick
+            .AddListener(temp.GetComponent<UIReplayInfoHolderScript>().GhostButton.GetComponent<UIReplayButtonScript>().Execute);
+            temp.GetComponent<UIReplayInfoHolderScript>().WatchButton.GetComponent<UIReplayButtonScript>().value = r;
+            temp.GetComponent<UIReplayInfoHolderScript>().WatchButton.GetComponent<UIReplayButtonScript>().action = WatchButtonPressed;
+            temp.GetComponent<UIReplayInfoHolderScript>().WatchButton.GetComponent<Button>().onClick
+            .AddListener(temp.GetComponent<UIReplayInfoHolderScript>().WatchButton.GetComponent<UIReplayButtonScript>().Execute);
         });
     }
 
@@ -60,6 +63,13 @@ public class LevelSelect : MonoBehaviour
         SetupVSGhost(CurrentLevel, replay);
     }
 
+    public void WatchButtonPressed(string replay)
+    {
+        if (CurrentLevel == null)
+            return;
+        SetupWatchGhost(CurrentLevel, replay);
+    }
+
     public void LoadScene(string sceneName) {
         var operation = SceneManager.LoadSceneAsync(sceneName);
         operation.completed += o => { GameObject.FindGameObjectWithTag("Spawn").GetComponent<Spawn>().Init(); };
@@ -71,6 +81,18 @@ public class LevelSelect : MonoBehaviour
         operation.completed += o =>
         {
             GameObject.FindGameObjectWithTag("Spawn").GetComponent<Spawn>().SpawnGhost = true;
+            PlayerPrefab.GetComponent<ReplayInputScript>().ReplayName = Replay;
+            GameObject.FindGameObjectWithTag("Spawn").GetComponent<Spawn>().Init();
+        };
+    }
+
+    void SetupWatchGhost(string sceneName, string Replay)
+    {
+        var operation = SceneManager.LoadSceneAsync(sceneName);
+        operation.completed += o =>
+        {
+            GameObject.FindGameObjectWithTag("Spawn").GetComponent<Spawn>().SpawnGhost = true;
+            GameObject.FindGameObjectWithTag("Spawn").GetComponent<Spawn>().WatchGhost = true;
             PlayerPrefab.GetComponent<ReplayInputScript>().ReplayName = Replay;
             GameObject.FindGameObjectWithTag("Spawn").GetComponent<Spawn>().Init();
         };
@@ -98,6 +120,6 @@ public class LevelSelect : MonoBehaviour
             string temp = sr.ReadLine();
             sr.Close();
             return temp == SceneName;
-        }).ToList();
+        }).Select(s => s.Substring(ReplayFolderLocation.Length)).ToList();
     }
 }

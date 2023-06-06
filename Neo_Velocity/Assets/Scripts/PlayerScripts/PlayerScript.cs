@@ -631,8 +631,14 @@ public class PlayerScript : MonoBehaviour
         }
         gameObject.layer = 8; // Ghost Layer (spooky)
         GetComponentInChildren<AudioListener>().enabled = false;
+        GetComponentInChildren<Camera>().enabled = false;
         SaveReplay = false;
         GetComponent<TimeMeasure>().enabled = false;
+        PlayReplay = true;
+    }
+    public void WatchGhost()
+    {
+        SaveReplay = false;
         PlayReplay = true;
     }
 

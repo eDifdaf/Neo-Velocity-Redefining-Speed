@@ -24,16 +24,16 @@ public class PlayerInputScript : AInputScript
     /// <br></br>
     /// <p>true  -> Tool changes with the ChangeKey</p>
     /// </summary>
-    [SerializeField] bool UseChangeKey = false;
+    [SerializeField] bool UseChangeKey = true;
     [SerializeField] KeyCode ChangeKey = KeyCode.Mouse2;
-    [SerializeField] float VerticalMouseSensitivity = 1f;
-    [SerializeField] float HorizontalMouseSensitivity = 0.5f;
+    [SerializeField] float VerticalMouseSensitivity = 4f;
+    [SerializeField] float HorizontalMouseSensitivity = 7f;
     /// <summary>
     /// <p>false -> Only Mouse is used to move the Camera</p>
     /// <br></br>
     /// <p>true  -> Additional to Mouse Movement, the 4 Look Keys are used to move the camera</p>
     /// </summary>
-    [SerializeField] bool UseFixedDistanceLookKeys;
+    [SerializeField] bool UseFixedDistanceLookKeys = true;
     [SerializeField] KeyCode UpLookKey = KeyCode.I;
     [SerializeField] KeyCode DownLookKey = KeyCode.K;
     [SerializeField] KeyCode LeftLookKey = KeyCode.J;

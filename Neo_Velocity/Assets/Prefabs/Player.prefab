@@ -611,8 +611,6 @@ MonoBehaviour:
   Rocket: {fileID: 790567055100085698, guid: 5b6bfd11c93d8074280b118cf63d1e99, type: 3}
   C4: {fileID: 6726947803506007272, guid: 0c3a08a25ce80624e93cc694bb2ad881, type: 3}
   Gravity: -50
-  LookSensitivityY: 4
-  LookSensitivityX: 7
   AccelerationSpeed: 50
   SpeedCapModifier: 0.05
   TerminalVelocity: -30
@@ -662,6 +660,8 @@ MonoBehaviour:
   ActivateKey: 324
   UseChangeKey: 1
   ChangeKey: 325
+  VerticalMouseSensitivity: 4
+  HorizontalMouseSensitivity: 7
   UseFixedDistanceLookKeys: 1
   UpLookKey: 105
   DownLookKey: 107

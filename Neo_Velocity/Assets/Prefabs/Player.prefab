@@ -789,7 +789,6 @@ GameObject:
   - component: {fileID: 1218479707681075363}
   - component: {fileID: 5354678869280106042}
   - component: {fileID: 7404699003986787792}
-  - component: {fileID: 2164695581109842980}
   m_Layer: 6
   m_Name: Eye_2
   m_TagString: Untagged
@@ -862,20 +861,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2164695581109842980
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6246578589910189304}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6591172385479751226
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,7 +872,6 @@ GameObject:
   - component: {fileID: 1455218038111872132}
   - component: {fileID: 7449901255701472456}
   - component: {fileID: 2211395318341906693}
-  - component: {fileID: 3046730052783586738}
   m_Layer: 6
   m_Name: Eye_1
   m_TagString: Untagged
@@ -960,20 +944,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3046730052783586738
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6591172385479751226}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7229309705400653282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,7 +1038,6 @@ GameObject:
   - component: {fileID: 3293891975195494353}
   - component: {fileID: 8314879063461326905}
   - component: {fileID: 2365070034211915374}
-  - component: {fileID: 772640681678643661}
   m_Layer: 6
   m_Name: Mouth
   m_TagString: Untagged
@@ -1141,20 +1110,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &772640681678643661
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7797177635254466036}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8041747936038323195
 GameObject:
   m_ObjectHideFlags: 0

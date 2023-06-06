@@ -13,6 +13,7 @@ TagManager:
   - No_Wallrun
   - Canvas
   - C4
+  - Laser
   layers:
   - Default
   - TransparentFX

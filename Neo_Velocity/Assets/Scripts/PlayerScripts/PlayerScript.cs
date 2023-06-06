@@ -57,6 +57,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float CameraTiltBufferChangeSpeed = 10f; // How fast the actual Tilt approaches the Buffer
     [SerializeField] float ShootDelay;
     [SerializeField] float ChangeDelay = 0.2f;
+    [SerializeField] int MaxNumberOfC4 = 5;
 
     Func<Dictionary<string, float>> GetInput;
     Func<Vector2> GetCameraMovement;
@@ -525,11 +526,19 @@ public class PlayerScript : MonoBehaviour
 
         if (input["Shoot"] == 1f && LastShoot >= ShootDelay) // SHOOT
         {
-            LastShoot = 0f;
             if (SelectedTool == Tools.Rocket)
+            {
                 Instantiate(Rocket, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+                LastShoot = 0f;
+            }
             else if (SelectedTool == Tools.C4)
-                Instantiate(C4, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+            {
+                if (GameObject.FindGameObjectsWithTag("C4").Length < MaxNumberOfC4)
+                {
+                    Instantiate(C4, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+                    LastShoot = 0f;
+                }
+            }
             else
                 Debug.Log("Didn't recognize Weapon");
         }

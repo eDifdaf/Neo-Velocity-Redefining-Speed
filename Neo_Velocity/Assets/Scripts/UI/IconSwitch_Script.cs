@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,10 +17,12 @@ public class IconSwitch_Script : MonoBehaviour
         IconRocketLauncher.enabled = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().SelectedTool == Tools.C4)
+        if (GameObject.FindGameObjectWithTag("Player") == null)
+            return;
+
+        if (GameObject.FindGameObjectsWithTag("Player").First(o => !o.GetComponent<PlayerScript>().IsGhost).GetComponent<PlayerScript>().SelectedTool == Tools.C4)
         {
             // Enable C4 icon and disable Rocket Launcher icon
             IconC4.enabled = true;

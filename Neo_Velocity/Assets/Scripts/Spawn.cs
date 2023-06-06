@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Spawn : MonoBehaviour {
     public bool SpawnGhost = false;
+    public bool WatchGhost = false;
 
     public GameObject playerPrefab; // Reference to the player prefab
 
     private GameObject player; // Reference to the spawned player object
     private GameObject playerGhost;
-
-    void Start() {
+    
+    public void Init()
+    {
         SpawnPlayer();
         TimeMeasure timeMeasure = player.GetComponent<TimeMeasure>();
         timeMeasure.InitializeTimer();
@@ -20,6 +22,11 @@ public class Spawn : MonoBehaviour {
         if (SpawnGhost)
         {
             playerGhost = Instantiate(playerPrefab, transform.position, transform.rotation);
+            if (WatchGhost)
+            {
+                playerGhost.GetComponent<PlayerScript>().WatchGhost();
+                return;
+            }
             playerGhost.GetComponent<PlayerScript>().MakeGhost();
         }
         player = Instantiate(playerPrefab, transform.position, transform.rotation);

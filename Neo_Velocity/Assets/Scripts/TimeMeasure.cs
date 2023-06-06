@@ -11,17 +11,28 @@ public class TimeMeasure : MonoBehaviour
     private float startTime;
     private TMP_Text timeText;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(spawnTag))
-        {
-            ResetTimer();
-            Debug.Log("Player entered the spawn area");
+    public float? TimeToFinish;
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag(spawnTag)) {
+            //why do i need this?
+            if (timing) {
+                timing = false;
+                float elapsedTime = Time.time - startTime;
+                DisplayTime(elapsedTime);
+                //Debug.Log("Player touched the finish object");
+            }
+            else {
+                ResetTimer();
+                //Debug.Log("Player entered the spawn area");
+            }
+            //end
         }
         else if (other.CompareTag(finishTag) && timing)
         {
             timing = false;
             float elapsedTime = Time.time - startTime;
+            TimeToFinish = elapsedTime;
             DisplayTime(elapsedTime);
             Debug.Log("Player touched the finish object");
         }
@@ -87,5 +98,10 @@ public class TimeMeasure : MonoBehaviour
         {
             Debug.LogError("Time Text component not found with the specified tag: " + timeTag);
         }
+    }
+
+    private void Start()
+    {
+        TimeToFinish = null;
     }
 }

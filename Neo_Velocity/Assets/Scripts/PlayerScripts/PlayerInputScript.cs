@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerInputScript : AInputScript
 {
@@ -22,11 +23,14 @@ public class PlayerInputScript : AInputScript
     float MouseYBuffer;
     float MouseX;
     float MouseY;
+    float ScrollBuffer;
+    float Scroll;
     
     bool MouseUpdateFlag; // true: unevaled, false: evaled
 
     bool RespawnPressed;
     bool ShootPressed;
+    bool ActivatePressed;
 
     bool AlreadyFinished;
     float TimeToFinish;
@@ -105,7 +109,33 @@ public class PlayerInputScript : AInputScript
             inputs.Add("Shoot", 0);
             ShootPressed = false;
         }
-        StringInputs += inputs["Shoot"];
+        StringInputs += inputs["Shoot"] + ",";
+
+        if (Input.GetMouseButton(1))
+        {
+            if (ActivatePressed)
+                inputs.Add("Activate", 0);
+            else
+            {
+                ActivatePressed = true;
+                inputs.Add("Activate", 1);
+            }
+        }
+        else
+        {
+            inputs.Add("Activate", 0);
+            ActivatePressed = false;
+        }
+        StringInputs += inputs["Activate"] + ",";
+
+        if (ScrollBuffer != 0)
+            inputs.Add("Change", 1);
+        else
+            inputs.Add("Change", 0);
+        StringInputs += inputs["Change"];
+        if (ScrollBuffer != 0)
+            Debug.Log(ScrollBuffer);
+        ScrollBuffer = 0;
 
         if (SaveReplay)
             replayWriter.WriteLine(StringInputs);
@@ -123,6 +153,9 @@ public class PlayerInputScript : AInputScript
             MouseYBuffer += MouseY;
 
             MouseUpdateFlag = false;
+
+            Scroll = Input.GetAxis("Mouse ScrollWheel");
+            ScrollBuffer += Scroll;
         }
         return new Vector2(MouseX, MouseY);
     }
@@ -130,18 +163,22 @@ public class PlayerInputScript : AInputScript
     {
         AlreadyFinished = false;
         if (replayWriter != null)
-            replayWriter.Close();
+            ResetWriter();
         if (!Directory.Exists(ReplayFolderLocation))
             Directory.CreateDirectory(ReplayFolderLocation);
         WriterLocation = ReplayFolderLocation + "Replay_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".replay";
         replayWriter = new StreamWriter(WriterLocation);
-        replayWriter.WriteLine("Format: 31_5_2023");
+        replayWriter.WriteLine("Format: 6_6_2023");
         replayWriter.WriteLine("Not Finished");
+        replayWriter.WriteLine(SceneManager.GetActiveScene().name);
     }
     public void Finished(float time)
     {
         if (AlreadyFinished)
+        {
+            TimeToFinish = Math.Min(TimeToFinish, time);
             return;
+        }
         TimeToFinish = time;
         AlreadyFinished = true;
     }
@@ -158,6 +195,8 @@ public class PlayerInputScript : AInputScript
 
     private void Start()
     {
+        Scroll = 0;
+        ScrollBuffer = 0;
         MouseX = 0;
         MouseY = 0;
         MouseUpdateFlag = true;
@@ -165,12 +204,13 @@ public class PlayerInputScript : AInputScript
         MouseYBuffer = 0;
         RespawnPressed = false;
         ShootPressed = false;
+        ActivatePressed = false;
     }
 
     private void OnDestroy()
     {
         if (replayWriter != null)
-            replayWriter.Close();
+            ResetWriter();
     }
 
     private void Update()
@@ -184,6 +224,9 @@ public class PlayerInputScript : AInputScript
             MouseYBuffer += MouseY;
 
             MouseUpdateFlag = false;
+
+            Scroll = Input.GetAxis("Mouse ScrollWheel");
+            ScrollBuffer += Scroll;
         }
     }
 

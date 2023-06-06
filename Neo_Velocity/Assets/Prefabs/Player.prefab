@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2266340603053421881}
   - component: {fileID: 1006983339040455562}
   m_Layer: 6
-  m_Name: Sphere
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bb7a6506360af8e4fa311fec4cf786be, type: 2}
+  - {fileID: 2100000, guid: 47c9749ee55f147449e8c161f77e876f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -609,6 +609,7 @@ MonoBehaviour:
   WallCollider: {fileID: 8041747936038323195}
   GroundCollider: {fileID: 4418298383214414295}
   Rocket: {fileID: 790567055100085698, guid: 5b6bfd11c93d8074280b118cf63d1e99, type: 3}
+  C4: {fileID: 6726947803506007272, guid: 0c3a08a25ce80624e93cc694bb2ad881, type: 3}
   Gravity: -50
   LookSensitivityY: 4
   LookSensitivityX: 7
@@ -618,6 +619,7 @@ MonoBehaviour:
   GroundMercyTime: 0.3
   JumpDelay: 0.1
   JumpForce: 15
+  JumpForceAwaysFromWall: 30
   MaxJumpVelocity: 35
   WallStickTime: 0.1
   WallJumpDelay: 0.15
@@ -633,7 +635,9 @@ MonoBehaviour:
   CameraTiltWhileWallrunning: 15
   CameraTiltBufferChangeSpeed: 300
   ShootDelay: 0.5
+  ChangeDelay: 0.45
   velocity: {x: 0, y: 0, z: 0}
+  SelectedTool: 0
 --- !u!114 &1501487197093846086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,7 +668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReplayFolderLocation: Replays\
-  ReplayName: 
+  ReplayName: Replay_2023-06-06-10-18-25-177.replay
 --- !u!114 &5774500035664423022
 MonoBehaviour:
   m_ObjectHideFlags: 0

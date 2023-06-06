@@ -91,6 +91,7 @@ public class PlayerScript : MonoBehaviour
     float CameraTiltBuffer;
     float LastShoot;
     float LastChange;
+    bool Respawn;
 
     public Tools SelectedTool = Tools.Rocket;
 
@@ -543,7 +544,7 @@ public class PlayerScript : MonoBehaviour
             Finished((float)GetComponent<TimeMeasure>().TimeToFinish);
         }
 
-        if (input["Respawn"] == 1f)
+        if (Respawn || input["Respawn"] == 1f)
         {
             velocity = Vector3.zero;
             rigidbody.velocity = velocity;
@@ -556,6 +557,7 @@ public class PlayerScript : MonoBehaviour
             if (SaveReplay && !PlayReplay)
                 ResetInputs();
         }
+        Respawn = false;
 
         /*
          * temp
@@ -580,10 +582,14 @@ public class PlayerScript : MonoBehaviour
     #region Save Collided
     void WallCollided(Collider other)
     {
+        if (other.gameObject.tag == "Laser")
+            Respawn = true;
         OtherWalls.Add(other);
     }
     void GroundCollided(Collider other)
     {
+        if (other.gameObject.tag == "Laser")
+            Respawn = true;
         OtherFloor = other;
     }
     #endregion

@@ -568,13 +568,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514034dd9d265d64aaab2d48d23415e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayReplay: 1
+  PlayReplay: 0
   SaveReplay: 1
   Body: {fileID: 9213567486236578209}
   PlayerCamera: {fileID: 4418298381620389061}
   WallCollider: {fileID: 8041747936038323195}
   GroundCollider: {fileID: 4418298383214414295}
   Rocket: {fileID: 790567055100085698, guid: 5b6bfd11c93d8074280b118cf63d1e99, type: 3}
+  C4: {fileID: 6726947803506007272, guid: 0c3a08a25ce80624e93cc694bb2ad881, type: 3}
   Gravity: -50
   LookSensitivityY: 4
   LookSensitivityX: 7
@@ -584,6 +585,7 @@ MonoBehaviour:
   GroundMercyTime: 0.3
   JumpDelay: 0.1
   JumpForce: 15
+  JumpForceAwaysFromWall: 30
   MaxJumpVelocity: 35
   WallStickTime: 0.1
   WallJumpDelay: 0.15
@@ -599,7 +601,9 @@ MonoBehaviour:
   CameraTiltWhileWallrunning: 15
   CameraTiltBufferChangeSpeed: 300
   ShootDelay: 0.5
+  ChangeDelay: 0.45
   velocity: {x: 0, y: 0, z: 0}
+  SelectedTool: 0
 --- !u!114 &1501487197093846086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,7 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReplayFolderLocation: Replays\
-  ReplayName: Replay_2023-05-31-15-34-29-129.replay
+  ReplayName: Replay_2023-06-06-10-18-25-177.replay
 --- !u!114 &5774500035664423022
 MonoBehaviour:
   m_ObjectHideFlags: 0

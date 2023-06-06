@@ -11,6 +11,8 @@ TagManager:
   - Spawn
   - Time
   - No_Wallrun
+  - Canvas
+  - C4
   layers:
   - Default
   - TransparentFX

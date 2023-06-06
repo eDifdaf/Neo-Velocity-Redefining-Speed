@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59739dcf6c94b404180213ba8fc96bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 0.6
+  Speed: 25
   ExplosionRadius: 40
   ExplosionForce: 50
   LifeTime: 10
@@ -66,7 +66,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &3838329795260361884
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +129,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f2143d2f3f04abc42a7bc224bc422ecb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -10,6 +10,7 @@ TagManager:
   - GroundCollider
   - Spawn
   - Time
+  - No_Wallrun
   layers:
   - Default
   - TransparentFX

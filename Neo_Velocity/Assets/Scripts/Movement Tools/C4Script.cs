@@ -16,9 +16,11 @@ public class C4Script : MonoBehaviour
     public List<GameObject> Affected;
     float RemainingLifeTime;
     bool Landed;
+    public bool IsGhost = false;
 
     void Start()
     {
+        Landed = false;
         Affected = new List<GameObject>();
         RemainingLifeTime = LifeTime;
         GetComponent<Rigidbody>().velocity = transform.rotation * Vector3.forward * Speed;
@@ -50,7 +52,7 @@ public class C4Script : MonoBehaviour
     {
         Affected = Affected.Union(GameObject.FindGameObjectsWithTag("Player")).ToList();
 
-        Affected.ForEach(o =>
+        Affected.Where(o => o.GetComponent<PlayerScript>().IsGhost == IsGhost).ToList().ForEach(o =>
         {
             // There is a Method for simulating an Explosion, but because of how velocity is handled it doesn't work
             Vector3 closestPoint = o.GetComponentInChildren<Collider>().ClosestPoint(transform.position);
@@ -62,5 +64,11 @@ public class C4Script : MonoBehaviour
         });
 
         Destroy(gameObject);
+    }
+
+    public void MakeGhost()
+    {
+        IsGhost = true;
+        tag = "Ghost_C4";
     }
 }

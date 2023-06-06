@@ -44,7 +44,7 @@ public class TimeMeasure : MonoBehaviour
         {
             timing = true;
             startTime = Time.time;
-            Debug.Log("Player left the spawn area");
+            //Debug.Log("Player left the spawn area");
         }
     }
 

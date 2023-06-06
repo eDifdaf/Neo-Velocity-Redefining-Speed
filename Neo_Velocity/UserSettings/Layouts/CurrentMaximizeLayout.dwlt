@@ -187,8 +187,8 @@ MonoBehaviour:
     y: 0
     width: 304
     height: 487.2
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -226,9 +226,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 82f0ffff
-      m_LastClickedID: -3966
-      m_ExpandedIDs: 82f0ffff34fbffff
+      m_SelectedIDs: 50020000
+      m_LastClickedID: 0
+      m_ExpandedIDs: 041affff5640ffff82f0ffff34fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -271,8 +271,8 @@ MonoBehaviour:
     y: 0
     width: 962.4
     height: 487.2
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 8}
@@ -571,9 +571,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -163.25055, y: 5.5735016, z: 10.568322}
+    m_Target: {x: -41.227192, y: -38.672325, z: 43.91251}
     speed: 2
-    m_Value: {x: -163.25055, y: 5.5735016, z: 10.568322}
+    m_Value: {x: -41.227192, y: -38.672325, z: 43.91251}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -620,13 +620,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.053622026, y: 0.7132246, z: -0.054890055, w: -0.6967279}
+    m_Target: {x: -0.22929944, y: 0.5336811, z: -0.15306477, w: -0.79949147}
     speed: 2
-    m_Value: {x: -0.053621836, y: 0.713222, z: -0.054889858, w: -0.69672537}
+    m_Value: {x: -0.2292984, y: 0.53367865, z: -0.15306407, w: -0.7994878}
   m_Size:
-    m_Target: 98.78599
+    m_Target: 55.403084
     speed: 2
-    m_Value: 98.78599
+    m_Value: 55.403084
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -720,21 +720,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/2d
+    - Assets/Scripts/UI
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/2d
+  - Assets/Scripts/UI
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Rene\OneDrive\Dokumente\GitHub\Neo-Velocity-Redefining-Speed\Neo_Velocity
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 95}
-    m_SelectedIDs: 76700000
-    m_LastClickedID: 28790
+    scrollPos: {x: 0, y: 65.400024}
+    m_SelectedIDs: 4a710000
+    m_LastClickedID: 29002
     m_ExpandedIDs: 00000000607000008270000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -763,7 +763,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000060700000
+    m_ExpandedIDs: 000000006070000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -788,8 +788,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 68f0ffff
-    m_LastClickedInstanceID: -3992
+    m_SelectedInstanceIDs: b2a2feff
+    m_LastClickedInstanceID: -89422
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300006a610000be6100000a61000040f0000000000000
     m_RenameOverlay:
@@ -867,8 +867,8 @@ MonoBehaviour:
     y: 0
     width: 269.59998
     height: 722.8
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -910,7 +910,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 119.20001
+  m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:

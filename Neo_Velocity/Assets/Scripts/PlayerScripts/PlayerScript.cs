@@ -22,6 +22,7 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField] bool PlayReplay = false;
     [SerializeField] bool SaveReplay = true;
+    [SerializeField] bool SettingsInputs = false;
 
     [SerializeField] GameObject Body;
     [SerializeField] GameObject PlayerCamera;
@@ -119,8 +120,15 @@ public class PlayerScript : MonoBehaviour
         WallCollider.GetComponent<ColliderScript>().collided += WallCollided;
         GroundCollider.GetComponent<ColliderScript>().collided += GroundCollided;
 
-
-        if (PlayReplay)
+        if (SettingsInputs)
+        {
+            GetInput = GetComponent<Settings>().GetInput;
+            GetCameraMovement = GetComponent<Settings>().GetMouseInput;
+            ResetInputs = GetComponent<Settings>().ResetInputs;
+            Finished = t => { };
+            ResetInputs();
+        }
+        else if (PlayReplay)
         {
             GetInput = GetComponent<ReplayInputScript>().GetInput;
             GetCameraMovement = GetComponent<ReplayInputScript>().GetMouseInput;

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 573331634982426578}
   m_Layer: 7
   m_Name: Rocket
-  m_TagString: Untagged
+  m_TagString: Rocket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -7,6 +7,13 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public enum Tools
+{
+    Rocket,
+    C4
+}
+
+
 public class PlayerScript : MonoBehaviour
 {
     #region Field Declaration
@@ -21,6 +28,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] GameObject GroundCollider;
 
     [SerializeField] GameObject Rocket;
+    [SerializeField] GameObject C4;
 
     [SerializeField] float Gravity;
     [SerializeField] float LookSensitivityY = 4;
@@ -31,6 +39,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float GroundMercyTime;
     [SerializeField] float JumpDelay;
     [SerializeField] float JumpForce;
+    [SerializeField] float JumpForceAwaysFromWall;
     [SerializeField] float MaxJumpVelocity;
     [SerializeField] float WallStickTime;
     [SerializeField] float WallJumpDelay;
@@ -47,6 +56,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float CameraTiltWhileWallrunning = 15f; // Max Angle of Camertilt, when parallel to Wall
     [SerializeField] float CameraTiltBufferChangeSpeed = 10f; // How fast the actual Tilt approaches the Buffer
     [SerializeField] float ShootDelay;
+    [SerializeField] float ChangeDelay = 0.2f;
 
     Func<Dictionary<string, float>> GetInput;
     Func<Vector2> GetCameraMovement;
@@ -80,6 +90,9 @@ public class PlayerScript : MonoBehaviour
     float SlidingAnimationTimer;
     float CameraTiltBuffer;
     float LastShoot;
+    float LastChange;
+
+    public Tools SelectedTool = Tools.Rocket;
 
     float RevertToCameraY;
     float RevertToCameraZ;
@@ -212,6 +225,7 @@ public class PlayerScript : MonoBehaviour
         LastWallRun += Time.deltaTime;
         WallJumpForgetTime += Time.deltaTime;
         LastShoot += Time.deltaTime;
+        LastChange += Time.deltaTime;
         if (IsSliding)
             SlidingAnimationTimer = Math.Min(SlidingAnimationTimer + Time.deltaTime, SlideCameraTransitionTime);
         else
@@ -467,7 +481,7 @@ public class PlayerScript : MonoBehaviour
                 WallAwayVector.y = 0;
                 WallAwayVector = WallAwayVector.normalized;
                 newVelocity = newVelocity - 2 * Vector3.Dot(newVelocity, WallAwayVector) * WallAwayVector; // mirror Speed at the Wall
-                newVelocity += WallAwayVector * (JumpForce / (1 + (new Vector3(newVelocity.x, 0, newVelocity.z).magnitude * SpeedCapModifier)));
+                newVelocity += WallAwayVector * (JumpForceAwaysFromWall / (1 + (new Vector3(newVelocity.x, 0, newVelocity.z).magnitude * SpeedCapModifier)));
                 newVelocity += PlaneMovement.normalized * (JumpForce / (1 + (new Vector3(newVelocity.x, 0, newVelocity.z).magnitude * SpeedCapModifier) * (1 - Vector3.Angle(newVelocity, PlaneMovement.normalized) / 180) )) * 0.5f;
                 newVelocity.y = velocity.y;
                 velocity = newVelocity;
@@ -500,10 +514,33 @@ public class PlayerScript : MonoBehaviour
         //rigidbody.velocity = new Vector3(ActualVelocity.x, velocity.y, ActualVelocity.z);
         rigidbody.velocity = velocity;
 
+        if (input["Change"] == 1f && LastChange >= ChangeDelay) {
+            LastChange = 0f;
+            if (SelectedTool == Tools.Rocket)
+                SelectedTool = Tools.C4;
+            else
+                SelectedTool = Tools.Rocket;
+        }
+
         if (input["Shoot"] == 1f && LastShoot >= ShootDelay) // SHOOT
         {
             LastShoot = 0f;
-            Instantiate(Rocket, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+            if (SelectedTool == Tools.Rocket)
+                Instantiate(Rocket, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+            else if (SelectedTool == Tools.C4)
+                Instantiate(C4, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+            else
+                Debug.Log("Didn't recognize Weapon");
+        }
+
+        if (input["Activate"] == 1f)
+        {
+            GameObject.FindGameObjectsWithTag("C4").ToList().ForEach(o => o.GetComponent<C4Script>().Explode());
+        }
+
+        if (GetComponent<TimeMeasure>().TimeToFinish != null)
+        {
+            Finished((float)GetComponent<TimeMeasure>().TimeToFinish);
         }
 
         if (input["Respawn"] == 1f)

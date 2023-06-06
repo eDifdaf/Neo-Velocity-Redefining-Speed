@@ -88,6 +88,29 @@ public class ReplayInputScript : AInputScript
                     return inputs;
                 };
                 break;
+            case "Format: 6_6_2023":
+                replayReader.ReadLine();
+                replayReader.ReadLine();
+                getInputs = () =>
+                {
+                    Dictionary<string, float> inputs = new Dictionary<string, float>();
+
+                    string[] rawInput = replayReader.ReadLine().Split(',');
+
+                    inputs.Add("Sliding", int.Parse(rawInput[0]));
+                    inputs.Add("Jump", int.Parse(rawInput[1]));
+                    inputs.Add("Respawn", int.Parse(rawInput[2]));
+                    inputs.Add("Mouse X", float.Parse(rawInput[3], CultureInfo.InvariantCulture));
+                    inputs.Add("Mouse Y", float.Parse(rawInput[4], CultureInfo.InvariantCulture));
+                    inputs.Add("Vertical", float.Parse(rawInput[5], CultureInfo.InvariantCulture));
+                    inputs.Add("Horizontal", float.Parse(rawInput[6], CultureInfo.InvariantCulture));
+                    inputs.Add("Shoot", int.Parse(rawInput[7]));
+                    inputs.Add("Activate", int.Parse(rawInput[8]));
+                    inputs.Add("Change", int.Parse(rawInput[9]));
+
+                    return inputs;
+                };
+                break;
             default:
                 Debug.Log("Unrecognized Replay Format");
                 break;

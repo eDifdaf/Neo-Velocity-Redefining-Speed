@@ -14,6 +14,7 @@ TagManager:
   - Canvas
   - C4
   - Laser
+  - Rocket
   layers:
   - Default
   - TransparentFX

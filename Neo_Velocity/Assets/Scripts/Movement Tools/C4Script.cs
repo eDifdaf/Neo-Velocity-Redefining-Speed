@@ -10,7 +10,7 @@ public class C4Script : MonoBehaviour
     [SerializeField] float ExplosionRadius = 50;
     [SerializeField] float ExplosionForce = 25;
     [SerializeField] float LifeTime = 20; // Only while in the air
-    [SerializeField] float Gravity = 1;
+    [SerializeField] float Gravity = 25;
     [SerializeField] float TerminalVelocity = -30;
 
     public List<GameObject> Affected;
@@ -32,7 +32,7 @@ public class C4Script : MonoBehaviour
             if (RemainingLifeTime < 0)
                 Destroy(gameObject);
             Vector3 temp = GetComponent<Rigidbody>().velocity;
-            temp.y -= Gravity * Time.fixedTime;
+            temp.y -= Gravity * Time.fixedDeltaTime;
             if (temp.y < TerminalVelocity)
                 temp.y = TerminalVelocity;
             GetComponent<Rigidbody>().velocity = temp;
@@ -58,7 +58,7 @@ public class C4Script : MonoBehaviour
             if (toObject.magnitude > ExplosionRadius)
                 return;
             float ForceFactor = 1 - toObject.magnitude / ExplosionRadius;
-            o.GetComponent<PlayerScript>().velocity += (toObject.normalized + new Vector3(0, 0.2f, 0)).normalized * (ExplosionForce * ForceFactor);
+            o.GetComponent<PlayerScript>().velocity += (toObject.normalized + new Vector3(0, 0.1f, 0)).normalized * (ExplosionForce * ForceFactor);
         });
 
         Destroy(gameObject);

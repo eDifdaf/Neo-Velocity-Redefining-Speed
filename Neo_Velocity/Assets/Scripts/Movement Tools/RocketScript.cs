@@ -40,7 +40,7 @@ public class RocketScript : MonoBehaviour
             if (toObject.magnitude > ExplosionRadius)
                 return;
             float ForceFactor = 1 - toObject.magnitude / ExplosionRadius;
-            o.GetComponent<PlayerScript>().velocity += (toObject.normalized + new Vector3(0, 0.2f, 0)).normalized * (ExplosionForce * ForceFactor);
+            o.GetComponent<PlayerScript>().velocity += (toObject.normalized + new Vector3(0, 0.1f, 0)).normalized * (ExplosionForce * ForceFactor);
         });
 
         Destroy(gameObject);

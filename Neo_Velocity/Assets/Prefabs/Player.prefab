@@ -483,7 +483,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 191
+    m_Bits: 447
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -640,6 +640,7 @@ MonoBehaviour:
   MaxNumberOfC4: 5
   velocity: {x: 0, y: 0, z: 0}
   SelectedTool: 0
+  IsGhost: 0
 --- !u!114 &1501487197093846086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -687,7 +688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReplayFolderLocation: Replays\
-  ReplayName: Replay_2023-06-06-10-18-25-177.replay
+  ReplayName: Replay_2023-06-06-15-26-52-941.replay
 --- !u!114 &5774500035664423022
 MonoBehaviour:
   m_ObjectHideFlags: 0

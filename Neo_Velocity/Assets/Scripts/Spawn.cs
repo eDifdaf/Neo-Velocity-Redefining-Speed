@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawn : MonoBehaviour {
+    public bool SpawnGhost = false;
+
     public GameObject playerPrefab; // Reference to the player prefab
 
     private GameObject player; // Reference to the spawned player object
+    private GameObject playerGhost;
 
     void Start() {
         SpawnPlayer();
@@ -14,6 +17,11 @@ public class Spawn : MonoBehaviour {
     }
 
     void SpawnPlayer() {
+        if (SpawnGhost)
+        {
+            playerGhost = Instantiate(playerPrefab, transform.position, transform.rotation);
+            playerGhost.GetComponent<PlayerScript>().MakeGhost();
+        }
         player = Instantiate(playerPrefab, transform.position, transform.rotation);
     }
 }

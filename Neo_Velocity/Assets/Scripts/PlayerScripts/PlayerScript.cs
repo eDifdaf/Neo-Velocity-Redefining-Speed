@@ -3,15 +3,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
+
+public enum Tools
+{
+    Rocket,
+    C4
+}
+
 
 public class PlayerScript : MonoBehaviour
 {
     #region Field Declaration
 
 
-    [SerializeField] bool Replay;
+    [SerializeField] bool PlayReplay = false;
+    [SerializeField] bool SaveReplay = true;
 
     [SerializeField] GameObject Body;
     [SerializeField] GameObject PlayerCamera;
@@ -19,16 +28,16 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] GameObject GroundCollider;
 
     [SerializeField] GameObject Rocket;
+    [SerializeField] GameObject C4;
 
     [SerializeField] float Gravity;
-    [SerializeField] float LookSensitivityY = 4;
-    [SerializeField] float LookSensitivityX = 7;
     [SerializeField] float AccelerationSpeed;
     [SerializeField] float SpeedCapModifier;
     [SerializeField] float TerminalVelocity;
     [SerializeField] float GroundMercyTime;
     [SerializeField] float JumpDelay;
     [SerializeField] float JumpForce;
+    [SerializeField] float JumpForceAwaysFromWall;
     [SerializeField] float MaxJumpVelocity;
     [SerializeField] float WallStickTime;
     [SerializeField] float WallJumpDelay;
@@ -45,10 +54,13 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float CameraTiltWhileWallrunning = 15f; // Max Angle of Camertilt, when parallel to Wall
     [SerializeField] float CameraTiltBufferChangeSpeed = 10f; // How fast the actual Tilt approaches the Buffer
     [SerializeField] float ShootDelay;
+    [SerializeField] float ChangeDelay = 0.2f;
+    [SerializeField] int MaxNumberOfC4 = 5;
 
     Func<Dictionary<string, float>> GetInput;
     Func<Vector2> GetCameraMovement;
     Action ResetInputs;
+    Action<float> Finished;
 
     new Rigidbody rigidbody;
     new GameObject camera;
@@ -77,12 +89,13 @@ public class PlayerScript : MonoBehaviour
     float SlidingAnimationTimer;
     float CameraTiltBuffer;
     float LastShoot;
+    float LastChange;
+    bool Respawn;
+
+    public Tools SelectedTool = Tools.Rocket;
 
     float RevertToCameraY;
     float RevertToCameraZ;
-
-    Vector3 RespawnPoint;
-    Vector3 RespawnLookDirection;
 
     #endregion
 
@@ -103,20 +116,26 @@ public class PlayerScript : MonoBehaviour
         WallCollider.GetComponent<ColliderScript>().collided += WallCollided;
         GroundCollider.GetComponent<ColliderScript>().collided += GroundCollided;
 
-        if (Replay)
+
+        if (PlayReplay)
         {
             GetInput = GetComponent<ReplayInputScript>().GetInput;
             GetCameraMovement = GetComponent<ReplayInputScript>().GetMouseInput;
             ResetInputs = GetComponent<ReplayInputScript>().ResetInputs;
+            Finished = t => { };
+            ResetInputs();
         }
         else
         {
             GetInput = GetComponent<PlayerInputScript>().GetInput;
             GetCameraMovement = GetComponent<PlayerInputScript>().GetMouseInput;
             ResetInputs = GetComponent<PlayerInputScript>().ResetInputs;
+            GetComponent<PlayerInputScript>().SaveReplay = SaveReplay;
+            Finished = GetComponent<PlayerInputScript>().Finished;
+            if (SaveReplay)
+                ResetInputs();
         }
-        ResetInputs();
-
+        
         RevertToCameraY = 0;
         RevertToCameraZ = 0;
 
@@ -154,8 +173,8 @@ public class PlayerScript : MonoBehaviour
     {
         Vector2 MouseMovement = GetCameraMovement();
 
-        float AmpMouseX = MouseMovement.x * LookSensitivityX;
-        float AmpMouseY = -MouseMovement.y * LookSensitivityY;
+        float AmpMouseX = MouseMovement.x;
+        float AmpMouseY = -MouseMovement.y;
 
         #region Camera Rotation
 
@@ -192,6 +211,9 @@ public class PlayerScript : MonoBehaviour
     {
         Dictionary<string, float> input = GetInput();
 
+        // This causes as many problems as it fixes, so no
+        // velocity = rigidbody.velocity;
+
         IsSliding = input["Sliding"] == 1f;
         if (IsSliding)
         {
@@ -199,13 +221,14 @@ public class PlayerScript : MonoBehaviour
         }
 
         #region Advance Timers
-        LastGroundedTime += Time.deltaTime;
-        LastJumpTime += Time.deltaTime;
-        LastWallTouch += Time.deltaTime;
-        LastWallJump += Time.deltaTime;
-        LastWallRun += Time.deltaTime;
-        WallJumpForgetTime += Time.deltaTime;
-        LastShoot += Time.deltaTime;
+        LastGroundedTime += Time.fixedDeltaTime;
+        LastJumpTime += Time.fixedDeltaTime;
+        LastWallTouch += Time.fixedDeltaTime;
+        LastWallJump += Time.fixedDeltaTime;
+        LastWallRun += Time.fixedDeltaTime;
+        WallJumpForgetTime += Time.fixedDeltaTime;
+        LastShoot += Time.fixedDeltaTime;
+        LastChange += Time.fixedDeltaTime;
         if (IsSliding)
             SlidingAnimationTimer = Math.Min(SlidingAnimationTimer + Time.deltaTime, SlideCameraTransitionTime);
         else
@@ -294,9 +317,8 @@ public class PlayerScript : MonoBehaviour
         } // Reset the touched walls
 
         // Axis - Sensi: 0,1
-        float MouseX = input["Mouse X"] * LookSensitivityX; // <- Time.deltaTime might be wrong, depending on how Mouse Axis work
-        float MouseY = -input["Mouse Y"] * LookSensitivityY;// Why can't I find any good Info for this
-        // Mouse Movement doesn't line up with Desktop Movement, don't know why (Removing timeDelta fix it)
+        float MouseX = input["Mouse X"];
+        float MouseY = -input["Mouse Y"];
 
         CameraRotationEuler.y = 0;
         #region General Rotation
@@ -373,6 +395,10 @@ public class PlayerScript : MonoBehaviour
             WallRunning = false;
 
         CameraTiltBuffer = 0; // Reset Camera-tilt before Wallrun-eval
+
+        if (CurrentWall != null)
+            if (CurrentWall.tag == "No_Wallrun") // No Wallruns on this Wall
+                WallRunning = false;
 
         if (WallRunning && CurrentWall != null)
         {
@@ -457,7 +483,7 @@ public class PlayerScript : MonoBehaviour
                 WallAwayVector.y = 0;
                 WallAwayVector = WallAwayVector.normalized;
                 newVelocity = newVelocity - 2 * Vector3.Dot(newVelocity, WallAwayVector) * WallAwayVector; // mirror Speed at the Wall
-                newVelocity += WallAwayVector * (JumpForce / (1 + (new Vector3(newVelocity.x, 0, newVelocity.z).magnitude * SpeedCapModifier)));
+                newVelocity += WallAwayVector * (JumpForceAwaysFromWall / (1 + (new Vector3(newVelocity.x, 0, newVelocity.z).magnitude * SpeedCapModifier)));
                 newVelocity += PlaneMovement.normalized * (JumpForce / (1 + (new Vector3(newVelocity.x, 0, newVelocity.z).magnitude * SpeedCapModifier) * (1 - Vector3.Angle(newVelocity, PlaneMovement.normalized) / 180) )) * 0.5f;
                 newVelocity.y = velocity.y;
                 velocity = newVelocity;
@@ -480,36 +506,66 @@ public class PlayerScript : MonoBehaviour
             }
         } // Jump
 
+        if (input["Change"] == 1f && LastChange >= ChangeDelay) {
+            LastChange = 0f;
+            if (SelectedTool == Tools.Rocket)
+                SelectedTool = Tools.C4;
+            else
+                SelectedTool = Tools.Rocket;
+        }
+
+        if (input["Shoot"] == 1f && LastShoot >= ShootDelay) // SHOOT
+        {
+            if (SelectedTool == Tools.Rocket)
+            {
+                Instantiate(Rocket, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+                LastShoot = 0f;
+            }
+            else if (SelectedTool == Tools.C4)
+            {
+                if (GameObject.FindGameObjectsWithTag("C4").Length < MaxNumberOfC4)
+                {
+                    Instantiate(C4, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+                    LastShoot = 0f;
+                }
+            }
+            else
+                Debug.Log("Didn't recognize Weapon");
+        }
+
+        if (input["Activate"] == 1f)
+        {
+            GameObject.FindGameObjectsWithTag("C4").ToList().ForEach(o => o.GetComponent<C4Script>().Explode());
+        }
+
         if (velocity.y < TerminalVelocity)
         {
             velocity.y = TerminalVelocity;
         } // Caps falling-speed at TerminalVelocity
 
-        //Vector3 ActualVelocity = new Vector3(velocity.x, 0, velocity.z);
-        //ActualVelocity = ActualVelocity.normalized * DecreasedReturn(ActualVelocity.magnitude);
-        //rigidbody.velocity = new Vector3(ActualVelocity.x, velocity.y, ActualVelocity.z);
         rigidbody.velocity = velocity;
 
-        if (input["Shoot"] == 1f && LastShoot >= ShootDelay) // SHOOT
+        if (GetComponent<TimeMeasure>().TimeToFinish != null)
         {
-            LastShoot = 0f;
-            Instantiate(Rocket, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
+            Finished((float)GetComponent<TimeMeasure>().TimeToFinish);
         }
 
-        if (input["Respawn"] == 1f)
+        if (Respawn || input["Respawn"] == 1f)
         {
+            GameObject.FindGameObjectsWithTag("C4").ToList().ForEach(o => Destroy(o));
+            GameObject.FindGameObjectsWithTag("Rocket").ToList().ForEach(o => Destroy(o));
             velocity = Vector3.zero;
             rigidbody.velocity = velocity;
             transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
             RotationEuler = new Vector3(0, GameObject.FindGameObjectWithTag("Spawn").transform.rotation.eulerAngles.y);
             Rotation.eulerAngles = RotationEuler;
-            transform.rotation = Rotation;
             CameraRotationEuler = new Vector3(GameObject.FindGameObjectWithTag("Spawn").transform.rotation.eulerAngles.x, 0);
             CameraRotation.eulerAngles = CameraRotationEuler;
-            //Camera.transform.rotation = CameraRotation;
 
-            ResetInputs();
+            if (SaveReplay && !PlayReplay)
+                ResetInputs();
         }
+        Respawn = false;
 
         /*
          * temp
@@ -531,13 +587,32 @@ public class PlayerScript : MonoBehaviour
         // it doesn't snap you to the second one
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        List<ContactPoint> contacts = new List<ContactPoint>();
+        collision.GetContacts(contacts);
+
+        contacts.ForEach(c =>
+        {
+            if (Vector3.Angle(c.normal, Vector3.up) >= 150f)
+            {
+                velocity.y = 0;
+                rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+            }
+        });
+    }
+
     #region Save Collided
     void WallCollided(Collider other)
     {
+        if (other.gameObject.tag == "Laser")
+            Respawn = true;
         OtherWalls.Add(other);
     }
     void GroundCollided(Collider other)
     {
+        if (other.gameObject.tag == "Laser")
+            Respawn = true;
         OtherFloor = other;
     }
     #endregion

@@ -10,6 +10,11 @@ TagManager:
   - GroundCollider
   - Spawn
   - Time
+  - No_Wallrun
+  - Canvas
+  - C4
+  - Laser
+  - Rocket
   layers:
   - Default
   - TransparentFX

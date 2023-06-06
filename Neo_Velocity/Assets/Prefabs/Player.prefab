@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2266340603053421881}
   - component: {fileID: 1006983339040455562}
   m_Layer: 6
-  m_Name: Sphere
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 47c9749ee55f147449e8c161f77e876f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -144,7 +144,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bb7a6506360af8e4fa311fec4cf786be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -227,7 +227,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bb7a6506360af8e4fa311fec4cf786be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -310,7 +310,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bb7a6506360af8e4fa311fec4cf786be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -393,7 +393,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bb7a6506360af8e4fa311fec4cf786be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -426,6 +426,7 @@ GameObject:
   - component: {fileID: 4418298381620389082}
   - component: {fileID: 4418298381620389080}
   - component: {fileID: 4418298381620389083}
+  - component: {fileID: 5046979783616254442}
   m_Layer: 6
   m_Name: PlayerCamera
   m_TagString: MainCamera
@@ -473,7 +474,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 100
+  field of view: 130
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -499,6 +500,39 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4418298381620389061}
   m_Enabled: 1
+--- !u!114 &5046979783616254442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4418298381620389061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &4418298382927004808
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,6 +546,8 @@ GameObject:
   - component: {fileID: 4418298382927004815}
   - component: {fileID: 1501487197093846086}
   - component: {fileID: 1960077663518410568}
+  - component: {fileID: 5774500035664423022}
+  - component: {fileID: 3067760334636747341}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -527,7 +563,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4418298382927004808}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.5808997, y: 7.7172003, z: -42.154293}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -566,21 +602,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 514034dd9d265d64aaab2d48d23415e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Replay: 0
+  PlayReplay: 0
+  SaveReplay: 1
   Body: {fileID: 9213567486236578209}
   PlayerCamera: {fileID: 4418298381620389061}
   WallCollider: {fileID: 8041747936038323195}
   GroundCollider: {fileID: 4418298383214414295}
   Rocket: {fileID: 790567055100085698, guid: 5b6bfd11c93d8074280b118cf63d1e99, type: 3}
+  C4: {fileID: 6726947803506007272, guid: 0c3a08a25ce80624e93cc694bb2ad881, type: 3}
   Gravity: -50
-  LookSensitivityY: 4
-  LookSensitivityX: 7
   AccelerationSpeed: 50
   SpeedCapModifier: 0.05
   TerminalVelocity: -30
   GroundMercyTime: 0.3
   JumpDelay: 0.1
   JumpForce: 15
+  JumpForceAwaysFromWall: 30
   MaxJumpVelocity: 35
   WallStickTime: 0.1
   WallJumpDelay: 0.15
@@ -590,13 +627,16 @@ MonoBehaviour:
   FrictionCompensation: 25
   WallRunDelay: 0.1
   WallJumpForgetDelay: 0.1
-  FOV: 60
+  FOV: 90
   SlideCameraTransitionTime: 0.1
   SlidingAccelerationSpeed: 10
   CameraTiltWhileWallrunning: 15
   CameraTiltBufferChangeSpeed: 300
   ShootDelay: 0.5
+  ChangeDelay: 0.45
+  MaxNumberOfC4: 5
   velocity: {x: 0, y: 0, z: 0}
+  SelectedTool: 0
 --- !u!114 &1501487197093846086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,10 +649,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e3fe07d26e64640addb2cca8c37e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ForwardKey: 119
+  BackwardsKey: 115
+  LeftKey: 97
+  RightKey: 100
   SlideKey: 304
   JumpKey: 32
   RespawnKey: 114
+  ShootKey: 323
+  ActivateKey: 324
+  UseChangeKey: 1
+  ChangeKey: 325
+  VerticalMouseSensitivity: 4
+  HorizontalMouseSensitivity: 7
+  UseFixedDistanceLookKeys: 1
+  UpLookKey: 105
+  DownLookKey: 107
+  LeftLookKey: 106
+  RightLookKey: 108
+  VerticalLookKeySensitivity: 1
+  HorizontalLookKeySensitivity: 0.5
   ReplayFolderLocation: Replays\
+  SaveReplay: 0
 --- !u!114 &1960077663518410568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -626,7 +684,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReplayFolderLocation: Replays\
-  ReplayName: 
+  ReplayName: Replay_2023-06-06-10-18-25-177.replay
+--- !u!114 &5774500035664423022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4418298382927004808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bc818b2b869bb84e80030bfbc313485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTag: Spawn
+  finishTag: Finish
+  timeTag: Time
+--- !u!136 &3067760334636747341
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4418298382927004808}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &4418298383214414295
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,7 +833,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bb7a6506360af8e4fa311fec4cf786be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

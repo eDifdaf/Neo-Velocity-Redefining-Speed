@@ -32,6 +32,9 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] GameObject Rocket;
     [SerializeField] GameObject C4;
 
+    [SerializeField] GameObject HandRocket;
+    [SerializeField] GameObject HandC4;
+
     [SerializeField] float Gravity;
     [SerializeField] float AccelerationSpeed;
     [SerializeField] float SpeedCapModifier;
@@ -159,6 +162,9 @@ public class PlayerScript : MonoBehaviour
         LastWallRun = 0f;
         SlidingAnimationTimer = 0f;
         LastShoot = 0f;
+
+        HandC4.SetActive(false);
+        HandRocket.SetActive(true);
 
         if (!SettingsInputs)
             Cursor.lockState = CursorLockMode.Locked;
@@ -531,9 +537,17 @@ public class PlayerScript : MonoBehaviour
         if (input["Change"] == 1f && LastChange >= ChangeDelay) {
             LastChange = 0f;
             if (SelectedTool == Tools.Rocket)
+            {
                 SelectedTool = Tools.C4;
+                HandC4.SetActive(true);
+                HandRocket.SetActive(false);
+            }
             else
+            {
                 SelectedTool = Tools.Rocket;
+                HandC4.SetActive(false);
+                HandRocket.SetActive(true);
+            }
         }
 
         if (input["Shoot"] == 1f && LastShoot >= ShootDelay) // SHOOT

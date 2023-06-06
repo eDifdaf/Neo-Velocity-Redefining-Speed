@@ -8,8 +8,8 @@ using UnityEngine;
 
 public class ReplayInputScript : AInputScript
 {
-    [SerializeField] string ReplayFolderLocation = "Replays\\";
-    [SerializeField] string ReplayName;
+    [SerializeField] public string ReplayFolderLocation = "Replays\\";
+    [SerializeField] public string ReplayName;
 
     StreamReader replayReader;
 

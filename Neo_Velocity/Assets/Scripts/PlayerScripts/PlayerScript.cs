@@ -595,10 +595,11 @@ public class PlayerScript : MonoBehaviour
 
         if (Respawn || input["Respawn"] == 1f)
         {
+            if (!IsGhost)
             GameObject.FindGameObjectsWithTag("Player").ToList().Where(o => o.GetComponent<PlayerScript>().IsGhost)
                 .ToList().ForEach(o => o.GetComponent<PlayerScript>().Respawn = true);
-            GameObject.FindGameObjectsWithTag("C4").ToList().ForEach(o => Destroy(o));
-            GameObject.FindGameObjectsWithTag("Rocket").ToList().ForEach(o => Destroy(o));
+            GameObject.FindGameObjectsWithTag("C4").Where(o => o.GetComponent<C4Script>().IsGhost == IsGhost).ToList().ForEach(o => Destroy(o));
+            GameObject.FindGameObjectsWithTag("Rocket").Where(o => o.GetComponent<RocketScript>().IsGhost == IsGhost).ToList().ForEach(o => Destroy(o));
             velocity = Vector3.zero;
             rigidbody.velocity = velocity;
             transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;

@@ -9,8 +9,9 @@ public class Spawn : MonoBehaviour {
 
     private GameObject player; // Reference to the spawned player object
     private GameObject playerGhost;
-
-    void Start() {
+    
+    public void Init()
+    {
         SpawnPlayer();
         TimeMeasure timeMeasure = player.GetComponent<TimeMeasure>();
         timeMeasure.InitializeTimer();

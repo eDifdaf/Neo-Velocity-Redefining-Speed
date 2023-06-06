@@ -8,14 +8,16 @@ using UnityEngine;
 
 public class ReplayInputScript : AInputScript
 {
-    [SerializeField] string ReplayFolderLocation = "Replays\\";
-    [SerializeField] string ReplayName;
+    [SerializeField] public string ReplayFolderLocation = "Replays\\";
+    [SerializeField] public string ReplayName;
 
     StreamReader replayReader;
 
     private Func<Dictionary<string, float>> getInputs;
     public override Dictionary<string, float> GetInput()
     {
+        if (replayReader.Peek() == -1) // No more to read from
+            return null;
         return getInputs();
     }
     public override Vector2 GetMouseInput()

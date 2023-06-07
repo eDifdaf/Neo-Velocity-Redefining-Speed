@@ -1232,6 +1232,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4418298382927004809}
     m_Modifications:
+    - target: {fileID: 293733236236399118, guid: 0a887ffd495f918459249d07407f7972, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1611568973809518392, guid: 0a887ffd495f918459249d07407f7972, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1291,6 +1295,14 @@ PrefabInstance:
     - target: {fileID: 2086301918092420854, guid: 0a887ffd495f918459249d07407f7972, type: 3}
       propertyPath: m_Name
       value: Raketenwerfer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2086301918092420854, guid: 0a887ffd495f918459249d07407f7972, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5894457931173237680, guid: 0a887ffd495f918459249d07407f7972, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a887ffd495f918459249d07407f7972, type: 3}

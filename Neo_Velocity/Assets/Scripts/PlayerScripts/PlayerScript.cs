@@ -229,6 +229,8 @@ public class PlayerScript : MonoBehaviour
         if (input == null)
         {
             rigidbody.velocity = Vector3.zero;
+            if (Respawn)
+                RespawnPlayer();
             return;
         }
             
@@ -593,22 +595,7 @@ public class PlayerScript : MonoBehaviour
 
         if (Respawn || input["Respawn"] == 1f)
         {
-            GameObject.FindGameObjectsWithTag("Player").ToList().Where(o => o.GetComponent<PlayerScript>().IsGhost)
-                .ToList().ForEach(o => o.GetComponent<PlayerScript>().Respawn = true);
-            GameObject.FindGameObjectsWithTag("C4").ToList().ForEach(o => Destroy(o));
-            GameObject.FindGameObjectsWithTag("Rocket").ToList().ForEach(o => Destroy(o));
-            velocity = Vector3.zero;
-            rigidbody.velocity = velocity;
-            transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
-            RotationEuler = new Vector3(0, GameObject.FindGameObjectWithTag("Spawn").transform.rotation.eulerAngles.y);
-            Rotation.eulerAngles = RotationEuler;
-            CameraRotationEuler = new Vector3(GameObject.FindGameObjectWithTag("Spawn").transform.rotation.eulerAngles.x, 0);
-            CameraRotation.eulerAngles = CameraRotationEuler;
-
-            GetComponent<TimeMeasure>().TimeToFinish = null;
-
-            if (SaveReplay || PlayReplay)
-                ResetInputs();
+            RespawnPlayer();
         }
         Respawn = false;
 
@@ -630,6 +617,27 @@ public class PlayerScript : MonoBehaviour
         // Issue with the way wallrunning is handled,
         // if you touch 2 Walls and move slightly away from the main one,
         // it doesn't snap you to the second one
+    }
+
+    public void RespawnPlayer()
+    {
+        if (!IsGhost)
+            GameObject.FindGameObjectsWithTag("Player").ToList().Where(o => o.GetComponent<PlayerScript>().IsGhost)
+            .ToList().ForEach(o => o.GetComponent<PlayerScript>().Respawn = true);
+        GameObject.FindGameObjectsWithTag("C4").Where(o => o.GetComponent<C4Script>().IsGhost == IsGhost).ToList().ForEach(o => Destroy(o));
+        GameObject.FindGameObjectsWithTag("Rocket").Where(o => o.GetComponent<RocketScript>().IsGhost == IsGhost).ToList().ForEach(o => Destroy(o));
+        velocity = Vector3.zero;
+        rigidbody.velocity = velocity;
+        transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
+        RotationEuler = new Vector3(0, GameObject.FindGameObjectWithTag("Spawn").transform.rotation.eulerAngles.y);
+        Rotation.eulerAngles = RotationEuler;
+        CameraRotationEuler = new Vector3(GameObject.FindGameObjectWithTag("Spawn").transform.rotation.eulerAngles.x, 0);
+        CameraRotation.eulerAngles = CameraRotationEuler;
+
+        GetComponent<TimeMeasure>().TimeToFinish = null;
+
+        if (SaveReplay || PlayReplay)
+            ResetInputs();
     }
 
     public void MakeGhost()

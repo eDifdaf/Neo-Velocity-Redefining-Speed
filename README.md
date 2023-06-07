@@ -4,9 +4,8 @@ In this game, you'll race against your ghost.
 
 Gameplay:
 The gameplay is inspired by "Titanfall 2 Gauntlet", where players must navigate a complex obstacle course as quickly as possible. 
-You'll need to use all of your movement abilities to traverse the environment quickly and efficiently. 
-You can race against your ghost, which represents your best time on the course, and compare your progress to others on the online leaderboard. 
-In addition, you can use left click and right click to fire a rocket launcher and C4 respectively, which you can use to take down obstacles and speed up your progress through the course.
+You'll need to use all of your movement abilities to traverse the environment quickly and efficiently.
+In addition, you can use left click to fire a rocket launcher and C4 respectively, which you can use to take down obstacles and speed up your progress through the course.
 
 Input Recording:
 The game also includes a feature that saves your inputs locally in a file, so you can review them and display them. 

@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 7dcee8e339d59114eb7fab3e9febe537, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18425442, g: 0.16681068, b: 0.17953701, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8512,6 +8512,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 803671849}
     m_Modifications:
+    - target: {fileID: 1176567888977577614, guid: 570ef99a8a2435a4493ca5b43c0167e4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9b7ba6336f7bc5f4e88dce9c8448edf7, type: 2}
     - target: {fileID: 8522451204203714818, guid: 570ef99a8a2435a4493ca5b43c0167e4, type: 3}
       propertyPath: m_Name
       value: Screen Variant
@@ -11546,6 +11550,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 803671849}
     m_Modifications:
+    - target: {fileID: 1176567888977577614, guid: 570ef99a8a2435a4493ca5b43c0167e4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1b16cd15f139c044bb04e445d9c17d16, type: 2}
     - target: {fileID: 1252840626778714647, guid: 570ef99a8a2435a4493ca5b43c0167e4, type: 3}
       propertyPath: m_Type
       value: 3
@@ -14212,7 +14220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5255497152958598413, guid: c24b37b97f090114a801e42e1b57dad1, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5255497152958598413, guid: c24b37b97f090114a801e42e1b57dad1, type: 3}
       propertyPath: m_AnchorMax.x
@@ -17270,7 +17278,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 973260854}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.198914, y: -57.131115, z: 50.296482}
+  m_LocalPosition: {x: 19.198914, y: -56, z: 50.296482}
   m_LocalScale: {x: 400, y: 0, z: 400}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24509,7 +24517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3233861620720283727, guid: e7749c40a5eb38941bdfca7918048173, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3233861620720283727, guid: e7749c40a5eb38941bdfca7918048173, type: 3}
       propertyPath: m_AnchorMax.x

@@ -1,6 +1,6 @@
 # Neo-Velocity-Redefining-Speed
 Welcome to "Neo Velocity: Redefining Speed", a fast-paced cyberpunk speedrun/movement game! 
-In this game, you'll race against your ghost to beat your best time and climb up the online leaderboard.
+In this game, you'll race against your ghost.
 
 Gameplay:
 The gameplay is inspired by "Titanfall 2 Gauntlet", where players must navigate a complex obstacle course as quickly as possible. 

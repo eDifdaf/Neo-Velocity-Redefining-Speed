@@ -8512,6 +8512,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 803671849}
     m_Modifications:
+    - target: {fileID: 1176567888977577614, guid: 570ef99a8a2435a4493ca5b43c0167e4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9b7ba6336f7bc5f4e88dce9c8448edf7, type: 2}
     - target: {fileID: 8522451204203714818, guid: 570ef99a8a2435a4493ca5b43c0167e4, type: 3}
       propertyPath: m_Name
       value: Screen Variant
@@ -11546,6 +11550,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 803671849}
     m_Modifications:
+    - target: {fileID: 1176567888977577614, guid: 570ef99a8a2435a4493ca5b43c0167e4, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1b16cd15f139c044bb04e445d9c17d16, type: 2}
     - target: {fileID: 1252840626778714647, guid: 570ef99a8a2435a4493ca5b43c0167e4, type: 3}
       propertyPath: m_Type
       value: 3

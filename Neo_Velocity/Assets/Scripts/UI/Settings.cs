@@ -6,6 +6,7 @@ using UnityEngine.Windows;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Settings : AInputScript {
     public AudioMixer audioMixer;
@@ -61,5 +62,9 @@ public class Settings : AInputScript {
 
     public void SetFullscreen(bool isFullscreen) {
         Screen.fullScreen = isFullscreen;
+    }
+
+    public void Back() {
+        SceneManager.LoadScene("Main_Menu");
     }
 }

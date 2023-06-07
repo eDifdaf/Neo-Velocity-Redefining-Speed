@@ -122,4 +122,7 @@ public class LevelSelect : MonoBehaviour
             return temp == SceneName;
         }).Select(s => s.Substring(ReplayFolderLocation.Length)).ToList();
     }
+    public void LoadMainMenu() {
+        SceneManager.LoadScene("Main_Menu");
+    }
 }

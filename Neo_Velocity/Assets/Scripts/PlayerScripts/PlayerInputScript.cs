@@ -233,6 +233,16 @@ public class PlayerInputScript : AInputScript
         TimeToFinish = time;
         AlreadyFinished = true;
     }
+
+    void RenameCurrentFile(string newName)
+    {
+        replayWriter.Close();
+        string newWriterLocation = ReplayFolderLocation + newName + ".replay";
+        File.Move(WriterLocation, newWriterLocation);
+        WriterLocation = newWriterLocation;
+        replayWriter = new StreamWriter(WriterLocation);
+    }
+
     void ResetWriter()
     {
         replayWriter.Close();
@@ -242,6 +252,10 @@ public class PlayerInputScript : AInputScript
             arrLine[1] = TimeToFinish.ToString(CultureInfo.InvariantCulture);
             File.WriteAllLines(WriterLocation, arrLine);
             TimeToFinish = 0;
+        }
+        else
+        {
+            File.Delete(WriterLocation);
         }
     }
 

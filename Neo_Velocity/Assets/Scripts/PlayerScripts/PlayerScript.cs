@@ -628,6 +628,7 @@ public class PlayerScript : MonoBehaviour
             camera.transform.rotation = CameraRotation;
             RevertToCameraY = CameraRotationEuler.x;
             RevertToCameraZ = CameraRotationEuler.z;
+            RevertToRotation = RotationEuler.y;
 
             GetComponent<TimeMeasure>().TimeToFinish = null;
 

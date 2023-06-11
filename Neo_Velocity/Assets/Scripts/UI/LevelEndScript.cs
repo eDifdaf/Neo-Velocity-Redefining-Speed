@@ -5,9 +5,25 @@ using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine.UI;
 
-public class LevelEndScript : MonoBehaviour
-{
+public class LevelEndScript : MonoBehaviour {
+    [SerializeField] private string nextLevelName;
+    [SerializeField] private Button Nextbutton;
+    [SerializeField] private TMP_Text Nexttext;
+ 
+
+    public void Start() {
+        
+        if (nextLevelName == "") {
+            Nextbutton.enabled = false;
+            Nexttext.enabled = false;
+        }
+    }
+    
+
+    
     public void RenameReplay(string Name)
     {
         GameObject.FindGameObjectsWithTag("Player").First(o => !o.GetComponent<PlayerScript>().IsGhost).GetComponent<PlayerInputScript>().RenameCurrentFile(Name);
@@ -16,9 +32,8 @@ public class LevelEndScript : MonoBehaviour
     {
         GameObject.FindGameObjectsWithTag("Player").ToList().ForEach(o => o.GetComponent<PlayerScript>().Respawn = true);
     }
-    public void LoadNextLevel(string SceneName)
-    {
-        LoadScene(SceneName);
+    public void LoadNextLevel() {
+        LoadScene(nextLevelName);
     }
     public void MainMenu()
     {

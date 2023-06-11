@@ -17,6 +17,8 @@ TagManager:
   - Rocket
   - Ghost_C4
   - Ghost_Rocket
+  - NextStage
+  - UI
   layers:
   - Default
   - TransparentFX

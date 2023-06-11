@@ -819,7 +819,7 @@ GameObject:
   - component: {fileID: 5274231161774915546}
   m_Layer: 0
   m_Name: LevelEnd
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -987,6 +987,7 @@ GameObject:
   - component: {fileID: 5288882224649582457}
   - component: {fileID: 1117149864669102199}
   - component: {fileID: 7668280678444949741}
+  - component: {fileID: 2284242329480492002}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -1076,6 +1077,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2284242329480492002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5612631984054814455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4668b42009ff48479cb8ecc33b06d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextLevelName: 
+  Nextbutton: {fileID: 6228439199322143791}
+  Nexttext: {fileID: 5795048914863437010}
 --- !u!1 &6342844221987344817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1639,7 +1655,7 @@ GameObject:
   - component: {fileID: 4787237507692643303}
   - component: {fileID: 8748052210646148102}
   m_Layer: 0
-  m_Name: txtNext (1)
+  m_Name: txtMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

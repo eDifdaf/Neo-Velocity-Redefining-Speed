@@ -634,21 +634,10 @@ public class PlayerScript : MonoBehaviour
 
         if (GetComponent<TimeMeasure>().TimeToFinish != null)
         {
-            GameObject.FindGameObjectWithTag("LevelEnd_UI").GetComponent<LevelEndScript>().Show();
+            if (!IsGhost)
+                GameObject.FindGameObjectWithTag("LevelEnd_UI").GetComponent<LevelEndScript>().Show();
             Finished((float)GetComponent<TimeMeasure>().TimeToFinish);
         }
-
-        /*
-         * temp
-        Debug.Log(CurrentWall);
-        if (LastPainted)
-            LastPainted.GetComponent<MeshRenderer>().material.SetColor("BLUE", new Color(0, 0, 255));
-        if (CurrentWall)
-        {
-            CurrentWall.GetComponent<MeshRenderer>().material.SetColor("RED", new Color(255, 0, 0));
-            LastPainted = CurrentWall;
-        }
-        */
 
         // FOV setting / more than 60 clips the camera through Walls :(
         //camera.GetComponent<Camera>().fieldOfView = Mathf.Floor(FOV + FOV * Mathf.Pow(velocity.magnitude / 100, 0.1f));

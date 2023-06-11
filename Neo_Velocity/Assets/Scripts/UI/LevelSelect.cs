@@ -48,12 +48,12 @@ public class LevelSelect : MonoBehaviour
             GhostButton.GetComponent<UIReplayButtonScript>().value = r;
             GhostButton.GetComponent<UIReplayButtonScript>().action = GhostButtonPressed;
             GhostButton.GetComponent<Button>().onClick
-            .AddListener(GhostButton.GetComponent<UIReplayButtonScript>().Execute);
+            .AddListener(() => GhostButton.GetComponent<UIReplayButtonScript>().Execute());
             GameObject WatchButton = temp.GetComponent<UIReplayInfoHolderScript>().WatchButton;
             WatchButton.GetComponent<UIReplayButtonScript>().value = r;
             WatchButton.GetComponent<UIReplayButtonScript>().action = WatchButtonPressed;
             WatchButton.GetComponent<Button>().onClick
-            .AddListener(WatchButton.GetComponent<UIReplayButtonScript>().Execute);
+            .AddListener(() => WatchButton.GetComponent<UIReplayButtonScript>().Execute());
         });
     }
 

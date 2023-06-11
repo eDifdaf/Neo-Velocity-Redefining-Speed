@@ -7,36 +7,36 @@ using UnityEngine.SceneManagement;
 
 public class PlayerInputScript : AInputScript
 {
-    [SerializeField] KeyCode ForwardKey = KeyCode.W;
-    [SerializeField] KeyCode BackwardsKey = KeyCode.S;
-    [SerializeField] KeyCode LeftKey = KeyCode.A;
-    [SerializeField] KeyCode RightKey = KeyCode.D;
-    [SerializeField] KeyCode SlideKey = KeyCode.LeftShift;
-    [SerializeField] KeyCode JumpKey = KeyCode.Space;
-    [SerializeField] KeyCode RespawnKey = KeyCode.R;
-    [SerializeField] KeyCode ShootKey = KeyCode.Mouse0;
-    [SerializeField] KeyCode ActivateKey = KeyCode.Mouse1;
+    [SerializeField] public KeyCode ForwardKey = KeyCode.W;
+    [SerializeField] public KeyCode BackwardsKey = KeyCode.S;
+    [SerializeField] public KeyCode LeftKey = KeyCode.A;
+    [SerializeField] public KeyCode RightKey = KeyCode.D;
+    [SerializeField] public KeyCode SlideKey = KeyCode.LeftShift;
+    [SerializeField] public KeyCode JumpKey = KeyCode.Space;
+    [SerializeField] public KeyCode RespawnKey = KeyCode.R;
+    [SerializeField] public KeyCode ShootKey = KeyCode.Mouse0;
+    [SerializeField] public KeyCode ActivateKey = KeyCode.Mouse1;
     /// <summary>
     /// <p>false -> Tool changes by scrolling</p>
     /// <br></br>
     /// <p>true  -> Tool changes with the ChangeKey</p>
     /// </summary>
-    [SerializeField] bool UseChangeKey = true;
-    [SerializeField] KeyCode ChangeKey = KeyCode.Mouse2;
-    [SerializeField] float VerticalMouseSensitivity = 4f;
-    [SerializeField] float HorizontalMouseSensitivity = 7f;
+    [SerializeField] public bool UseChangeKey = true;
+    [SerializeField] public KeyCode ChangeKey = KeyCode.Mouse2;
+    [SerializeField] public float VerticalMouseSensitivity = 4f;
+    [SerializeField] public float HorizontalMouseSensitivity = 7f;
     /// <summary>
     /// <p>false -> Only Mouse is used to move the Camera</p>
     /// <br></br>
     /// <p>true  -> Additional to Mouse Movement, the 4 Look Keys are used to move the camera</p>
     /// </summary>
-    [SerializeField] bool UseFixedDistanceLookKeys = true;
-    [SerializeField] KeyCode UpLookKey = KeyCode.I;
-    [SerializeField] KeyCode DownLookKey = KeyCode.K;
-    [SerializeField] KeyCode LeftLookKey = KeyCode.J;
-    [SerializeField] KeyCode RightLookKey = KeyCode.L;
-    [SerializeField] float VerticalLookKeySensitivity = 1f;
-    [SerializeField] float HorizontalLookKeySensitivity = 0.5f;
+    [SerializeField] public bool UseFixedDistanceLookKeys = true;
+    [SerializeField] public KeyCode UpLookKey = KeyCode.I;
+    [SerializeField] public KeyCode DownLookKey = KeyCode.K;
+    [SerializeField] public KeyCode LeftLookKey = KeyCode.J;
+    [SerializeField] public KeyCode RightLookKey = KeyCode.L;
+    [SerializeField] public float VerticalLookKeySensitivity = 1f;
+    [SerializeField] public float HorizontalLookKeySensitivity = 0.5f;
 
 
     [SerializeField] string ReplayFolderLocation = "Replays\\";

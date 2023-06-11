@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2258522079623975457}
   - component: {fileID: 8986507565867484758}
   m_Layer: 0
-  m_Name: Platform
+  m_Name: Platform_1
   m_TagString: No_Wallrun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

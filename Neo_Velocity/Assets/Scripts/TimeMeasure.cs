@@ -15,8 +15,6 @@ public class TimeMeasure : MonoBehaviour
 
     public void Start() {
         TimeToFinish = null;
-        
-
     }
 
     private void OnTriggerEnter(Collider other) {

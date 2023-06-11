@@ -44,14 +44,16 @@ public class LevelSelect : MonoBehaviour
                 temp.GetComponent<RectTransform>().localPosition = new Vector2(90, -80 * i); // This doesn't correctly arrange the Buttons, good Luck!
             }
             i++;
-            temp.GetComponent<UIReplayInfoHolderScript>().GhostButton.GetComponent<UIReplayButtonScript>().value = r;
-            temp.GetComponent<UIReplayInfoHolderScript>().GhostButton.GetComponent<UIReplayButtonScript>().action = GhostButtonPressed;
-            temp.GetComponent<UIReplayInfoHolderScript>().GhostButton.GetComponent<Button>().onClick
-            .AddListener(temp.GetComponent<UIReplayInfoHolderScript>().GhostButton.GetComponent<UIReplayButtonScript>().Execute);
-            temp.GetComponent<UIReplayInfoHolderScript>().WatchButton.GetComponent<UIReplayButtonScript>().value = r;
-            temp.GetComponent<UIReplayInfoHolderScript>().WatchButton.GetComponent<UIReplayButtonScript>().action = WatchButtonPressed;
-            temp.GetComponent<UIReplayInfoHolderScript>().WatchButton.GetComponent<Button>().onClick
-            .AddListener(temp.GetComponent<UIReplayInfoHolderScript>().WatchButton.GetComponent<UIReplayButtonScript>().Execute);
+            GameObject GhostButton = temp.GetComponent<UIReplayInfoHolderScript>().GhostButton;
+            GhostButton.GetComponent<UIReplayButtonScript>().value = r;
+            GhostButton.GetComponent<UIReplayButtonScript>().action = GhostButtonPressed;
+            GhostButton.GetComponent<Button>().onClick
+            .AddListener(GhostButton.GetComponent<UIReplayButtonScript>().Execute);
+            GameObject WatchButton = temp.GetComponent<UIReplayInfoHolderScript>().WatchButton;
+            WatchButton.GetComponent<UIReplayButtonScript>().value = r;
+            WatchButton.GetComponent<UIReplayButtonScript>().action = WatchButtonPressed;
+            WatchButton.GetComponent<Button>().onClick
+            .AddListener(WatchButton.GetComponent<UIReplayButtonScript>().Execute);
         });
     }
 

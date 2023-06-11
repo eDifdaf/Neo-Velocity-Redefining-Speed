@@ -21,7 +21,8 @@ public class Spawn : MonoBehaviour {
     void SpawnPlayer() {
         if (SpawnGhost)
         {
-            playerGhost = Instantiate(playerPrefab, transform.position, transform.rotation);
+            playerGhost = Instantiate(playerPrefab);
+            playerGhost.GetComponent<PlayerScript>().Respawn = true;
             if (WatchGhost)
             {
                 playerGhost.GetComponent<PlayerScript>().WatchGhost();
@@ -30,6 +31,7 @@ public class Spawn : MonoBehaviour {
             }
             playerGhost.GetComponent<PlayerScript>().MakeGhost();
         }
-        player = Instantiate(playerPrefab, transform.position, transform.rotation);
+        player = Instantiate(playerPrefab);
+        player.GetComponent<PlayerScript>().Respawn = true;
     }
 }

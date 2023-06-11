@@ -607,11 +607,6 @@ public class PlayerScript : MonoBehaviour
 
         rigidbody.velocity = velocity;
 
-        if (GetComponent<TimeMeasure>().TimeToFinish != null)
-        {
-            Finished((float)GetComponent<TimeMeasure>().TimeToFinish);
-        }
-
         if (Respawn || input["Respawn"] == 1f)
         {
             GameObject.FindGameObjectsWithTag("Player").ToList().Where(o => o.GetComponent<PlayerScript>().IsGhost)
@@ -636,6 +631,12 @@ public class PlayerScript : MonoBehaviour
                 ResetInputs();
         }
         Respawn = false;
+
+        if (GetComponent<TimeMeasure>().TimeToFinish != null)
+        {
+            GameObject.FindGameObjectWithTag("LevelEnd_UI").GetComponent<LevelEndScript>().Show();
+            Finished((float)GetComponent<TimeMeasure>().TimeToFinish);
+        }
 
         /*
          * temp

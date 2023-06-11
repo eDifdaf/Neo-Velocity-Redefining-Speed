@@ -121,7 +121,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2284242329480492002}
+      - m_Target: {fileID: 7583604745613318967}
         m_TargetAssemblyTypeName: LevelEndScript, Assembly-CSharp
         m_MethodName: StayInLevel
         m_Mode: 1
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2284242329480492002}
+      - m_Target: {fileID: 7583604745613318967}
         m_TargetAssemblyTypeName: LevelEndScript, Assembly-CSharp
         m_MethodName: RenameReplay
         m_Mode: 2
@@ -523,7 +523,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2284242329480492002}
+      - m_Target: {fileID: 7583604745613318967}
         m_TargetAssemblyTypeName: LevelEndScript, Assembly-CSharp
         m_MethodName: LoadNextLevel
         m_Mode: 1
@@ -709,7 +709,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2284242329480492002}
+      - m_Target: {fileID: 7583604745613318967}
         m_TargetAssemblyTypeName: LevelEndScript, Assembly-CSharp
         m_MethodName: MainMenu
         m_Mode: 1
@@ -865,9 +865,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5274231161774915546}
+  - component: {fileID: 7583604745613318967}
   m_Layer: 0
   m_Name: LevelEnd
-  m_TagString: UI
+  m_TagString: LevelEnd_UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -888,6 +889,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7583604745613318967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3149032440262394360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4668b42009ff48479cb8ecc33b06d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextLevelName: 
+  Holder: {fileID: 5612631984054814455}
+  Nextbutton: {fileID: 6228439199322143791}
+  SaveReplayButton: {fileID: 4714235019489557694}
 --- !u!1 &4936736352280338082
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,7 +1052,6 @@ GameObject:
   - component: {fileID: 5288882224649582457}
   - component: {fileID: 1117149864669102199}
   - component: {fileID: 7668280678444949741}
-  - component: {fileID: 2284242329480492002}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -1125,21 +1141,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2284242329480492002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5612631984054814455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4668b42009ff48479cb8ecc33b06d1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextLevelName: 
-  Nextbutton: {fileID: 6228439199322143791}
-  Nexttext: {fileID: 5795048914863437010}
 --- !u!1 &6342844221987344817
 GameObject:
   m_ObjectHideFlags: 0

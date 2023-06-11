@@ -240,7 +240,7 @@ public class PlayerInputScript : AInputScript
         string newWriterLocation = ReplayFolderLocation + newName + ".replay";
         File.Move(WriterLocation, newWriterLocation);
         WriterLocation = newWriterLocation;
-        replayWriter = new StreamWriter(WriterLocation);
+        replayWriter = new StreamWriter(WriterLocation, true);
     }
 
     void ResetWriter()

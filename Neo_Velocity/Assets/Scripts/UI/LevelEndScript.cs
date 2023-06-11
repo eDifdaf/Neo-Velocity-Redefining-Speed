@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -21,8 +20,6 @@ public class LevelEndScript : MonoBehaviour {
             Nexttext.enabled = false;
         }
     }
-    
-
     
     public void RenameReplay(TMP_InputField Input) {
         string Name = Input.text;

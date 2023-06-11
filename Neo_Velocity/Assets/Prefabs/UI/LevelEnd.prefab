@@ -120,7 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7289671356009338547}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2284242329480492002}
+        m_TargetAssemblyTypeName: LevelEndScript, Assembly-CSharp
+        m_MethodName: StayInLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &364699778398242136
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +254,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2741590532862753336}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2284242329480492002}
+        m_TargetAssemblyTypeName: LevelEndScript, Assembly-CSharp
+        m_MethodName: RenameReplay
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 9087760997897574773}
+          m_ObjectArgumentAssemblyTypeName: TMPro.TMP_InputField, Unity.TextMeshPro
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &902468610983535868
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,7 +522,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5748036403678695843}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2284242329480492002}
+        m_TargetAssemblyTypeName: LevelEndScript, Assembly-CSharp
+        m_MethodName: LoadNextLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1901345016098865676
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,7 +708,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4961609902268272118}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2284242329480492002}
+        m_TargetAssemblyTypeName: LevelEndScript, Assembly-CSharp
+        m_MethodName: MainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3034172381618437813
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,7 +34,7 @@ public class LevelSelect : MonoBehaviour
         allReplays.ForEach(r =>
         {
             GameObject temp = Instantiate(UIReplayPrefab);
-            temp.GetComponent<UIReplayInfoHolderScript>().Text.GetComponent<TextMeshProUGUI>().text = r;
+            temp.GetComponent<UIReplayInfoHolderScript>().Text.GetComponent<TextMeshProUGUI>().text = r.Remove(r.Length-7);
             temp.transform.SetParent(ReplayInfoHolder.transform);
             temp.GetComponent<RectTransform>().localPosition = new Vector2(90, -80 * i); // This doesn't correctly arrange the Buttons, good Luck!
             i++;

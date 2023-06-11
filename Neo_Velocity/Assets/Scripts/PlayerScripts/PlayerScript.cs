@@ -601,6 +601,9 @@ public class PlayerScript : MonoBehaviour
             Rotation.eulerAngles = RotationEuler;
             CameraRotationEuler = new Vector3(GameObject.FindGameObjectWithTag("Spawn").transform.rotation.eulerAngles.x, 0);
             CameraRotation.eulerAngles = CameraRotationEuler;
+            camera.transform.rotation = CameraRotation;
+            RevertToCameraY = CameraRotationEuler.x;
+            RevertToCameraZ = CameraRotationEuler.z;
 
             GetComponent<TimeMeasure>().TimeToFinish = null;
 

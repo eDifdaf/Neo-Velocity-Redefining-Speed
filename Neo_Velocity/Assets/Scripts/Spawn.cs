@@ -25,6 +25,7 @@ public class Spawn : MonoBehaviour {
             if (WatchGhost)
             {
                 playerGhost.GetComponent<PlayerScript>().WatchGhost();
+                player = playerGhost;
                 return;
             }
             playerGhost.GetComponent<PlayerScript>().MakeGhost();

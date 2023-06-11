@@ -63,49 +63,61 @@ public class ButtonMapping : MonoBehaviour
         {
             case "Forward Key":
                 inputScript.ForwardKey = newKey;
+                prevInfo.text_field.text = inputScript.ForwardKey.ToString();
                 break;
             case "Backwards Key":
                 inputScript.BackwardsKey = newKey;
+                prevInfo.text_field.text = inputScript.BackwardsKey.ToString();
                 break;
             case "Left Key":
                 inputScript.LeftKey = newKey;
+                prevInfo.text_field.text = inputScript.LeftKey.ToString();
                 break;
             case "Right Key":
                 inputScript.RightKey = newKey;
+                prevInfo.text_field.text = inputScript.RightKey.ToString();
                 break;
             case "Look up Key":
                 inputScript.UpLookKey = newKey;
+                prevInfo.text_field.text = inputScript.UpLookKey.ToString();
                 break;
             case "Look down Key":
                 inputScript.DownLookKey = newKey;
+                prevInfo.text_field.text = inputScript.DownLookKey.ToString();
                 break;
             case "Look left Key":
                 inputScript.LeftLookKey = newKey;
+                prevInfo.text_field.text = inputScript.LeftLookKey.ToString();
                 break;
             case "Look right Key":
                 inputScript.RightLookKey = newKey;
+                prevInfo.text_field.text = inputScript.RightLookKey.ToString();
                 break;
             case "Slide Key":
                 inputScript.SlideKey = newKey;
+                prevInfo.text_field.text = inputScript.SlideKey.ToString();
                 break;
             case "Jump Key":
                 inputScript.JumpKey = newKey;
+                prevInfo.text_field.text = inputScript.JumpKey.ToString();
                 break;
             case "Respawn Key":
                 inputScript.RespawnKey = newKey;
+                prevInfo.text_field.text = inputScript.RespawnKey.ToString();
                 break;
             case "Shoot Key":
                 inputScript.ShootKey = newKey;
+                prevInfo.text_field.text = inputScript.ShootKey.ToString();
                 break;
             case "Activate Key":
                 inputScript.ActivateKey = newKey;
+                prevInfo.text_field.text = inputScript.ActivateKey.ToString();
                 break;
             case "Tool Change Key":
                 inputScript.ChangeKey = newKey;
+                prevInfo.text_field.text = inputScript.ChangeKey.ToString();
                 break;
         }
-
-        prevInfo.text_field.text = prevInfo.text;
     }
 
     public void ChangeBool(ButtonMappingInfoHolder info)

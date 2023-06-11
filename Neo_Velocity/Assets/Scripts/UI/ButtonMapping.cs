@@ -1,40 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class ButtonMapping : MonoBehaviour
 {
     /*
-    [SerializeField] KeyCode ForwardKey = KeyCode.W;
-    [SerializeField] KeyCode BackwardsKey = KeyCode.S;
-    [SerializeField] KeyCode LeftKey = KeyCode.A;
-    [SerializeField] KeyCode RightKey = KeyCode.D;
-    [SerializeField] KeyCode SlideKey = KeyCode.LeftShift;
-    [SerializeField] KeyCode JumpKey = KeyCode.Space;
-    [SerializeField] KeyCode RespawnKey = KeyCode.R;
-    [SerializeField] KeyCode ShootKey = KeyCode.Mouse0;
-    [SerializeField] KeyCode ActivateKey = KeyCode.Mouse1;
-    /// <summary>
-    /// <p>false -> Tool changes by scrolling</p>
-    /// <br></br>
-    /// <p>true  -> Tool changes with the ChangeKey</p>
-    /// </summary>
     [SerializeField] bool UseChangeKey = true;
-    [SerializeField] KeyCode ChangeKey = KeyCode.Mouse2;
     [SerializeField] float VerticalMouseSensitivity = 4f;
     [SerializeField] float HorizontalMouseSensitivity = 7f;
-    /// <summary>
-    /// <p>false -> Only Mouse is used to move the Camera</p>
-    /// <br></br>
-    /// <p>true  -> Additional to Mouse Movement, the 4 Look Keys are used to move the camera</p>
-    /// </summary>
     [SerializeField] bool UseFixedDistanceLookKeys = true;
-    [SerializeField] KeyCode UpLookKey = KeyCode.I;
-    [SerializeField] KeyCode DownLookKey = KeyCode.K;
-    [SerializeField] KeyCode LeftLookKey = KeyCode.J;
-    [SerializeField] KeyCode RightLookKey = KeyCode.L;
     [SerializeField] float VerticalLookKeySensitivity = 1f;
     [SerializeField] float HorizontalLookKeySensitivity = 0.5f;
     */
@@ -42,6 +19,7 @@ public class ButtonMapping : MonoBehaviour
     PlayerInputScript inputScript;
     bool awaitingButton;
     string ButtonToChange;
+    ButtonMappingInfoHolder prevInfo;
     
     public void Start()
     {
@@ -53,6 +31,10 @@ public class ButtonMapping : MonoBehaviour
         if (!awaitingButton)
             return;
 
+        // This is for getting the pressed Key
+        // If it doesn't work, please find a different one
+        // Then pass it to -> ChangeButton(KeyCode newKey)
+        // You should be able to tell from the logs if it works or not
         Event temp = Event.current;
         if (temp.isKey){
             if (temp.type == EventType.KeyDown)
@@ -62,19 +44,18 @@ public class ButtonMapping : MonoBehaviour
                 ChangeButton(temp.keyCode);
             }
         }
-
-        if (Input.anyKeyDown && awaitingButton)
-        {
-            awaitingButton = false;
-            string keyPressed = Input.inputString;
-            Debug.Log(keyPressed);
-            
-        }
     }
-    public void SheduleButtonChange(string name)
+    public void SheduleButtonChange(ButtonMappingInfoHolder info)
     {
+        if (awaitingButton)
+        {
+            prevInfo.text_field.text = prevInfo.text;
+        }
         awaitingButton = true;
-        ButtonToChange = name;
+        ButtonToChange = info.text;
+        info.text_field.text = "Input Key...";
+
+        prevInfo = info;
     }
     public void ChangeButton(KeyCode newKey)
     {
@@ -123,9 +104,51 @@ public class ButtonMapping : MonoBehaviour
                 inputScript.ChangeKey = newKey;
                 break;
         }
+
+        prevInfo.text_field.text = prevInfo.text;
     }
-    public void GetNewButton()
+
+    public void ChangeBool(ButtonMappingInfoHolder info)
     {
-        
+        switch (info.text)
+        {
+            case "Use Change Key":
+                inputScript.UseChangeKey = info.checkBox;
+                break;
+            case "Use Look Keys":
+                inputScript.UseFixedDistanceLookKeys = info.checkBox;
+                break;
+        }
+    }
+
+    public void ChangeFloat(ButtonMappingInfoHolder info)
+    {
+        switch (info.text)
+        {
+            case "Horizontal Mouse Sensitivity":
+                if (info.IsSlider)
+                    inputScript.HorizontalMouseSensitivity = info.slider.value;
+                else
+                    inputScript.HorizontalMouseSensitivity = float.Parse(info.inputTextField.text);
+                break;
+            case "Vertical Mouse Sensitivity":
+                if (info.IsSlider)
+                    inputScript.VerticalMouseSensitivity = info.slider.value;
+                else
+                    inputScript.VerticalMouseSensitivity = float.Parse(info.inputTextField.text);
+                break;
+            case "Horizontal Look Key Sensitivity":
+                if (info.IsSlider)
+                    inputScript.HorizontalLookKeySensitivity = info.slider.value;
+                else
+                    inputScript.HorizontalLookKeySensitivity = float.Parse(info.inputTextField.text);
+                break;
+            case "Vertical Look Key Sensitivity":
+                if (info.IsSlider)
+                    inputScript.VerticalLookKeySensitivity = info.slider.value;
+                else
+                    inputScript.VerticalLookKeySensitivity = float.Parse(info.inputTextField.text);
+                break;
+        }
     }
 }

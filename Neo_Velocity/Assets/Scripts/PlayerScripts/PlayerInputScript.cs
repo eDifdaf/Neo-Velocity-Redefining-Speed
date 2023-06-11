@@ -234,7 +234,7 @@ public class PlayerInputScript : AInputScript
         AlreadyFinished = true;
     }
 
-    void RenameCurrentFile(string newName)
+    public void RenameCurrentFile(string newName)
     {
         replayWriter.Close();
         string newWriterLocation = ReplayFolderLocation + newName + ".replay";

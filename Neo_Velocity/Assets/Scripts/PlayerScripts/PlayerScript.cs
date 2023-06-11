@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using UnityEngine;
 
 public enum Tools
@@ -97,6 +98,8 @@ public class PlayerScript : MonoBehaviour
     float RevertToCameraY;
     float RevertToCameraZ;
 
+    float RevertToRotation;
+
     public bool IsGhost = false;
 
     #endregion
@@ -147,6 +150,7 @@ public class PlayerScript : MonoBehaviour
         
         RevertToCameraY = 0;
         RevertToCameraZ = 0;
+        RevertToRotation = 0;
 
         OtherWalls = new List<Collider>();
 
@@ -212,7 +216,16 @@ public class PlayerScript : MonoBehaviour
         else if (CameraRotationEuler.x < -90)
             CameraRotationEuler.x = -90;
 
-        CameraRotationEuler.y += AmpMouseX;
+        Quaternion temp = Rocket.transform.rotation;
+        temp.eulerAngles = new Vector3(CameraRotationEuler.x, Rocket.transform.rotation.eulerAngles.y);
+        Rocket.transform.rotation = temp;
+        temp = C4.transform.rotation;
+        temp.eulerAngles = new Vector3(CameraRotationEuler.x, C4.transform.rotation.eulerAngles.y);
+        C4.transform.rotation = temp;
+
+        RotationEuler.y += AmpMouseX;
+        Rotation.eulerAngles = RotationEuler;
+        transform.rotation = Rotation;
 
         CameraRotation.eulerAngles = CameraRotationEuler;
         camera.transform.localRotation = CameraRotation;
@@ -342,9 +355,11 @@ public class PlayerScript : MonoBehaviour
 
         CameraRotationEuler.y = 0;
         #region General Rotation
+        RotationEuler.y = RevertToRotation;
         RotationEuler.y += MouseX;
         Rotation.eulerAngles = RotationEuler;
         transform.rotation = Rotation;
+        RevertToRotation = RotationEuler.y;
         #endregion
         // Camera Rotation moved down to Wallrunning Section for Camera tilting
 
@@ -487,6 +502,15 @@ public class PlayerScript : MonoBehaviour
         CameraRotation.eulerAngles = CameraRotationEuler;
         camera.transform.localRotation = CameraRotation;
         RevertToCameraY = CameraRotationEuler.x;
+
+        /*
+        Quaternion temp = Rocket.transform.localRotation;
+        temp.eulerAngles = new Vector3(CameraRotationEuler.x, Rocket.transform.localRotation.eulerAngles.y);
+        Rocket.transform.localRotation = temp;
+        temp = C4.transform.localRotation;
+        temp.eulerAngles = new Vector3(CameraRotationEuler.x, C4.transform.localRotation.eulerAngles.y);
+        C4.transform.localRotation = temp;
+        */
         #endregion
 
         if (WallJumpForgetTime > WallJumpForgetDelay)

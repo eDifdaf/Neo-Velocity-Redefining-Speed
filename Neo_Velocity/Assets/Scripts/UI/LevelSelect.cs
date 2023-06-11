@@ -28,6 +28,7 @@ public class LevelSelect : MonoBehaviour
         CurrentLevel = name;
         SceneDisplay.GetComponent<TextMeshProUGUI>().text = name.Replace("_", " ");
         List<string> allReplays = GetReplayNames(name);
+        ReplayInfoHolder.transform.DetachChildren();
         ReplayInfoHolder.GetComponent<RectTransform>().sizeDelta =
             new Vector2(ReplayInfoHolder.GetComponent<RectTransform>().sizeDelta.x, 80 * allReplays.Count);
         int i = 0;

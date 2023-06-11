@@ -24,8 +24,8 @@ public class LevelEndScript : MonoBehaviour {
     
 
     
-    public void RenameReplay(string Name)
-    {
+    public void RenameReplay(TMP_InputField Input) {
+        string Name = Input.text;
         GameObject.FindGameObjectsWithTag("Player").First(o => !o.GetComponent<PlayerScript>().IsGhost).GetComponent<PlayerInputScript>().RenameCurrentFile(Name);
     }
     public void StayInLevel()

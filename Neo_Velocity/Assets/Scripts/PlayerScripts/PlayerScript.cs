@@ -20,6 +20,8 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] bool SaveReplay = true;
     [SerializeField] bool SettingsInputs = false;
 
+    PlayerAudioHandlerScript audioHandler;
+
     [SerializeField] GameObject Body;
     [SerializeField] GameObject PlayerCamera;
     [SerializeField] GameObject WallCollider;
@@ -165,6 +167,8 @@ public class PlayerScript : MonoBehaviour
         HandC4.SetActive(false);
         HandRocket.SetActive(true);
 
+        audioHandler = gameObject.GetComponent<PlayerAudioHandlerScript>();
+
         if (!SettingsInputs)
             Cursor.lockState = CursorLockMode.Locked;
     }
@@ -249,10 +253,11 @@ public class PlayerScript : MonoBehaviour
         // This causes as many problems as it fixes, so no
         // velocity = rigidbody.velocity;
 
+        if (!IsSliding && input["Sliding"] == 1f)
+            audioHandler.PlayAudioSlide(transform.position, GetAudioVolume());
         IsSliding = input["Sliding"] == 1f;
         if (IsSliding)
         {
-            
             LastWallTouch = WallStickTime;
         }
 
@@ -524,7 +529,7 @@ public class PlayerScript : MonoBehaviour
         {
             // Walljump
             if (CurrentWall != null && LastWallJump > WallJumpDelay && LastJumpTime > JumpDelay && !IsGrounded) {
-                //PlaySounds.playJump();
+                audioHandler.PlayAudioJump(transform.position, GetAudioVolume());
                 Vector3 newVelocity = new Vector3(LastVelocityAtTouch.x, 0, LastVelocityAtTouch.z);
                 Vector3 WallAwayVector = transform.position - CurrentWall.GetComponent<Collider>().ClosestPoint(transform.position);
                 WallAwayVector.y = 0;
@@ -546,7 +551,7 @@ public class PlayerScript : MonoBehaviour
             }
             // Grounded Jump
             else if (LastJumpTime > JumpDelay && IsGrounded) {
-                //PlaySounds.playJump();
+                audioHandler.PlayAudioJump(transform.position, GetAudioVolume());
                 velocity.y += JumpForce;
                 LastJumpTime = 0f;
                 LastGroundedTime = GroundMercyTime;
@@ -573,7 +578,7 @@ public class PlayerScript : MonoBehaviour
         {
             GameObject Projectile = null;
             if (SelectedTool == Tools.Rocket) {
-                //PlaySounds.playShoot();
+                audioHandler.PlayAudioShoot(transform.position, GetAudioVolume());
                 Projectile = Instantiate(Rocket, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
                 if (IsGhost)
                     Projectile.GetComponent<RocketScript>().MakeGhost();
@@ -581,7 +586,8 @@ public class PlayerScript : MonoBehaviour
             }
             else if (SelectedTool == Tools.C4)
             {
-                // SOUND-C4_Throw
+                // Add later
+                //audioHandler.PlayAudioThrow(transform.position);
                 string tag = IsGhost ? "Ghost_C4" : "C4";
                 if (GameObject.FindGameObjectsWithTag(tag).Length < MaxNumberOfC4)
                 {
@@ -696,4 +702,9 @@ public class PlayerScript : MonoBehaviour
         OtherFloor = other;
     }
     #endregion
+
+    float GetAudioVolume()
+    {
+        return GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>().volume * 10;
+    }
 }

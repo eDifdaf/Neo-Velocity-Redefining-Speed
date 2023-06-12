@@ -5,13 +5,14 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class PlayerInputScript : AInputScript
 {
     [SerializeField] public KeyCode ForwardKey = KeyCode.W;
     [SerializeField] public KeyCode BackwardsKey = KeyCode.S;
     [SerializeField] public KeyCode LeftKey = KeyCode.A;
     [SerializeField] public KeyCode RightKey = KeyCode.D;
-    [SerializeField] public KeyCode SlideKey = KeyCode.LeftShift;
+    [SerializeField] public KeyCode SlideKey = KeyCode.LeftControl;
     [SerializeField] public KeyCode JumpKey = KeyCode.Space;
     [SerializeField] public KeyCode RespawnKey = KeyCode.R;
     [SerializeField] public KeyCode ShootKey = KeyCode.Mouse0;
@@ -21,7 +22,7 @@ public class PlayerInputScript : AInputScript
     /// <br></br>
     /// <p>true  -> Tool changes with the ChangeKey</p>
     /// </summary>
-    [SerializeField] public bool UseChangeKey = true;
+    [SerializeField] public bool UseChangeKey = false;
     [SerializeField] public KeyCode ChangeKey = KeyCode.Mouse2;
     [SerializeField] public float VerticalMouseSensitivity = 4f;
     [SerializeField] public float HorizontalMouseSensitivity = 7f;

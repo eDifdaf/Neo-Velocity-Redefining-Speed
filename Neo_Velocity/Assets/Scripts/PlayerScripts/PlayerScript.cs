@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using UnityEngine;
+//using PlaySounds;
 
 public enum Tools
 {
@@ -14,8 +15,7 @@ public enum Tools
 public class PlayerScript : MonoBehaviour
 {
     #region Field Declaration
-
-
+    
     [SerializeField] bool PlayReplay = false;
     [SerializeField] bool SaveReplay = true;
     [SerializeField] bool SettingsInputs = false;
@@ -249,7 +249,7 @@ public class PlayerScript : MonoBehaviour
         IsSliding = input["Sliding"] == 1f;
         if (IsSliding)
         {
-            // SOUND-Sliding
+            
             LastWallTouch = WallStickTime;
         }
 
@@ -435,9 +435,8 @@ public class PlayerScript : MonoBehaviour
             if (CurrentWall.tag == "No_Wallrun") // No Wallruns on this Wall
                 WallRunning = false;
 
-        if (WallRunning && CurrentWall != null)
-        {
-            // SOUND-Wallrun
+        if (WallRunning && CurrentWall != null) {
+            //PlaySounds.playJump();
             LastWallRun = 0f;
             Vector3 WallAwayVector = transform.position - CurrentWall.GetComponent<Collider>().ClosestPoint(transform.position);
             float AngleFromWallAndMovement = Vector3.Angle(PlaneMovement, WallAwayVector);
@@ -521,9 +520,8 @@ public class PlayerScript : MonoBehaviour
         if (input["Jump"] == 1f)
         {
             // Walljump
-            if (CurrentWall != null && LastWallJump > WallJumpDelay && LastJumpTime > JumpDelay && !IsGrounded)
-            {
-                // SOUND-Walljump
+            if (CurrentWall != null && LastWallJump > WallJumpDelay && LastJumpTime > JumpDelay && !IsGrounded) {
+                //PlaySounds.playJump();
                 Vector3 newVelocity = new Vector3(LastVelocityAtTouch.x, 0, LastVelocityAtTouch.z);
                 Vector3 WallAwayVector = transform.position - CurrentWall.GetComponent<Collider>().ClosestPoint(transform.position);
                 WallAwayVector.y = 0;
@@ -544,9 +542,8 @@ public class PlayerScript : MonoBehaviour
                 LastWallJump = 0f;
             }
             // Grounded Jump
-            else if (LastJumpTime > JumpDelay && IsGrounded)
-            {
-                // SOUND-Grounded_Jump
+            else if (LastJumpTime > JumpDelay && IsGrounded) {
+                //PlaySounds.playJump();
                 velocity.y += JumpForce;
                 LastJumpTime = 0f;
                 LastGroundedTime = GroundMercyTime;
@@ -572,9 +569,8 @@ public class PlayerScript : MonoBehaviour
         if (input["Shoot"] == 1f && LastShoot >= ShootDelay) // SHOOT
         {
             GameObject Projectile = null;
-            if (SelectedTool == Tools.Rocket)
-            {
-                // SOUND-Rocketlaunch
+            if (SelectedTool == Tools.Rocket) {
+                //PlaySounds.playShoot();
                 Projectile = Instantiate(Rocket, camera.transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation);
                 if (IsGhost)
                     Projectile.GetComponent<RocketScript>().MakeGhost();
@@ -594,9 +590,8 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        if (input["Activate"] == 1f)
-        {
-            // SOUND-C4_Activate
+        if (input["Activate"] == 1f) {
+            //PlaySounds.playShoot();
             GameObject.FindGameObjectsWithTag("C4").ToList().ForEach(o => o.GetComponent<C4Script>().Explode());
         }
 

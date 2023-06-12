@@ -7,14 +7,6 @@ using UnityEngine.UIElements;
 
 public class ButtonMapping : MonoBehaviour
 {
-    /*
-    [SerializeField] bool UseChangeKey = true;
-    [SerializeField] float VerticalMouseSensitivity = 4f;
-    [SerializeField] float HorizontalMouseSensitivity = 7f;
-    [SerializeField] bool UseFixedDistanceLookKeys = true;
-    [SerializeField] float VerticalLookKeySensitivity = 1f;
-    [SerializeField] float HorizontalLookKeySensitivity = 0.5f;
-    */
     [SerializeField] public GameObject PlayerPrefab;
     PlayerInputScript inputScript;
     bool awaitingButton;

@@ -67,4 +67,9 @@ public class Settings : AInputScript {
     public void Back() {
         SceneManager.LoadScene("Main_Menu");
     }
+
+    public void Inputs()
+    {
+        SceneManager.LoadScene("Input");
+    }
 }

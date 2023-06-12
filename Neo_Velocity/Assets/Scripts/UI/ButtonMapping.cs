@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class ButtonMapping : MonoBehaviour
@@ -12,39 +15,88 @@ public class ButtonMapping : MonoBehaviour
     bool awaitingButton;
     string ButtonToChange;
     ButtonMappingInfoHolder prevInfo;
+    string prevText;
     
     public void Start()
     {
         awaitingButton = false;
         inputScript = PlayerPrefab.GetComponent<PlayerInputScript>();
+
+        gameObject.GetComponentsInChildren<ButtonMappingInfoHolder>(true).Where(s => s.button != null).ToList().ForEach(s =>
+        {
+            KeyCode key = KeyCode.None;
+            switch (s.text)
+            {
+                case "Forward Key":
+                    key = inputScript.ForwardKey;
+                    break;
+                case "Backwards Key":
+                    key = inputScript.BackwardsKey;
+                    break;
+                case "Left Key":
+                    key = inputScript.LeftKey;
+                    break;
+                case "Right Key":
+                    key = inputScript.RightKey;
+                    break;
+                case "Look up Key":
+                    key = inputScript.UpLookKey;
+                    break;
+                case "Look down Key":
+                    key = inputScript.DownLookKey;
+                    break;
+                case "Look left Key":
+                    key = inputScript.LeftLookKey;
+                    break;
+                case "Look right Key":
+                    key = inputScript.RightLookKey;
+                    break;
+                case "Slide Key":
+                    key = inputScript.SlideKey;
+                    break;
+                case "Jump Key":
+                    key = inputScript.JumpKey;
+                    break;
+                case "Respawn Key":
+                    key = inputScript.RespawnKey;
+                    break;
+                case "Shoot Key":
+                    key = inputScript.ShootKey;
+                    break;
+                case "Activate Key":
+                    key = inputScript.ActivateKey;
+                    break;
+                case "Tool Change Key":
+                    key = inputScript.ChangeKey;
+                    break;
+            }
+            s.button.GetComponentInChildren<TMP_Text>().text = key.ToString();
+        });
     }
     public void Update()
     {
         if (!awaitingButton)
             return;
 
-        // This is for getting the pressed Key
-        // If it doesn't work, please find a different one
-        // Then pass it to -> ChangeButton(KeyCode newKey)
-        // You should be able to tell from the logs if it works or not
-        Event temp = Event.current;
-        if (temp.isKey){
-            if (temp.type == EventType.KeyDown)
+        foreach (KeyCode key in (KeyCode[])Enum.GetValues(typeof(KeyCode)))
+        {
+            if (Input.GetKeyDown(key))
             {
                 awaitingButton = false;
-                Debug.Log(temp.keyCode);
-                ChangeButton(temp.keyCode);
+                ChangeButton(key);
             }
         }
     }
+
     public void SheduleButtonChange(ButtonMappingInfoHolder info)
     {
         if (awaitingButton)
         {
-            prevInfo.text_field.text = prevInfo.text;
+            prevInfo.text_field.text = prevText;
         }
         awaitingButton = true;
         ButtonToChange = info.text;
+        prevText = info.text_field.text;
         info.text_field.text = "Input Key...";
 
         prevInfo = info;
@@ -55,61 +107,49 @@ public class ButtonMapping : MonoBehaviour
         {
             case "Forward Key":
                 inputScript.ForwardKey = newKey;
-                prevInfo.text_field.text = inputScript.ForwardKey.ToString();
                 break;
             case "Backwards Key":
                 inputScript.BackwardsKey = newKey;
-                prevInfo.text_field.text = inputScript.BackwardsKey.ToString();
                 break;
             case "Left Key":
                 inputScript.LeftKey = newKey;
-                prevInfo.text_field.text = inputScript.LeftKey.ToString();
                 break;
             case "Right Key":
                 inputScript.RightKey = newKey;
-                prevInfo.text_field.text = inputScript.RightKey.ToString();
                 break;
             case "Look up Key":
                 inputScript.UpLookKey = newKey;
-                prevInfo.text_field.text = inputScript.UpLookKey.ToString();
                 break;
             case "Look down Key":
                 inputScript.DownLookKey = newKey;
-                prevInfo.text_field.text = inputScript.DownLookKey.ToString();
                 break;
             case "Look left Key":
                 inputScript.LeftLookKey = newKey;
-                prevInfo.text_field.text = inputScript.LeftLookKey.ToString();
                 break;
             case "Look right Key":
                 inputScript.RightLookKey = newKey;
-                prevInfo.text_field.text = inputScript.RightLookKey.ToString();
                 break;
             case "Slide Key":
                 inputScript.SlideKey = newKey;
-                prevInfo.text_field.text = inputScript.SlideKey.ToString();
                 break;
             case "Jump Key":
                 inputScript.JumpKey = newKey;
-                prevInfo.text_field.text = inputScript.JumpKey.ToString();
                 break;
             case "Respawn Key":
                 inputScript.RespawnKey = newKey;
-                prevInfo.text_field.text = inputScript.RespawnKey.ToString();
                 break;
             case "Shoot Key":
                 inputScript.ShootKey = newKey;
-                prevInfo.text_field.text = inputScript.ShootKey.ToString();
                 break;
             case "Activate Key":
                 inputScript.ActivateKey = newKey;
-                prevInfo.text_field.text = inputScript.ActivateKey.ToString();
                 break;
             case "Tool Change Key":
                 inputScript.ChangeKey = newKey;
-                prevInfo.text_field.text = inputScript.ChangeKey.ToString();
                 break;
         }
+        prevInfo.button.gameObject.GetComponentInChildren<TMP_Text>().text = newKey.ToString();
+        prevInfo.text_field.text = prevText;
     }
 
     public void ChangeBool(ButtonMappingInfoHolder info)
@@ -154,5 +194,10 @@ public class ButtonMapping : MonoBehaviour
                     inputScript.VerticalLookKeySensitivity = float.Parse(info.inputTextField.text);
                 break;
         }
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Settings");
     }
 }

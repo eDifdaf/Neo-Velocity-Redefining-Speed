@@ -7,12 +7,22 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
+using System.Linq;
 
 public class Settings : AInputScript {
+    [SerializeField] AudioSource[] audioSource;
+    [SerializeField] Slider audioSlider;
     public AudioMixer audioMixer;
     public TMP_Dropdown resolutionDropdown;
     private Resolution[] resolutions;
+
     void Start() {
+        if (audioSource.Length == 0)
+            return;
+        else
+            audioSlider.value = audioSource[0].volume;
+
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
 
@@ -53,7 +63,9 @@ public class Settings : AInputScript {
     }
 
     public void SetVolume(float volume) {
-        audioMixer.SetFloat("volume", volume);
+        //audioMixer.SetFloat("volume", volume);
+        audioSource.ToList().ForEach(a => a.volume = volume);
+        GameObject.FindGameObjectsWithTag("Music").ToList().ForEach(o => o.GetComponent<AudioSource>().volume = volume);
     }
 
     public void SetQuality(int qualityIndex) {

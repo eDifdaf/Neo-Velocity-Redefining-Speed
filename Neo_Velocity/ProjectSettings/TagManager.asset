@@ -19,6 +19,7 @@ TagManager:
   - Ghost_Rocket
   - NextStage
   - LevelEnd_UI
+  - Music
   layers:
   - Default
   - TransparentFX

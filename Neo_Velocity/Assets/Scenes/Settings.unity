@@ -1623,10 +1623,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 207985462}
   m_HandleRect: {fileID: 313701645}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 0
+  m_MinValue: 0
+  m_MaxValue: 0.1
   m_WholeNumbers: 0
-  m_Value: -20
+  m_Value: 0.1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1888,9 +1888,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2339460166382143571, guid: bcd226279b2fd9540bf565b7aed5ab72, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 03806ad820e307d48a29c5799598a77b, type: 3}
     - target: {fileID: 3632066095955032109, guid: bcd226279b2fd9540bf565b7aed5ab72, type: 3}
       propertyPath: m_Name
-      value: Muisc
+      value: Music
       objectReference: {fileID: 0}
     - target: {fileID: 3701074283705522893, guid: bcd226279b2fd9540bf565b7aed5ab72, type: 3}
       propertyPath: m_RootOrder
@@ -3058,6 +3062,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 852e408b45d7a6c4fb62bbae9d1cdc52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource:
+  - {fileID: 2339460166382143571, guid: bcd226279b2fd9540bf565b7aed5ab72, type: 3}
+  audioSlider: {fileID: 392945713}
   audioMixer: {fileID: 24100000, guid: dc0d2a5ea97390e409630e5913869f26, type: 2}
   resolutionDropdown: {fileID: 1121642769}
 --- !u!1 &1053063821
@@ -5270,5 +5277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 852e408b45d7a6c4fb62bbae9d1cdc52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: []
+  audioSlider: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: dc0d2a5ea97390e409630e5913869f26, type: 2}
   resolutionDropdown: {fileID: 1121642769}

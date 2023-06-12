@@ -188,6 +188,9 @@ public class PlayerScript : MonoBehaviour
     // Camera Movement, unrelated from the recorded inputs
     private void Update()
     {
+        if (PauseMenu.IsPaused || Time.timeScale == 0)
+            return;
+
         Vector2 MouseMovement = GetCameraMovement();
 
         float AmpMouseX = MouseMovement.x;
@@ -693,5 +696,4 @@ public class PlayerScript : MonoBehaviour
         OtherFloor = other;
     }
     #endregion
-
 }

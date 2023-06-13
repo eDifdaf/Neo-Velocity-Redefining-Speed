@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnGhost: 0
+  WatchGhost: 0
   playerPrefab: {fileID: 4418298382927004808, guid: bd8d767e58249794d987153ebbf0e388, type: 3}
 --- !u!65 &64379676243888360
 BoxCollider:

@@ -7590,10 +7590,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 64379676243888360, guid: 78bf13b24500d0e4f9f891caa280138e, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2672590680488795701, guid: 78bf13b24500d0e4f9f891caa280138e, type: 3}
       propertyPath: m_Name
       value: Spawnpoint
@@ -10037,6 +10033,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2339460166382143571, guid: bcd226279b2fd9540bf565b7aed5ab72, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: da6e543d9dcbe734e829f4bc0a6b4e06, type: 3}
     - target: {fileID: 3632066095955032109, guid: bcd226279b2fd9540bf565b7aed5ab72, type: 3}
       propertyPath: m_Name
       value: Muisc
@@ -30269,7 +30269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7583604745613318967, guid: a8023912ca5121d42948ed72babd7470, type: 3}
       propertyPath: nextLevelName
-      value: Level_5
+      value: Level_7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8023912ca5121d42948ed72babd7470, type: 3}

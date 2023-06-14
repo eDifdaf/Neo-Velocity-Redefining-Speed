@@ -6,6 +6,15 @@ using UnityEngine;
 public class MusicScript : MonoBehaviour
 {
     AudioSource audioPlayer;
+    public float Volume { get
+        {
+            return audioPlayer.volume;
+        }
+        set
+        {
+            audioPlayer.volume = value;
+        }
+        }
 
     void Awake()
     {

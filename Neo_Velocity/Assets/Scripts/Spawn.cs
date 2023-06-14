@@ -16,6 +16,7 @@ public class Spawn : MonoBehaviour {
         SpawnPlayer();
         TimeMeasure timeMeasure = player.GetComponent<TimeMeasure>();
         timeMeasure.InitializeTimer();
+        GameObject.FindGameObjectWithTag("DataHandler").GetComponent<SaveDataManager>().ApplyCurrentConfig();
     }
 
     void SpawnPlayer() {

@@ -19,6 +19,8 @@ public class Settings : AInputScript {
     private Resolution[] resolutions;
 
     void Start() {
+        if (audioSlider == null)
+            return;
         audioSlider.value = SaveDataManager.Volume;
 
         checkbox.isOn = SaveDataManager.Fullscreen;

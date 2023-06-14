@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +12,7 @@ using UnityEngine.SceneManagement;
 public class SaveDataManager : MonoBehaviour
 {
     static string dataPath = "Data\\";
-    static string fileName = "config.json";
+    static string fileName = "config.txt";
 
     #region fields
     public static KeyCode ForwardKey = KeyCode.W;
@@ -39,13 +40,17 @@ public class SaveDataManager : MonoBehaviour
     public static int Quality = 1;
     #endregion
 
+    private void OnDestroy()
+    {
+        SaveCurrentConfig();
+    }
     private void Start()
     {
         if (GameObject.FindGameObjectsWithTag("DataHandler").Length > 1)
             Destroy(gameObject);
         LoadCurrentConfig();
         DontDestroyOnLoad(gameObject);
-        SceneManager.activeSceneChanged += (a1, a2) => ApplyCurrentConfig();
+        SceneManager.activeSceneChanged += (a1, a2) => { SaveCurrentConfig(); ApplyCurrentConfig(); };
         ApplyCurrentConfig();
     }
     public void SaveCurrentConfig()
@@ -109,13 +114,15 @@ public class SaveDataManager : MonoBehaviour
         });
         Screen.fullScreen = Fullscreen;
         QualitySettings.SetQualityLevel(Quality);
-        SaveCurrentConfig();
     }
     public void LoadCurrentConfig()
     {
         Dictionary<string, string> temp = ReadConfig();
         if (temp == null)
+        {
+            Debug.Log("Couldn't load it");
             return;
+        }
         temp.ToList().ForEach(kv =>
         {
             switch (kv.Key) {
@@ -213,9 +220,14 @@ public class SaveDataManager : MonoBehaviour
 
     Dictionary<string, string> ReadConfig()
     {
-        if (!Directory.Exists(dataPath))
+        try
+        {
+            return ConvertFromString(File.ReadAllLines(dataPath + fileName));
+        }
+        catch
+        {
             return null;
-        return ConvertFromString(File.ReadAllLines(dataPath + fileName));
+        }
     }
     void SaveConfig(Dictionary<string, string> config)
     {

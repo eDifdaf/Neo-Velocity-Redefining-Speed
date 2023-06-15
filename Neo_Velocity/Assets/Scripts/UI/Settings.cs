@@ -13,15 +13,17 @@ using System.Linq;
 public class Settings : AInputScript {
     [SerializeField] AudioSource[] audioSource;
     [SerializeField] Slider audioSlider;
+    [SerializeField] Toggle checkbox;
     public AudioMixer audioMixer;
     public TMP_Dropdown resolutionDropdown;
     private Resolution[] resolutions;
 
     void Start() {
-        if (audioSource.Length == 0)
+        if (audioSlider == null)
             return;
-        else
-            audioSlider.value = audioSource[0].volume;
+        audioSlider.value = SaveDataManager.Volume;
+
+        checkbox.isOn = SaveDataManager.Fullscreen;
 
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
@@ -66,14 +68,17 @@ public class Settings : AInputScript {
         //audioMixer.SetFloat("volume", volume);
         audioSource.ToList().ForEach(a => a.volume = volume);
         GameObject.FindGameObjectsWithTag("Music").ToList().ForEach(o => o.GetComponent<AudioSource>().volume = volume);
+        SaveDataManager.Volume = volume;
     }
 
     public void SetQuality(int qualityIndex) {
         QualitySettings.SetQualityLevel(qualityIndex);
+        SaveDataManager.Quality = qualityIndex;
     }
 
     public void SetFullscreen(bool isFullscreen) {
         Screen.fullScreen = isFullscreen;
+        SaveDataManager.Fullscreen = isFullscreen;
     }
 
     public void Back() {

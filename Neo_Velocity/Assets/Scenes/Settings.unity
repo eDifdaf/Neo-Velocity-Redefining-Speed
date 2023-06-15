@@ -3065,6 +3065,7 @@ MonoBehaviour:
   audioSource:
   - {fileID: 2339460166382143571, guid: bcd226279b2fd9540bf565b7aed5ab72, type: 3}
   audioSlider: {fileID: 392945713}
+  checkbox: {fileID: 550818712}
   audioMixer: {fileID: 24100000, guid: dc0d2a5ea97390e409630e5913869f26, type: 2}
   resolutionDropdown: {fileID: 1121642769}
 --- !u!1 &1053063821
@@ -5279,5 +5280,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: []
   audioSlider: {fileID: 0}
+  checkbox: {fileID: 0}
   audioMixer: {fileID: 24100000, guid: dc0d2a5ea97390e409630e5913869f26, type: 2}
   resolutionDropdown: {fileID: 1121642769}

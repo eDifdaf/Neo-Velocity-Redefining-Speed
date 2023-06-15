@@ -20,6 +20,7 @@ TagManager:
   - NextStage
   - LevelEnd_UI
   - Music
+  - DataHandler
   layers:
   - Default
   - TransparentFX

@@ -11,7 +11,6 @@ using UnityEngine.UIElements;
 public class ButtonMapping : MonoBehaviour
 {
     [SerializeField] public GameObject PlayerPrefab;
-    PlayerInputScript inputScript;
     bool awaitingButton;
     string ButtonToChange;
     ButtonMappingInfoHolder prevInfo;
@@ -20,7 +19,6 @@ public class ButtonMapping : MonoBehaviour
     public void Start()
     {
         awaitingButton = false;
-        inputScript = PlayerPrefab.GetComponent<PlayerInputScript>();
 
         gameObject.GetComponentsInChildren<ButtonMappingInfoHolder>(true).Where(s => s.button != null).ToList().ForEach(s =>
         {
@@ -28,46 +26,46 @@ public class ButtonMapping : MonoBehaviour
             switch (s.text)
             {
                 case "Forward Key":
-                    key = inputScript.ForwardKey;
+                    key = SaveDataManager.ForwardKey;
                     break;
                 case "Backwards Key":
-                    key = inputScript.BackwardsKey;
+                    key = SaveDataManager.BackwardsKey;
                     break;
                 case "Left Key":
-                    key = inputScript.LeftKey;
+                    key = SaveDataManager.LeftKey;
                     break;
                 case "Right Key":
-                    key = inputScript.RightKey;
+                    key = SaveDataManager.RightKey;
                     break;
                 case "Look up Key":
-                    key = inputScript.UpLookKey;
+                    key = SaveDataManager.UpLookKey;
                     break;
                 case "Look down Key":
-                    key = inputScript.DownLookKey;
+                    key = SaveDataManager.DownLookKey;
                     break;
                 case "Look left Key":
-                    key = inputScript.LeftLookKey;
+                    key = SaveDataManager.LeftLookKey;
                     break;
                 case "Look right Key":
-                    key = inputScript.RightLookKey;
+                    key = SaveDataManager.RightLookKey;
                     break;
                 case "Slide Key":
-                    key = inputScript.SlideKey;
+                    key = SaveDataManager.SlideKey;
                     break;
                 case "Jump Key":
-                    key = inputScript.JumpKey;
+                    key = SaveDataManager.JumpKey;
                     break;
                 case "Respawn Key":
-                    key = inputScript.RespawnKey;
+                    key = SaveDataManager.RespawnKey;
                     break;
                 case "Shoot Key":
-                    key = inputScript.ShootKey;
+                    key = SaveDataManager.ShootKey;
                     break;
                 case "Activate Key":
-                    key = inputScript.ActivateKey;
+                    key = SaveDataManager.ActivateKey;
                     break;
                 case "Tool Change Key":
-                    key = inputScript.ChangeKey;
+                    key = SaveDataManager.ChangeKey;
                     break;
             }
             s.button.GetComponentInChildren<TMP_Text>().text = key.ToString();
@@ -106,46 +104,46 @@ public class ButtonMapping : MonoBehaviour
         switch (ButtonToChange)
         {
             case "Forward Key":
-                inputScript.ForwardKey = newKey;
+                SaveDataManager.ForwardKey = newKey;
                 break;
             case "Backwards Key":
-                inputScript.BackwardsKey = newKey;
+                SaveDataManager.BackwardsKey = newKey;
                 break;
             case "Left Key":
-                inputScript.LeftKey = newKey;
+                SaveDataManager.LeftKey = newKey;
                 break;
             case "Right Key":
-                inputScript.RightKey = newKey;
+                SaveDataManager.RightKey = newKey;
                 break;
             case "Look up Key":
-                inputScript.UpLookKey = newKey;
+                SaveDataManager.UpLookKey = newKey;
                 break;
             case "Look down Key":
-                inputScript.DownLookKey = newKey;
+                SaveDataManager.DownLookKey = newKey;
                 break;
             case "Look left Key":
-                inputScript.LeftLookKey = newKey;
+                SaveDataManager.LeftLookKey = newKey;
                 break;
             case "Look right Key":
-                inputScript.RightLookKey = newKey;
+                SaveDataManager.RightLookKey = newKey;
                 break;
             case "Slide Key":
-                inputScript.SlideKey = newKey;
+                SaveDataManager.SlideKey = newKey;
                 break;
             case "Jump Key":
-                inputScript.JumpKey = newKey;
+                SaveDataManager.JumpKey = newKey;
                 break;
             case "Respawn Key":
-                inputScript.RespawnKey = newKey;
+                SaveDataManager.RespawnKey = newKey;
                 break;
             case "Shoot Key":
-                inputScript.ShootKey = newKey;
+                SaveDataManager.ShootKey = newKey;
                 break;
             case "Activate Key":
-                inputScript.ActivateKey = newKey;
+                SaveDataManager.ActivateKey = newKey;
                 break;
             case "Tool Change Key":
-                inputScript.ChangeKey = newKey;
+                SaveDataManager.ChangeKey = newKey;
                 break;
         }
         prevInfo.button.gameObject.GetComponentInChildren<TMP_Text>().text = newKey.ToString();
@@ -157,10 +155,10 @@ public class ButtonMapping : MonoBehaviour
         switch (info.text)
         {
             case "Use Change Key":
-                inputScript.UseChangeKey = info.checkBox;
+                SaveDataManager.UseChangeKey = info.checkBox;
                 break;
             case "Use Look Keys":
-                inputScript.UseFixedDistanceLookKeys = info.checkBox;
+                SaveDataManager.UseFixedDistanceLookKeys = info.checkBox;
                 break;
         }
     }
@@ -171,27 +169,27 @@ public class ButtonMapping : MonoBehaviour
         {
             case "Horizontal Mouse Sensitivity":
                 if (info.IsSlider)
-                    inputScript.HorizontalMouseSensitivity = info.slider.value;
+                    SaveDataManager.HorizontalMouseSensitivity = info.slider.value;
                 else
-                    inputScript.HorizontalMouseSensitivity = float.Parse(info.inputTextField.text);
+                    SaveDataManager.HorizontalMouseSensitivity = float.Parse(info.inputTextField.text);
                 break;
             case "Vertical Mouse Sensitivity":
                 if (info.IsSlider)
-                    inputScript.VerticalMouseSensitivity = info.slider.value;
+                    SaveDataManager.VerticalMouseSensitivity = info.slider.value;
                 else
-                    inputScript.VerticalMouseSensitivity = float.Parse(info.inputTextField.text);
+                    SaveDataManager.VerticalMouseSensitivity = float.Parse(info.inputTextField.text);
                 break;
             case "Horizontal Look Key Sensitivity":
                 if (info.IsSlider)
-                    inputScript.HorizontalLookKeySensitivity = info.slider.value;
+                    SaveDataManager.HorizontalLookKeySensitivity = info.slider.value;
                 else
-                    inputScript.HorizontalLookKeySensitivity = float.Parse(info.inputTextField.text);
+                    SaveDataManager.HorizontalLookKeySensitivity = float.Parse(info.inputTextField.text);
                 break;
             case "Vertical Look Key Sensitivity":
                 if (info.IsSlider)
-                    inputScript.VerticalLookKeySensitivity = info.slider.value;
+                    SaveDataManager.VerticalLookKeySensitivity = info.slider.value;
                 else
-                    inputScript.VerticalLookKeySensitivity = float.Parse(info.inputTextField.text);
+                    SaveDataManager.VerticalLookKeySensitivity = float.Parse(info.inputTextField.text);
                 break;
         }
     }

@@ -614,6 +614,8 @@ public class PlayerScript : MonoBehaviour
         if (Respawn || input["Respawn"] == 1f)
         {
             SelectedTool = Tools.Rocket;
+            HandC4.SetActive(false);
+            HandRocket.SetActive(true);
 
             GameObject.FindGameObjectsWithTag("Player").ToList().Where(o => o.GetComponent<PlayerScript>().IsGhost)
                 .ToList().ForEach(o => o.GetComponent<PlayerScript>().Respawn = true);

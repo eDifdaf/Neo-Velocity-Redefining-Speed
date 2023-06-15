@@ -12,6 +12,6 @@ public class ButtonMappingInfoHolder : MonoBehaviour
     [SerializeField] public string text;
     [SerializeField] public Toggle checkBox;
     [SerializeField] public Slider slider;
-    [SerializeField] public TMP_Text inputTextField;
+    [SerializeField] public TMP_InputField inputTextField;
     [SerializeField] public bool IsSlider; // True if attached to a slider, false if for a text field
 }

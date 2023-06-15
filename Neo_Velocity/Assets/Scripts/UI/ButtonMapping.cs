@@ -70,6 +70,41 @@ public class ButtonMapping : MonoBehaviour
             }
             s.button.GetComponentInChildren<TMP_Text>().text = key.ToString();
         });
+        gameObject.GetComponentsInChildren<ButtonMappingInfoHolder>(true).Where(s => s.checkBox != null).ToList().ForEach(s =>
+        {
+            bool value = true;
+            switch (s.text)
+            {
+                case "Use Change Key":
+                    value = SaveDataManager.UseChangeKey;
+                    break;
+                case "Use Look Keys":
+                    value = SaveDataManager.UseFixedDistanceLookKeys;
+                    break;
+            }
+            s.checkBox.isOn = value;
+        });
+        gameObject.GetComponentsInChildren<ButtonMappingInfoHolder>(true).Where(s => s.slider != null).ToList().ForEach(s =>
+        {
+            float value = 4f;
+            switch (s.text)
+            {
+                case "Horizontal Mouse Sensitivity":
+                    value = SaveDataManager.HorizontalMouseSensitivity;
+                    break;
+                case "Vertical Mouse Sensitivity":
+                    value = SaveDataManager.VerticalMouseSensitivity;
+                    break;
+                case "Horizontal Look Key Sensitivity":
+                    value = SaveDataManager.HorizontalLookKeySensitivity;
+                    break;
+                case "Vertical Look Key Sensitivity":
+                    value = SaveDataManager.VerticalLookKeySensitivity;
+                    break;
+            }
+            s.slider.value = value;
+            s.inputTextField.text = value.ToString();
+        });
     }
     public void Update()
     {
@@ -169,28 +204,53 @@ public class ButtonMapping : MonoBehaviour
         {
             case "Horizontal Mouse Sensitivity":
                 if (info.IsSlider)
+                {
                     SaveDataManager.HorizontalMouseSensitivity = info.slider.value;
+                    info.inputTextField.text = info.slider.value.ToString();
+                }
                 else
+                {
                     SaveDataManager.HorizontalMouseSensitivity = float.Parse(info.inputTextField.text);
+                    info.slider.value = float.Parse(info.inputTextField.text);
+                }
                 break;
             case "Vertical Mouse Sensitivity":
                 if (info.IsSlider)
+                {
                     SaveDataManager.VerticalMouseSensitivity = info.slider.value;
+                    info.inputTextField.text = info.slider.value.ToString();
+                }
                 else
+                {
                     SaveDataManager.VerticalMouseSensitivity = float.Parse(info.inputTextField.text);
+                    info.slider.value = float.Parse(info.inputTextField.text);
+                }
                 break;
             case "Horizontal Look Key Sensitivity":
                 if (info.IsSlider)
+                {
                     SaveDataManager.HorizontalLookKeySensitivity = info.slider.value;
+                    info.inputTextField.text = info.slider.value.ToString();
+                }
                 else
+                {
                     SaveDataManager.HorizontalLookKeySensitivity = float.Parse(info.inputTextField.text);
+                    info.slider.value = float.Parse(info.inputTextField.text);
+                }
                 break;
             case "Vertical Look Key Sensitivity":
                 if (info.IsSlider)
+                {
                     SaveDataManager.VerticalLookKeySensitivity = info.slider.value;
+                    info.inputTextField.text = info.slider.value.ToString();
+                }
                 else
+                {
                     SaveDataManager.VerticalLookKeySensitivity = float.Parse(info.inputTextField.text);
+                    info.slider.value = float.Parse(info.inputTextField.text);
+                }
                 break;
+
         }
     }
 

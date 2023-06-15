@@ -553,7 +553,6 @@ GameObject:
   - component: {fileID: 81421960}
   - component: {fileID: 81421963}
   - component: {fileID: 81421962}
-  - component: {fileID: 81421961}
   m_Layer: 5
   m_Name: LookSensitivity (Y)
   m_TagString: Untagged
@@ -584,25 +583,6 @@ RectTransform:
   m_AnchoredPosition: {x: 125, y: -235.6}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &81421961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81421959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36042732a9c2b234598afc2335529f1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button: {fileID: 0}
-  text_field: {fileID: 1995441172}
-  text: Tool Change Key
-  checkBox: {fileID: 0}
-  slider: {fileID: 0}
-  inputTextField: {fileID: 0}
-  IsSlider: 0
 --- !u!114 &81421962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1052,8 +1032,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 880362415}
   m_HandleRect: {fileID: 880362414}
   m_Direction: 2
-  m_Value: -0.0023190307
-  m_Size: 0.49857423
+  m_Value: 0
+  m_Size: 0.55549437
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1108,6 +1088,7 @@ GameObject:
   - component: {fileID: 256410125}
   - component: {fileID: 256410124}
   - component: {fileID: 256410123}
+  - component: {fileID: 256410126}
   m_Layer: 0
   m_Name: InputField (TMP)
   m_TagString: Untagged
@@ -1133,7 +1114,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 69, y: 9}
+  m_AnchoredPosition: {x: 75, y: 9}
   m_SizeDelta: {x: 50, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &256410123
@@ -1197,7 +1178,19 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1392080734}
+        m_TargetAssemblyTypeName: ButtonMapping, Assembly-CSharp
+        m_MethodName: ChangeFloat
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 256410126}
+          m_ObjectArgumentAssemblyTypeName: ButtonMappingInfoHolder, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -1272,6 +1265,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 256410121}
   m_CullTransparentMesh: 1
+--- !u!114 &256410126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256410121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36042732a9c2b234598afc2335529f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
+  text_field: {fileID: 1200517327}
+  text: Vertical Mouse Sensitivity
+  checkBox: {fileID: 0}
+  slider: {fileID: 541246358}
+  inputTextField: {fileID: 256410123}
+  IsSlider: 0
 --- !u!1 &317232965
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,8 +1527,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 0}
   text_field: {fileID: 413218841}
-  text: Jump Key
-  checkBox: {fileID: 0}
+  text: Use Look Keys
+  checkBox: {fileID: 515776301}
   slider: {fileID: 0}
   inputTextField: {fileID: 0}
   IsSlider: 0
@@ -2502,7 +2514,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 20, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &403240774
 MonoBehaviour:
@@ -3724,7 +3736,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1392080734}
+        m_TargetAssemblyTypeName: ButtonMapping, Assembly-CSharp
+        m_MethodName: ChangeBool
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 320405323}
+          m_ObjectArgumentAssemblyTypeName: ButtonMappingInfoHolder, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &541246356
 GameObject:
@@ -3736,6 +3760,7 @@ GameObject:
   m_Component:
   - component: {fileID: 541246357}
   - component: {fileID: 541246358}
+  - component: {fileID: 541246359}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -3811,24 +3836,43 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1898373358}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 0.1
+  m_MaxValue: 30
   m_WholeNumbers: 0
   m_Value: 0.1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
+      - m_Target: {fileID: 1392080734}
+        m_TargetAssemblyTypeName: ButtonMapping, Assembly-CSharp
+        m_MethodName: ChangeFloat
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 541246359}
+          m_ObjectArgumentAssemblyTypeName: ButtonMappingInfoHolder, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &541246359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541246356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36042732a9c2b234598afc2335529f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
+  text_field: {fileID: 1200517327}
+  text: Vertical Mouse Sensitivity
+  checkBox: {fileID: 0}
+  slider: {fileID: 541246358}
+  inputTextField: {fileID: 256410123}
+  IsSlider: 1
 --- !u!1 &542157343
 GameObject:
   m_ObjectHideFlags: 0
@@ -3974,6 +4018,7 @@ GameObject:
   m_Component:
   - component: {fileID: 577689018}
   - component: {fileID: 577689019}
+  - component: {fileID: 577689020}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -4049,24 +4094,43 @@ MonoBehaviour:
   m_HandleRect: {fileID: 708999915}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 0.1
+  m_MaxValue: 30
   m_WholeNumbers: 0
   m_Value: 0.1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
+      - m_Target: {fileID: 1392080734}
+        m_TargetAssemblyTypeName: ButtonMapping, Assembly-CSharp
+        m_MethodName: ChangeFloat
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 577689020}
+          m_ObjectArgumentAssemblyTypeName: ButtonMappingInfoHolder, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &577689020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577689017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36042732a9c2b234598afc2335529f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
+  text_field: {fileID: 0}
+  text: Vertical Look Key Sensitivity
+  checkBox: {fileID: 0}
+  slider: {fileID: 577689019}
+  inputTextField: {fileID: 1519773822}
+  IsSlider: 1
 --- !u!1 &578802726
 GameObject:
   m_ObjectHideFlags: 0
@@ -4105,7 +4169,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Use changed key
+  m_text: Use change key
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -5077,7 +5141,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1392080734}
+        m_TargetAssemblyTypeName: ButtonMapping, Assembly-CSharp
+        m_MethodName: ChangeBool
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1867827476}
+          m_ObjectArgumentAssemblyTypeName: ButtonMappingInfoHolder, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!1 &708999914
 GameObject:
@@ -5115,7 +5191,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 20, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &708999916
 MonoBehaviour:
@@ -5716,6 +5792,7 @@ GameObject:
   - component: {fileID: 837276536}
   - component: {fileID: 837276535}
   - component: {fileID: 837276534}
+  - component: {fileID: 837276537}
   m_Layer: 0
   m_Name: InputField (TMP)
   m_TagString: Untagged
@@ -5741,7 +5818,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 71.2, y: 0}
+  m_AnchoredPosition: {x: 75, y: 9}
   m_SizeDelta: {x: 50, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &837276534
@@ -5805,7 +5882,19 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1392080734}
+        m_TargetAssemblyTypeName: ButtonMapping, Assembly-CSharp
+        m_MethodName: ChangeFloat
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 837276537}
+          m_ObjectArgumentAssemblyTypeName: ButtonMappingInfoHolder, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -5880,6 +5969,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837276532}
   m_CullTransparentMesh: 1
+--- !u!114 &837276537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837276532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36042732a9c2b234598afc2335529f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
+  text_field: {fileID: 0}
+  text: Horizontal Mouse Sensitivity
+  checkBox: {fileID: 0}
+  slider: {fileID: 1205257670}
+  inputTextField: {fileID: 837276534}
+  IsSlider: 0
 --- !u!1 &847583326
 GameObject:
   m_ObjectHideFlags: 0
@@ -6051,7 +6159,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 20, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &855824684
 MonoBehaviour:
@@ -6715,7 +6823,6 @@ GameObject:
   - component: {fileID: 885522084}
   - component: {fileID: 885522087}
   - component: {fileID: 885522086}
-  - component: {fileID: 885522085}
   m_Layer: 5
   m_Name: LookSensitivity (X)
   m_TagString: Untagged
@@ -6746,25 +6853,6 @@ RectTransform:
   m_AnchoredPosition: {x: 419, y: -234}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &885522085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 885522083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36042732a9c2b234598afc2335529f1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button: {fileID: 0}
-  text_field: {fileID: 1677607430}
-  text: Activate Key
-  checkBox: {fileID: 0}
-  slider: {fileID: 0}
-  inputTextField: {fileID: 0}
-  IsSlider: 0
 --- !u!114 &885522086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6890,7 +6978,6 @@ GameObject:
   - component: {fileID: 991874837}
   - component: {fileID: 991874840}
   - component: {fileID: 991874839}
-  - component: {fileID: 991874838}
   m_Layer: 5
   m_Name: MouseSensitivity (Y)
   m_TagString: Untagged
@@ -6921,25 +7008,6 @@ RectTransform:
   m_AnchoredPosition: {x: 125, y: -135.3}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &991874838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 991874836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36042732a9c2b234598afc2335529f1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button: {fileID: 0}
-  text_field: {fileID: 1200517327}
-  text: Respawn Key
-  checkBox: {fileID: 0}
-  slider: {fileID: 0}
-  inputTextField: {fileID: 0}
-  IsSlider: 0
 --- !u!114 &991874839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7025,6 +7093,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1004767405}
   - component: {fileID: 1004767406}
+  - component: {fileID: 1004767407}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -7100,24 +7169,43 @@ MonoBehaviour:
   m_HandleRect: {fileID: 855824683}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 0.1
+  m_MaxValue: 30
   m_WholeNumbers: 0
   m_Value: 0.1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
+      - m_Target: {fileID: 1392080734}
+        m_TargetAssemblyTypeName: ButtonMapping, Assembly-CSharp
+        m_MethodName: ChangeFloat
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1004767407}
+          m_ObjectArgumentAssemblyTypeName: ButtonMappingInfoHolder, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1004767407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004767404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36042732a9c2b234598afc2335529f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
+  text_field: {fileID: 0}
+  text: Horizontal Look Key Sensitivity
+  checkBox: {fileID: 0}
+  slider: {fileID: 1004767406}
+  inputTextField: {fileID: 1231910330}
+  IsSlider: 1
 --- !u!1 &1011792965
 GameObject:
   m_ObjectHideFlags: 0
@@ -7154,8 +7242,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.5}
-  m_SizeDelta: {x: -20, y: -13}
+  m_AnchoredPosition: {x: 0, y: -1.5}
+  m_SizeDelta: {x: -20, y: -15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1011792967
 MonoBehaviour:
@@ -8519,6 +8607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1205257669}
   - component: {fileID: 1205257670}
+  - component: {fileID: 1205257671}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -8594,24 +8683,43 @@ MonoBehaviour:
   m_HandleRect: {fileID: 403240773}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 0.1
+  m_MaxValue: 30
   m_WholeNumbers: 0
   m_Value: 0.1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
+      - m_Target: {fileID: 1392080734}
+        m_TargetAssemblyTypeName: ButtonMapping, Assembly-CSharp
+        m_MethodName: ChangeFloat
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1205257671}
+          m_ObjectArgumentAssemblyTypeName: ButtonMappingInfoHolder, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1205257671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205257668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36042732a9c2b234598afc2335529f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
+  text_field: {fileID: 0}
+  text: Horizontal Mouse Sensitivity
+  checkBox: {fileID: 0}
+  slider: {fileID: 1205257670}
+  inputTextField: {fileID: 837276534}
+  IsSlider: 1
 --- !u!1 &1231910328
 GameObject:
   m_ObjectHideFlags: 0
@@ -8624,6 +8732,7 @@ GameObject:
   - component: {fileID: 1231910332}
   - component: {fileID: 1231910331}
   - component: {fileID: 1231910330}
+  - component: {fileID: 1231910333}
   m_Layer: 0
   m_Name: InputField (TMP)
   m_TagString: Untagged
@@ -8649,7 +8758,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 70.4, y: 0}
+  m_AnchoredPosition: {x: 75, y: 9}
   m_SizeDelta: {x: 50, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1231910330
@@ -8713,7 +8822,19 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1392080734}
+        m_TargetAssemblyTypeName: ButtonMapping, Assembly-CSharp
+        m_MethodName: ChangeFloat
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1231910333}
+          m_ObjectArgumentAssemblyTypeName: ButtonMappingInfoHolder, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -8788,6 +8909,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1231910328}
   m_CullTransparentMesh: 1
+--- !u!114 &1231910333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231910328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36042732a9c2b234598afc2335529f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
+  text_field: {fileID: 0}
+  text: Horizontal Look Key Sensitivity
+  checkBox: {fileID: 0}
+  slider: {fileID: 1004767406}
+  inputTextField: {fileID: 1231910330}
+  IsSlider: 0
 --- !u!1 &1317393170
 GameObject:
   m_ObjectHideFlags: 0
@@ -10837,6 +10977,7 @@ GameObject:
   - component: {fileID: 1519773824}
   - component: {fileID: 1519773823}
   - component: {fileID: 1519773822}
+  - component: {fileID: 1519773825}
   m_Layer: 0
   m_Name: InputField (TMP)
   m_TagString: Untagged
@@ -10862,7 +11003,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 69.3, y: 0}
+  m_AnchoredPosition: {x: 75, y: 9}
   m_SizeDelta: {x: 50, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1519773822
@@ -10926,7 +11067,19 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1392080734}
+        m_TargetAssemblyTypeName: ButtonMapping, Assembly-CSharp
+        m_MethodName: ChangeFloat
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1519773825}
+          m_ObjectArgumentAssemblyTypeName: ButtonMappingInfoHolder, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -11001,6 +11154,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1519773820}
   m_CullTransparentMesh: 1
+--- !u!114 &1519773825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519773820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36042732a9c2b234598afc2335529f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
+  text_field: {fileID: 0}
+  text: Vertical Look Key Sensitivity
+  checkBox: {fileID: 0}
+  slider: {fileID: 577689019}
+  inputTextField: {fileID: 1519773822}
+  IsSlider: 0
 --- !u!1 &1590468402
 GameObject:
   m_ObjectHideFlags: 0
@@ -11958,7 +12130,6 @@ GameObject:
   - component: {fileID: 1723030513}
   - component: {fileID: 1723030516}
   - component: {fileID: 1723030515}
-  - component: {fileID: 1723030514}
   m_Layer: 5
   m_Name: MouseSensitivity (X)
   m_TagString: Untagged
@@ -11989,25 +12160,6 @@ RectTransform:
   m_AnchoredPosition: {x: 418.9, y: -134.7}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1723030514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1723030512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36042732a9c2b234598afc2335529f1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button: {fileID: 0}
-  text_field: {fileID: 847583327}
-  text: Right Key
-  checkBox: {fileID: 0}
-  slider: {fileID: 0}
-  inputTextField: {fileID: 0}
-  IsSlider: 0
 --- !u!114 &1723030515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12748,7 +12900,7 @@ GameObject:
   - component: {fileID: 1867827477}
   - component: {fileID: 1867827476}
   m_Layer: 5
-  m_Name: UseChangedKey
+  m_Name: UseChangeKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12789,9 +12941,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 0}
-  text_field: {fileID: 578802727}
-  text: Slide Key
-  checkBox: {fileID: 0}
+  text_field: {fileID: 0}
+  text: Use Change Key
+  checkBox: {fileID: 648824921}
   slider: {fileID: 0}
   inputTextField: {fileID: 0}
   IsSlider: 0
@@ -12869,7 +13021,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 20, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1898373359
 MonoBehaviour:
@@ -13842,7 +13994,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 400.92764}
+  m_AnchoredPosition: {x: 0, y: 400.00003}
   m_SizeDelta: {x: -700, y: 900}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &2125163424

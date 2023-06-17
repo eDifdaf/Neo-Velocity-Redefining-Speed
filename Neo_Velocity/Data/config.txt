@@ -20,4 +20,4 @@ VerticalLookKeySensitivity:1
 HorizontalLookKeySensitivity:0,5
 Volume:0,1
 Fullscreen:True
-Quality:1
+Quality:6

@@ -1659,7 +1659,7 @@ GameObject:
   - component: {fileID: 464616020}
   - component: {fileID: 464616019}
   m_Layer: 5
-  m_Name: txtGraphics
+  m_Name: txtQuality
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1705,7 +1705,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Graphics
+  m_text: Quality
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -2091,7 +2091,7 @@ GameObject:
   - component: {fileID: 689444979}
   - component: {fileID: 689444978}
   m_Layer: 5
-  m_Name: txtQuality
+  m_Name: txtResolution
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2137,7 +2137,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quality
+  m_text: Resolution
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -2336,7 +2336,7 @@ GameObject:
   - component: {fileID: 710116485}
   - component: {fileID: 710116484}
   m_Layer: 5
-  m_Name: Graphics
+  m_Name: Quality
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3233,7 +3233,7 @@ GameObject:
   - component: {fileID: 1121642770}
   - component: {fileID: 1121642769}
   m_Layer: 5
-  m_Name: Quality
+  m_Name: resolution
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3323,7 +3323,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1028066260}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
-        m_MethodName: SetQuality
+        m_MethodName: SetResolution
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

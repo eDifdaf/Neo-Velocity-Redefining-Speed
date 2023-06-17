@@ -76,10 +76,10 @@ public class Settings : AInputScript {
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
     public void SetVolume(float volume) {
-        audioMixer.SetFloat("volume", volume);
-        /*audioSource.ToList().ForEach(a => a.volume = volume);
+        //audioMixer.SetFloat("volume", volume);
+        audioSource.ToList().ForEach(a => a.volume = volume);
         GameObject.FindGameObjectsWithTag("Music").ToList().ForEach(o => o.GetComponent<AudioSource>().volume = volume);
-        SaveDataManager.Volume = volume;*/
+        SaveDataManager.Volume = volume;
     }
 
     public void SetQuality(int qualityIndex) {

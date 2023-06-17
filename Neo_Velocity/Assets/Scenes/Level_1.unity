@@ -14723,11 +14723,11 @@ Transform:
   - {fileID: 339633883}
   - {fileID: 2064927664}
   - {fileID: 170137365}
+  - {fileID: 1401387039}
   - {fileID: 161992191}
   - {fileID: 947582945}
   - {fileID: 1709343844}
   - {fileID: 1075340054}
-  - {fileID: 1401387039}
   - {fileID: 65425729}
   - {fileID: 1901429270}
   - {fileID: 1771673798}
@@ -14784,11 +14784,11 @@ Transform:
   - {fileID: 641068676}
   - {fileID: 411278984}
   - {fileID: 1914539908}
+  - {fileID: 854576827}
   - {fileID: 1531629800}
   - {fileID: 1575287591}
   - {fileID: 1567927021}
   - {fileID: 2111243597}
-  - {fileID: 854576827}
   - {fileID: 241662842}
   - {fileID: 1992068233}
   - {fileID: 855900866}
@@ -15863,7 +15863,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 803671849}
-  m_RootOrder: 89
+  m_RootOrder: 85
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &854576828
 BoxCollider:
@@ -27342,7 +27342,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 803671849}
-  m_RootOrder: 28
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1401387040
 MeshCollider:
@@ -35058,7 +35058,7 @@ PrefabInstance:
     - target: {fileID: 2339460166382143571, guid: bcd226279b2fd9540bf565b7aed5ab72, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: b5fb9cf1250f69a4c98174345a55321e, type: 3}
+      objectReference: {fileID: 8300000, guid: 6a80c7c832a05544cbbb106d5efd6cf9, type: 3}
     - target: {fileID: 3632066095955032109, guid: bcd226279b2fd9540bf565b7aed5ab72, type: 3}
       propertyPath: m_Name
       value: Music

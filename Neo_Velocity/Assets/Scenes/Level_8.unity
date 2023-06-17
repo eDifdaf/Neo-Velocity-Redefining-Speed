@@ -423,7 +423,7 @@ Transform:
   - {fileID: 1759883025}
   - {fileID: 1766798543}
   m_Father: {fileID: 228843681}
-  m_RootOrder: 47
+  m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &99270564 stripped
 Transform:
@@ -1107,6 +1107,7 @@ Transform:
   - {fileID: 857051654}
   - {fileID: 652194998}
   - {fileID: 391779477}
+  - {fileID: 96332486}
   - {fileID: 1701562552}
   - {fileID: 541561414}
   - {fileID: 1899525172}
@@ -1114,22 +1115,21 @@ Transform:
   - {fileID: 99270564}
   - {fileID: 1614379967}
   - {fileID: 705679990}
+  - {fileID: 518996882}
   - {fileID: 1866125745}
   - {fileID: 103433770}
   - {fileID: 1133428094}
   - {fileID: 2025751039}
   - {fileID: 740537604}
   - {fileID: 1466740011}
-  - {fileID: 96332486}
+  - {fileID: 990638182}
   - {fileID: 321371073}
   - {fileID: 459655866}
   - {fileID: 1549815686}
-  - {fileID: 518996882}
-  - {fileID: 990638182}
   - {fileID: 1011617833}
-  - {fileID: 1768303036}
   - {fileID: 1081515578}
   - {fileID: 1660791553}
+  - {fileID: 1768303036}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2646,7 +2646,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 228843681}
-  m_RootOrder: 51
+  m_RootOrder: 42
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &518996883
 MonoBehaviour:
@@ -5019,7 +5019,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 228843681}
-  m_RootOrder: 52
+  m_RootOrder: 49
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &990638183
 MonoBehaviour:
@@ -5425,7 +5425,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 228843681}
-  m_RootOrder: 55
+  m_RootOrder: 54
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1081515579
 MonoBehaviour:
@@ -6531,7 +6531,7 @@ PrefabInstance:
     - target: {fileID: 2339460166382143571, guid: bcd226279b2fd9540bf565b7aed5ab72, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: da6e543d9dcbe734e829f4bc0a6b4e06, type: 3}
+      objectReference: {fileID: 8300000, guid: 3e04ce02c6892fd44ac26898916d3880, type: 3}
     - target: {fileID: 3632066095955032109, guid: bcd226279b2fd9540bf565b7aed5ab72, type: 3}
       propertyPath: m_Name
       value: Music
@@ -7838,7 +7838,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 228843681}
-  m_RootOrder: 56
+  m_RootOrder: 55
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1660791554
 BoxCollider:

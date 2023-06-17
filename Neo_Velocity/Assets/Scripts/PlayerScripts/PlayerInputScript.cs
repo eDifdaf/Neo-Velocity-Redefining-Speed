@@ -62,6 +62,7 @@ public class PlayerInputScript : AInputScript
 
     bool AlreadyFinished;
     float TimeToFinish;
+    bool notRenamed;
 
     /// <summary>
     /// !!!not accurate, to lazy to change!!!!
@@ -219,6 +220,7 @@ public class PlayerInputScript : AInputScript
         if (!Directory.Exists(ReplayFolderLocation))
             Directory.CreateDirectory(ReplayFolderLocation);
         WriterLocation = ReplayFolderLocation + "Replay_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".replay";
+        notRenamed = true;
         replayWriter = new StreamWriter(WriterLocation);
         replayWriter.WriteLine("Format: 6_6_2023");
         replayWriter.WriteLine("Not Finished");
@@ -242,12 +244,13 @@ public class PlayerInputScript : AInputScript
         File.Move(WriterLocation, newWriterLocation);
         WriterLocation = newWriterLocation;
         replayWriter = new StreamWriter(WriterLocation, true);
+        notRenamed = false;
     }
 
     void ResetWriter()
     {
         replayWriter.Close();
-        if (AlreadyFinished)
+        if (AlreadyFinished && !notRenamed)
         {
             string[] arrLine = File.ReadAllLines(WriterLocation);
             arrLine[1] = TimeToFinish.ToString(CultureInfo.InvariantCulture);

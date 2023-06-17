@@ -10,14 +10,14 @@ public class Credits : MonoBehaviour
     [SerializeField] float ScrollSpeed;
     void Start()
     {
-        CreditsUIElementTransform.position = new Vector3(CreditsUIElementTransform.position.x, CreditsUIElementTransform.rect.height + 150);
+        CreditsUIElementTransform.position = new Vector3(CreditsUIElementTransform.position.x, -CreditsUIElementTransform.rect.height / 2 + 100);
     }
 
     void Update()
     {
         CreditsUIElementTransform.position = new Vector3(CreditsUIElementTransform.position.x, CreditsUIElementTransform.position.y + ScrollSpeed * Time.deltaTime);
 
-        if (CreditsUIElementTransform.position.y < -CreditsUIElementTransform.rect.height)
+        if (CreditsUIElementTransform.position.y > CreditsUIElementTransform.rect.height / 2)
             ReturnToMenu();
     }
 

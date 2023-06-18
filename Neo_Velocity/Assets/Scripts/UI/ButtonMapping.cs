@@ -68,7 +68,7 @@ public class ButtonMapping : MonoBehaviour
                     key = SaveDataManager.ChangeKey;
                     break;
             }
-            s.button.GetComponentInChildren<TMP_Text>().text = key.ToString();
+            s.button.GetComponentInChildren<TMP_Text>().text = ConvertKeyToString(key);
         });
         gameObject.GetComponentsInChildren<ButtonMappingInfoHolder>(true).Where(s => s.checkBox != null).ToList().ForEach(s =>
         {
@@ -181,7 +181,7 @@ public class ButtonMapping : MonoBehaviour
                 SaveDataManager.ChangeKey = newKey;
                 break;
         }
-        prevInfo.button.gameObject.GetComponentInChildren<TMP_Text>().text = newKey.ToString();
+        prevInfo.button.gameObject.GetComponentInChildren<TMP_Text>().text = ConvertKeyToString(newKey);
         prevInfo.text_field.text = prevText;
     }
 
@@ -252,6 +252,110 @@ public class ButtonMapping : MonoBehaviour
                 break;
 
         }
+    }
+
+    string ConvertKeyToString(KeyCode key)
+    {
+        switch (key)
+        {
+            case KeyCode.LeftAlt:
+                return "LALT";
+            case KeyCode.RightAlt:
+                return "RALT";
+            case KeyCode.LeftControl:
+                return "LCTRL";
+            case KeyCode.RightControl:
+                return "RCTRL";
+            case KeyCode.LeftShift:
+                return "LSHIFT";
+            case KeyCode.RightShift:
+                return "RSHIFT";
+            case KeyCode.Mouse0:
+                return "M0";
+            case KeyCode.Mouse1:
+                return "M1";
+            case KeyCode.Mouse2:
+                return "M2";
+            case KeyCode.Mouse3:
+                return "M3";
+            case KeyCode.Mouse4:
+                return "M4";
+            case KeyCode.Mouse5:
+                return "M5";
+            case KeyCode.Mouse6:
+                return "M6";
+            case KeyCode.LeftParen:
+                return "(";
+            case KeyCode.RightParen:
+                return "(";
+            case KeyCode.LeftBracket:
+                return "[";
+            case KeyCode.RightBracket:
+                return "]";
+            case KeyCode.LeftCurlyBracket:
+                return "{";
+            case KeyCode.RightCurlyBracket:
+                return "}";
+            case KeyCode.Colon:
+                return ":";
+            case KeyCode.Semicolon:
+                return ";";
+            case KeyCode.Comma:
+                return ",";
+            case KeyCode.Period:
+                return ".";
+            case KeyCode.Minus:
+                return "-";
+            case KeyCode.Plus:
+                return "+";
+            case KeyCode.Underscore:
+                return "_";
+            case KeyCode.Slash:
+                return "/";
+            case KeyCode.Percent:
+                return "%";
+            case KeyCode.Ampersand:
+                return "&";
+            case KeyCode.Delete:
+                return "DEL";
+            case KeyCode.Backspace:
+                return "BACK";
+            case KeyCode.Hash:
+                return "#";
+            case KeyCode.Backslash:
+                return "\\";
+            case KeyCode.Equals:
+                return "=";
+            case KeyCode.Exclaim:
+                return "!";
+            case KeyCode.Dollar:
+                return "$";
+            case KeyCode.Question:
+                return "?";
+            case KeyCode.Asterisk:
+                return "*";
+            case KeyCode.Alpha1:
+                return "1";
+            case KeyCode.Alpha2:
+                return "2";
+            case KeyCode.Alpha3:
+                return "3";
+            case KeyCode.Alpha4:
+                return "4";
+            case KeyCode.Alpha5:
+                return "5";
+            case KeyCode.Alpha6:
+                return "6";
+            case KeyCode.Alpha7:
+                return "7";
+            case KeyCode.Alpha8:
+                return "8";
+            case KeyCode.Alpha9:
+                return "9";
+            case KeyCode.Alpha0:
+                return "0";
+        }
+        return key.ToString();
     }
 
     public void BackToMenu()

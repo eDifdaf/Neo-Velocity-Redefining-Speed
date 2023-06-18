@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18425442, g: 0.16681068, b: 0.17953701, a: 1}
+  m_IndirectSpecularColor: {r: 0.1842527, g: 0.16680858, b: 0.17953661, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -537,7 +537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 828542595}
   text_field: {fileID: 1517798646}
-  text: Shoot
+  text: ShootKey
   checkBox: {fileID: 0}
   slider: {fileID: 0}
   inputTextField: {fileID: 0}
@@ -1032,7 +1032,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 880362415}
   m_HandleRect: {fileID: 880362414}
   m_Direction: 2
-  m_Value: 1.0000007
+  m_Value: 1.0000004
   m_Size: 0.7882353
   m_NumberOfSteps: 0
   m_OnValueChanged:

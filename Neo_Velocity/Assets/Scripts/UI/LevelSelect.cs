@@ -38,10 +38,10 @@ public class LevelSelect : MonoBehaviour
             temp.GetComponent<UIReplayInfoHolderScript>().Text.GetComponent<TextMeshProUGUI>().text = r.Remove(r.Length-7);
             temp.transform.SetParent(ReplayInfoHolder.transform);
             if (i == 0) {
-                temp.GetComponent<RectTransform>().localPosition = new Vector2(90, 0);
+                temp.GetComponent<RectTransform>().localPosition = new Vector2(90, -40);
             }
             else {
-                temp.GetComponent<RectTransform>().localPosition = new Vector2(90, -80 * i); // This doesn't correctly arrange the Buttons, good Luck!
+                temp.GetComponent<RectTransform>().localPosition = new Vector2(90, -80 * i -40); // This doesn't correctly arrange the Buttons, good Luck!
             }
             i++;
             GameObject GhostButton = temp.GetComponent<UIReplayInfoHolderScript>().GhostButton;

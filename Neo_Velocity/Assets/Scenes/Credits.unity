@@ -2908,7 +2908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CreditsUIElementTransform: {fileID: 229882911}
-  ScrollSpeed: 75
+  ScrollSpeed: 100
 --- !u!1001 &1152801180
 PrefabInstance:
   m_ObjectHideFlags: 0

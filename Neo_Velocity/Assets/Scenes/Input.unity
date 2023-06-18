@@ -537,7 +537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 828542595}
   text_field: {fileID: 1517798646}
-  text: Right Key
+  text: Shoot
   checkBox: {fileID: 0}
   slider: {fileID: 0}
   inputTextField: {fileID: 0}
@@ -576,11 +576,11 @@ RectTransform:
   - {fileID: 1519773821}
   - {fileID: 1995441174}
   m_Father: {fileID: 2102731733}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -333}
+  m_AnchoredPosition: {x: 75, y: -333}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &81421962
@@ -6846,11 +6846,11 @@ RectTransform:
   - {fileID: 1231910329}
   - {fileID: 1677607432}
   m_Father: {fileID: 2102731733}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 445, y: -333}
+  m_AnchoredPosition: {x: 420, y: -333}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &885522086
@@ -7005,7 +7005,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -233}
+  m_AnchoredPosition: {x: 75, y: -233}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &991874839
@@ -10966,7 +10966,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Use Tool
+  m_text: 'Use Tool/
+
+    Shoot'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -12235,7 +12237,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 445, y: -233}
+  m_AnchoredPosition: {x: 420, y: -233}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1723030515
@@ -14064,8 +14066,8 @@ RectTransform:
   - {fileID: 320405322}
   - {fileID: 991874837}
   - {fileID: 1723030513}
-  - {fileID: 885522084}
   - {fileID: 81421960}
+  - {fileID: 885522084}
   m_Father: {fileID: 2038327298}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

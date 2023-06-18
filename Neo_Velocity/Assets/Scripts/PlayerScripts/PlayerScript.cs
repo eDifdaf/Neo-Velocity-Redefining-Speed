@@ -60,6 +60,8 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float ChangeDelay = 0.2f;
     [SerializeField] int MaxNumberOfC4 = 5;
 
+    [SerializeField] GameObject FreeCam;
+
     Func<Dictionary<string, float>> GetInput;
     Func<Vector2> GetCameraMovement;
     Action ResetInputs;
@@ -192,6 +194,12 @@ public class PlayerScript : MonoBehaviour
     // Camera Movement, unrelated from the recorded inputs
     private void Update()
     {
+        if (Input.GetKey(KeyCode.F8))
+        {
+            Instantiate(FreeCam, transform.localPosition, transform.localRotation, transform.parent);
+            Destroy(gameObject);
+        }    
+
         if (PauseMenu.IsPaused || Time.timeScale == 0)
             return;
 

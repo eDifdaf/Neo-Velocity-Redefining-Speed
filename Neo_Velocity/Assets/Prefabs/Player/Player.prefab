@@ -558,7 +558,6 @@ GameObject:
   - component: {fileID: 4418298381620389080}
   - component: {fileID: 4418298381620389083}
   - component: {fileID: 5046979783616254442}
-  - component: {fileID: 3744581764171035859}
   m_Layer: 6
   m_Name: PlayerCamera
   m_TagString: MainCamera
@@ -667,21 +666,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &3744581764171035859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4418298381620389061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c96217fb5fba49c48bd07faca6fe4c8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jump: {fileID: 0}
-  shoot: {fileID: 0}
-  slide: {fileID: 0}
 --- !u!1 &4418298382927004808
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,6 +775,7 @@ MonoBehaviour:
   ShootDelay: 0.5
   ChangeDelay: 0.45
   MaxNumberOfC4: 5
+  FreeCam: {fileID: 8363887388528802899, guid: 48ee4287d91961644916063f0582543e, type: 3}
   velocity: {x: 0, y: 0, z: 0}
   Respawn: 0
   SelectedTool: 0

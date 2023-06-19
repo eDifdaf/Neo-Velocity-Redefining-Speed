@@ -237,14 +237,23 @@ public class PlayerInputScript : AInputScript
         AlreadyFinished = true;
     }
 
-    public void RenameCurrentFile(string newName)
+    public bool RenameCurrentFile(string newName)
     {
+        bool worked = true;
         replayWriter.Close();
-        string newWriterLocation = ReplayFolderLocation + newName + ".replay";
-        File.Move(WriterLocation, newWriterLocation);
-        WriterLocation = newWriterLocation;
+        try
+        {
+            string newWriterLocation = ReplayFolderLocation + newName + ".replay";
+            File.Move(WriterLocation, newWriterLocation);
+            WriterLocation = newWriterLocation;
+        }
+        catch
+        {
+            worked = false;
+        }
         replayWriter = new StreamWriter(WriterLocation, true);
-        notRenamed = false;
+        notRenamed = !worked;
+        return worked;
     }
 
     void ResetWriter()

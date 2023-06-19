@@ -87,10 +87,6 @@ public class TimeMeasure : MonoBehaviour
         {
             DisplayTime(0f);
         }
-        else
-        {
-            Debug.LogError("Time Text component not found with the specified tag: " + timeTag);
-        }
     }
 
     public void InitializeTimer()

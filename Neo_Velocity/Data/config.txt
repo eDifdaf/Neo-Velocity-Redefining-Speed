@@ -18,6 +18,6 @@ LeftLookKey:J
 RightLookKey:L
 VerticalLookKeySensitivity:1
 HorizontalLookKeySensitivity:0,5
-Volume:0,06204082
+Volume:0,05714286
 Fullscreen:True
 Quality:6

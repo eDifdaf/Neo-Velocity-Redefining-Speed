@@ -98,11 +98,11 @@ PrefabInstance:
     - target: {fileID: -7601226680800833775, guid: f4cb4827b3ec83f4cbd570e7e2ce36d9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8fa7bbfbdf7a6594b91b0b709b88df4f, type: 2}
+      objectReference: {fileID: 2100000, guid: 7827baaf736704047a50ee9495f4b024, type: 2}
     - target: {fileID: 236216658851537685, guid: f4cb4827b3ec83f4cbd570e7e2ce36d9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8fa7bbfbdf7a6594b91b0b709b88df4f, type: 2}
+      objectReference: {fileID: 2100000, guid: c603c6fcb0db19749ada9fbab84b4711, type: 2}
     - target: {fileID: 919132149155446097, guid: f4cb4827b3ec83f4cbd570e7e2ce36d9, type: 3}
       propertyPath: m_Name
       value: RocketLauncher
@@ -110,11 +110,11 @@ PrefabInstance:
     - target: {fileID: 7202271454713460447, guid: f4cb4827b3ec83f4cbd570e7e2ce36d9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8fa7bbfbdf7a6594b91b0b709b88df4f, type: 2}
+      objectReference: {fileID: 2100000, guid: 7827baaf736704047a50ee9495f4b024, type: 2}
     - target: {fileID: 7791277155113642600, guid: f4cb4827b3ec83f4cbd570e7e2ce36d9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 0f81544861d956a4db9ddb7bbd4ffe48, type: 2}
+      objectReference: {fileID: 2100000, guid: 071133945ee3db74ea41498804dc981c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4cb4827b3ec83f4cbd570e7e2ce36d9, type: 3}
 --- !u!4 &8410563578891480792 stripped
